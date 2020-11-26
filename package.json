@@ -1,0 +1,25 @@
+{
+  "name": "discord-bot-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SoorajModi/Discord-Bot-Test.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SoorajModi/Discord-Bot-Test/issues"
+  },
+  "homepage": "https://github.com/SoorajModi/Discord-Bot-Test#readme",
+  "dependencies": {
+    "discord.js": "^12.5.1",
+    "dotenv": "^8.2.0",
+    "env": "^0.0.2",
+    "nodemon": "^2.0.6"
+  }
+}
