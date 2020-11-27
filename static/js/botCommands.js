@@ -1,5 +1,6 @@
 // botCommands.js
 // ==============
+
 const randomPuppy = require('random-puppy');
 
 module.exports = {
@@ -73,13 +74,21 @@ function puppy_command(message) {
 // Helper Functions
 
 function addMemberRole(member, role, message) {
-    member.roles.add(role);
-    message.channel.send("Successfully added role \`" + role.name + "\` to user \`" + member.user.username + "\`");
+    if (role.name !== "admin") {
+        member.roles.add(role);
+        message.channel.send("Successfully added role \`" + role.name + "\` to user \`" + member.user.username + "\`");
+    } else {
+        message.channel.send("Error: cannot give admin role");
+    }
 }
 
 function removeMemberRole(member, role, message) {
-    member.roles.remove(role);
-    message.channel.send("Successfully removed role \`" + role.name + "\` to user \`" + member.user.username + "\`");
+    if (role.name !== "admin") {
+        member.roles.remove(role);
+        message.channel.send("Successfully removed role \`" + role.name + "\` to user \`" + member.user.username + "\`");
+    } else {
+        message.channel.send("Error: cannot remove admin role");
+    }
 }
 
 function getMember(message) {
