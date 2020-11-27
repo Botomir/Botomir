@@ -15,6 +15,8 @@ module.exports = {
             remove_command(message);
         } else if (message.content.toLowerCase().startsWith("!puppy")) {
             puppy_command(message);
+        } else if (message.content.toLowerCase().startsWith("!mental-health")) {
+            mental_health_commands(message);
         }
     }
 };
@@ -29,6 +31,7 @@ function helpCommand(message) {
         "!remove @role = removes @role from caller       \n" +
         "!remove @user @role = removes @role from @user  \n" +
         "!puppy = special surprise :]                    \n" +
+        "!mental-health = mental health resources        \n" +
         "!help = I think you can figure this out         \n" +
         "################################################\n" +
         "Contact @Colonel Pineapple#3164 for questions   \n" +
@@ -69,6 +72,14 @@ function puppy_command(message) {
             message.channel.send(url)
                 .then(r => console.log("Successfully sent puppy pic: " + r))
         })
+}
+
+function mental_health_commands(message) {
+    message.channel.send("Mental health resources: https://www.ccmhs-ccsms.ca/mental-health-resources-1\n" +
+                                "Mental health services: https://www.canada.ca/en/public-health/services/mental-health-services/mental-health-get-help.html\n" +
+                                "Information on mental illnesses, disorders and diseases: https://www.canada.ca/en/public-health/topics/mental-illness.html\n" +
+                                "About suicide, prevention, risk factors, how to get help when you or someone you know is in need: https://www.canada.ca/en/public-health/services/suicide-prevention.html\n" +
+                                "Information on mental health and ways to improve it at work and in your daily life: https://www.canada.ca/en/public-health/topics/improving-your-mental-health.html\n");
 }
 
 // Helper Functions
