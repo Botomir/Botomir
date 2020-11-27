@@ -1,30 +1,58 @@
-function pingCommand(message) {
-    message.channel.send("Pong");
-}
+// botCommands.js
+// ==============
 
-function role_command(message) {
-    let messageArr = splitStringBySpace(message);
-    console.log(messageArr);
+module.exports = {
+    pingCommand: function (message) {
+        message.channel.send("Pong");
+    },
+    role_command: function (message) {
+        let messageArr = splitStringBySpace(message);
+        console.log(messageArr);
 
-    let str1Id = trimDiscordID(messageArr[1]);
-    let str2Id = trimDiscordID(messageArr[2]);
+        let str1Id = trimDiscordID(messageArr[1]);
+        let str2Id = trimDiscordID(messageArr[2]);
 
-    let member = getMember(message, str1Id);
-    let role = getRole(message, str1Id, str2Id);
+        let member = getMember(message, str1Id);
+        let role = getRole(message, str1Id, str2Id);
 
-    if (!role) {
-        invalidRoleErrorHandler(message);
-        console.log("Error: role not found");
-    } else {
-        giveMemberRole(member, role, message);
-        console.log(member.user.username);
-        console.log(role.name);
+        if (!role) {
+            invalidRoleErrorHandler(message);
+            console.log("Error: role not found");
+        } else {
+            addMemberRole(member, role, message);
+            console.log(member.user.username);
+            console.log(role.name);
+        }
+    },
+    remove_command: function (message) {
+        let messageArr = splitStringBySpace(message);
+        console.log(messageArr);
+
+        let str1Id = trimDiscordID(messageArr[1]);
+        let str2Id = trimDiscordID(messageArr[2]);
+
+        let member = getMember(message, str1Id);
+        let role = getRole(message, str1Id, str2Id);
+
+        if (!role) {
+            invalidRoleErrorHandler(message);
+            console.log("Error: role not found");
+        } else {
+            removeMemberRole(member, role, message);
+            console.log(member.user.username);
+            console.log(role.name);
+        }
     }
-}
+};
 
-function giveMemberRole(member, role, message) {
+function addMemberRole(member, role, message) {
     member.roles.add(role);
     message.channel.send("Successfully added role \`" + role.name + "\` to user \`" + member.user.username + "\`");
+}
+
+function removeMemberRole(member, role, message) {
+    member.roles.remove(role);
+    message.channel.send("Successfully removed role \`" + role.name + "\` to user \`" + member.user.username + "\`");
 }
 
 function getMember(message, str1Id) {
@@ -40,7 +68,7 @@ function getMember(message, str1Id) {
 
 function getRole(message, str1Id, str2Id) {
     // If second str is null then self call
-    if (str2) {
+    if (str2Id) {
         return message.guild.roles.cache.find(r => r.id === str2Id);
     } else {
         return message.guild.roles.cache.find(r => r.id === str1Id);
@@ -58,5 +86,6 @@ function splitStringBySpace(message) {
 }
 
 function trimDiscordID(string) {
+    if (!string) return string;
     return string.substring(3, string.length - 1);
 }

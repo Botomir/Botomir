@@ -1,5 +1,6 @@
 require("dotenv").config();
 const Discord = require("discord.js");
+const CommandHandler = require("./static/js/botCommands.js");
 
 const client = new Discord.Client();
 
@@ -18,15 +19,16 @@ client.on('message', message => {
 
     console.log(message.content);
 
-    if (message.content === "!ping") {
-        pingCommand(message);
+    if (message.content.toLowerCase() === "!ping") {
+        CommandHandler.pingCommand(message);
     }
 
-    if (message.content.toLowerCase.startsWith("!role")) {
-        role_command(message);
+    if (message.content.toLowerCase().startsWith("!role")) {
+        CommandHandler.role_command(message);
     }
 
-    if (message.content.toLowerCase.startsWith("!remove")) {
+    if (message.content.toLowerCase().startsWith("!remove")) {
+        CommandHandler.remove_command(message);
     }
 });
 
