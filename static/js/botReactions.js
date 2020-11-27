@@ -2,15 +2,25 @@
 // ==============
 
 module.exports = {
-    getReactionMember: function (reaction, user) {
-        return reaction.message.guild.members.cache.find(member => member.id === user.id);
-    },
+    reactionHandler: function (reaction, user) {
+        let memberWhoReacted = getReactionMember(reaction, user);
 
-    addRole: function (member, roleName) {
-        let role = findRole(member, roleName);
-        member.roles.add(role);
+        if (reaction.emoji.name === "maple_leafs") {
+            addRole(memberWhoReacted, "test");
+        }
     }
 };
+
+function getReactionMember(reaction, user) {
+    return reaction.message.guild.members.cache.find(member => member.id === user.id);
+}
+
+function addRole(member, roleName) {
+    let role = findRole(member, roleName);
+    member.roles.add(role);
+}
+
+// Helper Functions
 
 function findRole(member, roleName) {
     return member.guild.roles.cache.find(r => r.name === roleName);

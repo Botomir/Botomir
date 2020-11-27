@@ -16,10 +16,14 @@
     "url": "https://github.com/SoorajModi/Discord-Bot-Test/issues"
   },
   "homepage": "https://github.com/SoorajModi/Discord-Bot-Test#readme",
+  "engines": {
+    "node": "15.2.1"
+  },
   "dependencies": {
     "discord.js": "^12.5.1",
     "dotenv": "^8.2.0",
     "env": "^0.0.2",
+    "mongoose": "^5.10.16",
     "nodemon": "^2.0.6",
     "random-puppy": "^1.1.0"
   }

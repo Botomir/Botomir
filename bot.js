@@ -1,9 +1,26 @@
+// bot.js
+// ======
+
 require("dotenv").config();
 const Discord = require("discord.js");
-const CommandHandler = require("./static/js/botCommands.js");
-const ReactionHandler = require("./static/js/botReactions");
+const mongoose = require("mongoose");
+
+const {commandHandler} = require("./static/js/botCommands");
+const {messageScanner} = require("./static/js/botMessage");
+const {reactionHandler} = require("./static/js/botReactions");
 
 const client = new Discord.Client();
+
+mongoose.connect(process.env.DATABASE_URL, {useNewUrlParser: true});
+
+const MessagePost = mongoose.model("messages", {
+    guild: String,
+    channel: String,
+    author: String,
+    content: String,
+    timestamp: Date,
+    id: String
+});
 
 client.once("ready", () => {
     // Notify connection ready
@@ -25,37 +42,19 @@ client.once("ready", () => {
 client.on('message', async message => {
     if (message.author.bot) return;
 
-    console.log(message.content);
+    // Check if message contains keywords
+    messageScanner(message);
 
-    if (message.content.toLowerCase().startsWith("!ping")) {
-        CommandHandler.pingCommand(message);
-    }
+    // Check if message contains command and handle appropriately
+    commandHandler(message);
 
-    if (message.content.toLowerCase().startsWith("!help")) {
-        CommandHandler.helpCommand();
-    }
-
-    if (message.content.toLowerCase().startsWith("!role")) {
-        CommandHandler.role_command(message);
-    }
-
-    if (message.content.toLowerCase().startsWith("!remove")) {
-        CommandHandler.remove_command(message);
-    }
-
-    if (message.content.toLowerCase().startsWith("!puppy")) {
-        CommandHandler.puppy_command(message);
-    }
+    // Store messages in database
+    storeMessageInDB(message);
 });
 
 client.on('messageReactionAdd', (reaction, user) => {
-    let memberWhoReacted = ReactionHandler.getReactionMember(reaction, user);
-
-    if (reaction.emoji.name === "maple_leafs") {
-        ReactionHandler.addRole(memberWhoReacted, "test");
-    }
-
-    console.log('a reaction has been added');
+    // Handle reactions to cached messages
+    reactionHandler(reaction, user);
 });
 
 client.on("error", err => {
@@ -64,3 +63,17 @@ client.on("error", err => {
 });
 
 client.login(process.env.DISCORD_TOKEN);
+
+function storeMessageInDB(message) {
+    const messagePost = new MessagePost({
+        guild: message.guild,
+        channel: message.channel,
+        author: message.author,
+        content: message.content,
+        timestamp: message.createdAt,
+        id: message.id
+    });
+
+    console.log(messagePost);
+    messagePost.save();
+}
