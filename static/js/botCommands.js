@@ -48,7 +48,7 @@ function role_command(message) {
 
     if (!role) {
         invalidRoleErrorHandler(message);
-        console.log("Error: role not found");
+        console.log("Error (botCommands): role not found");
     } else {
         addMemberRole(member, role, message);
     }
@@ -60,7 +60,6 @@ function remove_command(message) {
 
     if (!role) {
         invalidRoleErrorHandler(message);
-        console.log("Error: role not found");
     } else {
         removeMemberRole(member, role, message);
     }
@@ -89,7 +88,7 @@ function addMemberRole(member, role, message) {
         member.roles.add(role);
         message.channel.send("Successfully added role \`" + role.name + "\` to user \`" + member.user.username + "\`");
     } else {
-        message.channel.send("Error: cannot give admin role");
+        message.channel.send("Error (botCommands): cannot give admin role");
     }
 }
 
@@ -98,7 +97,7 @@ function removeMemberRole(member, role, message) {
         member.roles.remove(role);
         message.channel.send("Successfully removed role \`" + role.name + "\` to user \`" + member.user.username + "\`");
     } else {
-        message.channel.send("Error: cannot remove admin role");
+        message.channel.send("Error (botCommands): cannot remove admin role");
     }
 }
 
@@ -127,7 +126,7 @@ function getRole(message) {
 }
 
 function invalidRoleErrorHandler(message) {
-    message.channel.send("Error: role not found").then(r => console.log("Error: role not found"));
+    message.channel.send("Error: role not found").then(r => console.log("Error (botCommands): role not found"));
 }
 
 function splitStringBySpace(message) {

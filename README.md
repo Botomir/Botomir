@@ -24,4 +24,4 @@ This app is deployed to Heroku.
 
 ## Contact
 
-If you have any questions/requestion please contact me @SoorajModi
+If you have any questions/requests please contact me @SoorajModi

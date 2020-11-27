@@ -41,26 +41,31 @@ client.once("ready", () => {
     client.channels.cache.get(process.env.DISCORD_CHANNEL_ID).messages.fetch(process.env.DISCORD_MESSAGE_ID)
         .then(message => console.log("Cached message found: " + message))
         .catch(e => console.log("Error: cached message not found | " + e));
+
+    console.log("Bot now ready!");
 });
 
 client.on('message', async message => {
     if (message.author.bot) return;
-    console.log(message);
+    console.log(message.content);
 
     // Check if message contains keywords
     messageScanner(message);
+    console.log("Successfully scanned message");
 
     // Check if message contains command and handle appropriately
     commandHandler(message);
+    console.log("Successfully handled message command");
 
     // Store messages in database
     storeMessageInDB(message);
+    console.log("Successfully written to database");
 });
 
 client.on('messageReactionAdd', (reaction, user) => {
     // Handle reactions to cached messages
-    console.log(reaction);
     reactionHandler(reaction, user);
+    console.log("Successfully handled reaction");
 });
 
 client.on("error", err => {
@@ -88,6 +93,5 @@ function storeMessageInDB(message) {
         id: message.id
     });
 
-    console.log(messagePost);
     messagePost.save();
 }

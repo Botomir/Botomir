@@ -17,7 +17,11 @@ function getReactionMember(reaction, user) {
 
 function addRole(member, roleName) {
     let role = findRole(member, roleName);
-    member.roles.add(role);
+    if(role) {
+        member.roles.add(role);
+    } else {
+        console.log("Error (botReactions): role not found")
+    }
 }
 
 // Helper Functions
