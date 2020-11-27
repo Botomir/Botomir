@@ -2,9 +2,25 @@
 // ==============
 
 module.exports = {
+    helpCommand: function (message) {
+        message.channel.send("###############################################\n" +
+                                    "                Welcome to Help                 \n" +
+                                    "You can use the following commands:             \n" +
+                                    "!ping = checks if the bot is alive              \n" +
+                                    "!role @role = assigns @role to caller           \n" +
+                                    "!role @user @role = assigns @role to @user      \n" +
+                                    "!remove @role = removes @role from caller       \n" +
+                                    "!remove @user @role = removes @role from @user  \n" +
+                                    "!help = I think you can figure this out         \n" +
+                                    "################################################\n" +
+                                    "Contact @Colonel Pineapple#3164 for questions   \n" +
+                                    "################################################");
+    },
+
     pingCommand: function (message) {
         message.channel.send("Pong");
     },
+
     role_command: function (message) {
         let messageArr = splitStringBySpace(message);
         console.log(messageArr);
@@ -24,6 +40,7 @@ module.exports = {
             console.log(role.name);
         }
     },
+
     remove_command: function (message) {
         let messageArr = splitStringBySpace(message);
         console.log(messageArr);
