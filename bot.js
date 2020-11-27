@@ -1,8 +1,9 @@
 require("dotenv").config();
 const Discord = require("discord.js");
 const CommandHandler = require("./static/js/botCommands.js");
+const ReactionHandler = require("./static/js/botReactions");
 
-const client = new Discord.Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION'] });
+const client = new Discord.Client();
 
 client.once("ready", () => {
     // Notify connection ready
@@ -44,11 +45,13 @@ client.on('message', async message => {
 });
 
 client.on('messageReactionAdd', (reaction, user) => {
-    console.log('a reaction has been added');
-});
+    let memberWhoReacted = ReactionHandler.getReactionMember(reaction, user);
 
-client.on('messageReactionRemove', (reaction, user) => {
-    console.log('a reaction has been removed');
+    if (reaction.emoji.name === "maple_leafs") {
+        ReactionHandler.addRole(memberWhoReacted, "test");
+    }
+
+    console.log('a reaction has been added');
 });
 
 client.on("error", err => {

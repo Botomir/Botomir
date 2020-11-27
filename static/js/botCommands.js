@@ -53,7 +53,6 @@ module.exports = {
 
         if (!role) {
             invalidRoleErrorHandler(message);
-            console.log("Error: role not found");
         } else {
             removeMemberRole(member, role, message);
             console.log(member.user.username);
@@ -93,7 +92,7 @@ function getRole(message, str1Id, str2Id) {
 }
 
 function invalidRoleErrorHandler(message) {
-    message.channel.send("Error: role not found");
+    message.channel.send("Error: role not found").then(r => console.log("Error: role not found"));
 }
 
 function splitStringBySpace(message) {
