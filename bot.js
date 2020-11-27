@@ -42,6 +42,10 @@ client.on('message', async message => {
     if (message.content.toLowerCase().startsWith("!remove")) {
         CommandHandler.remove_command(message);
     }
+
+    if (message.content.toLowerCase().startsWith("!puppy")) {
+        CommandHandler.puppy_command(message);
+    }
 });
 
 client.on('messageReactionAdd', (reaction, user) => {

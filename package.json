@@ -20,6 +20,7 @@
     "discord.js": "^12.5.1",
     "dotenv": "^8.2.0",
     "env": "^0.0.2",
-    "nodemon": "^2.0.6"
+    "nodemon": "^2.0.6",
+    "random-puppy": "^1.1.0"
   }
 }

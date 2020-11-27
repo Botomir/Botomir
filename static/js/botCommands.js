@@ -1,5 +1,6 @@
 // botCommands.js
 // ==============
+const randomPuppy = require('random-puppy');
 
 module.exports = {
     helpCommand: function (message) {
@@ -58,6 +59,14 @@ module.exports = {
             console.log(member.user.username);
             console.log(role.name);
         }
+    },
+
+    puppy_command: function (message) {
+        randomPuppy()
+            .then(url => {
+                message.channel.send(url)
+                    .then(r => console.log("Successfully sent puppy pic: " + r))
+            })
     }
 };
 
