@@ -22,6 +22,10 @@ Each message will be written to MongoDB. Data includes guild, channel, author, c
 
 This app is deployed to Heroku.
 
+## Requirements
+
+Bot needs highest level privileges, or a role below admin to permit it to manage roles.
+
 ## Contact
 
 If you have any questions/requests please contact me @SoorajModi

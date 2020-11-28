@@ -16,7 +16,7 @@ module.exports = {
         } else if (message.content.toLowerCase().startsWith("!puppy")) {
             puppy_command(message);
         } else if (message.content.toLowerCase().startsWith("!mental-health")) {
-            mental_health_commands(message);
+            mental_health_command(message);
         }
     }
 };
@@ -42,26 +42,28 @@ function pingCommand(message) {
     message.channel.send("Pong");
 }
 
-function role_command(message) {
+async function role_command(message) {
     let member = getMember(message);
-    let role = getRole(message);
+    let role = filterRole(getRole(message));
 
     if (!role) {
         invalidRoleErrorHandler(message);
         console.log("Error (botCommands): role not found");
     } else {
-        addMemberRole(member, role, message);
+        addMemberRole(member, role, message).then(r => console);
+        await message.channel.send("Successfully added role \`" + role.name + "\` to user \`" + member.user.username + "\`");
     }
 }
 
-function remove_command(message) {
+async function remove_command(message) {
     let member = getMember(message);
-    let role = getRole(message);
+    let role = filterRole(getRole(message));
 
     if (!role) {
         invalidRoleErrorHandler(message);
     } else {
-        removeMemberRole(member, role, message);
+        removeMemberRole(member, role, message).then(r => console.log(r));
+        await message.channel.send("Successfully removed role \`" + role.name + "\` to user \`" + member.user.username + "\`");
     }
 }
 
@@ -73,38 +75,37 @@ function puppy_command(message) {
         })
 }
 
-function mental_health_commands(message) {
+function mental_health_command(message) {
     message.channel.send("Mental health resources: https://www.ccmhs-ccsms.ca/mental-health-resources-1\n" +
-                                "Mental health services: https://www.canada.ca/en/public-health/services/mental-health-services/mental-health-get-help.html\n" +
-                                "Information on mental illnesses, disorders and diseases: https://www.canada.ca/en/public-health/topics/mental-illness.html\n" +
-                                "About suicide, prevention, risk factors, how to get help when you or someone you know is in need: https://www.canada.ca/en/public-health/services/suicide-prevention.html\n" +
-                                "Information on mental health and ways to improve it at work and in your daily life: https://www.canada.ca/en/public-health/topics/improving-your-mental-health.html\n");
+        "Mental health services: https://www.canada.ca/en/public-health/services/mental-health-services/mental-health-get-help.html\n" +
+        "Information on mental illnesses, disorders and diseases: https://www.canada.ca/en/public-health/topics/mental-illness.html\n" +
+        "About suicide, prevention, risk factors, how to get help when you or someone you know is in need: https://www.canada.ca/en/public-health/services/suicide-prevention.html\n" +
+        "Information on mental health and ways to improve it at work and in your daily life: https://www.canada.ca/en/public-health/topics/improving-your-mental-health.html\n")
+        .then(r => console.log("Mental Health Command successfully sent: " + r));
 }
 
 // Helper Functions
 
-function addMemberRole(member, role, message) {
+async function addMemberRole(member, role, message) {
     if (role.name !== "admin") {
-        member.roles.add(role);
-        message.channel.send("Successfully added role \`" + role.name + "\` to user \`" + member.user.username + "\`");
+        await member.roles.add(role);
     } else {
-        message.channel.send("Error (botCommands): cannot give admin role");
+        await message.channel.send("Error (botCommands): cannot give admin role");
     }
 }
 
-function removeMemberRole(member, role, message) {
+async function removeMemberRole(member, role, message) {
     if (role.name !== "admin") {
-        member.roles.remove(role);
-        message.channel.send("Successfully removed role \`" + role.name + "\` to user \`" + member.user.username + "\`");
+        await member.roles.remove(role);
     } else {
-        message.channel.send("Error (botCommands): cannot remove admin role");
+        await message.channel.send("Error (botCommands): cannot remove admin role");
     }
 }
 
 function getMember(message) {
     let str1Id = trimDiscordID((splitStringBySpace(message))[1]);
-
     let member = message.guild.members.cache.find(m => m.user.id === str1Id);
+
     // If not a member must be self call
     if (!member) {
         member = message.member
@@ -122,6 +123,15 @@ function getRole(message) {
         return message.guild.roles.cache.find(r => r.id === str2Id);
     } else {
         return message.guild.roles.cache.find(r => r.id === str1Id);
+    }
+}
+
+// Roles Botomir does not have access to
+function filterRole(role) {
+    if (!role || role.name === "admin") {
+        return null;
+    } else {
+        return role;
     }
 }
 

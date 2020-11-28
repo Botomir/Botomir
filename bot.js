@@ -2,10 +2,10 @@
 // ======
 
 require("dotenv").config();
+require("ejs");
 const express = require("express");
-const Discord = require("discord.js");
 const mongoose = require("mongoose");
-
+const Discord = require("discord.js");
 const {commandHandler} = require("./static/js/botCommands");
 const {messageScanner} = require("./static/js/botMessage");
 const {reactionHandler} = require("./static/js/botReactions");
