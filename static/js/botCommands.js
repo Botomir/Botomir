@@ -2,20 +2,21 @@
 // ==============
 
 const randomPuppy = require('random-puppy');
+const command = "!";
 
 module.exports = {
     commandHandler: function (message) {
-        if (message.content.toLowerCase().startsWith("!ping")) {
+        if (message.content.toLowerCase().startsWith(command + "ping")) {
             pingCommand(message);
-        } else if (message.content.toLowerCase().startsWith("!help")) {
+        } else if (message.content.toLowerCase().startsWith(command + "help")) {
             helpCommand(message);
-        } else if (message.content.toLowerCase().startsWith("!role")) {
+        } else if (message.content.toLowerCase().startsWith(command + "role")) {
             role_command(message);
-        } else if (message.content.toLowerCase().startsWith("!remove")) {
+        } else if (message.content.toLowerCase().startsWith(command + "remove")) {
             remove_command(message);
-        } else if (message.content.toLowerCase().startsWith("!puppy")) {
+        } else if (message.content.toLowerCase().startsWith(command + "puppy")) {
             puppy_command(message);
-        } else if (message.content.toLowerCase().startsWith("!mental-health")) {
+        } else if (message.content.toLowerCase().startsWith(command + "mental-health")) {
             mental_health_command(message);
         }
     }
