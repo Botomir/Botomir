@@ -1,46 +1,54 @@
 // botCommands.js
 // ==============
 
+const weather = require('weather-js');
 const randomPuppy = require('random-puppy');
-const command = "!";
+const { meme } = require('memejs');
+const botCommand = "!";
+const defaultSubreddit = "dankmemes";
+const defaultCity = "Toronto, ON";
 
 module.exports = {
-    commandHandler: function (message) {
-        if (message.content.toLowerCase().startsWith(command + "ping")) {
-            pingCommand(message);
-        } else if (message.content.toLowerCase().startsWith(command + "help")) {
-            helpCommand(message);
-        } else if (message.content.toLowerCase().startsWith(command + "role")) {
-            role_command(message);
-        } else if (message.content.toLowerCase().startsWith(command + "remove")) {
-            remove_command(message);
-        } else if (message.content.toLowerCase().startsWith(command + "puppy")) {
+    commandHandler: async function (message) {
+        if (containsCommand(message,  "ping")) {
+            await pingCommand(message);
+        } else if (containsCommand(message, "help")) {
+           await helpCommand(message);
+        } else if (containsCommand(message, "role")) {
+            await role_command(message);
+        } else if (containsCommand(message, "remove")) {
+            await remove_command(message);
+        } else if (containsCommand(message,"puppy")) {
             puppy_command(message);
-        } else if (message.content.toLowerCase().startsWith(command + "mental-health")) {
-            mental_health_command(message);
+        } else if (containsCommand(message,"mental-health")) {
+            await mental_health_command(message);
+        } else if (containsCommand(message,  "meme")) {
+            await meme_command(message);
+        } else if (containsCommand(message, "weather")) {
+            await weather_command(message);
         }
     }
 };
 
-function helpCommand(message) {
-    message.channel.send("###############################################\n" +
-        "                Welcome to Help                 \n" +
-        "You can use the following commands:             \n" +
-        "!ping = checks if the bot is alive              \n" +
-        "!role @role = assigns @role to caller           \n" +
-        "!role @user @role = assigns @role to @user      \n" +
-        "!remove @role = removes @role from caller       \n" +
-        "!remove @user @role = removes @role from @user  \n" +
-        "!puppy = special surprise :]                    \n" +
-        "!mental-health = mental health resources        \n" +
-        "!help = I think you can figure this out         \n" +
+async function helpCommand(message) {
+    await message.channel.send("###############################################\n" +
+        "                     Welcome to Help                     \n" +
+        "You can use the following commands:                      \n" +
+        botCommand + "ping = checks if the bot is alive              \n" +
+        botCommand + "role @role = assigns @role to caller           \n" +
+        botCommand + "role @user @role = assigns @role to @user      \n" +
+        botCommand + "remove @role = removes @role from caller       \n" +
+        botCommand + "remove @user @role = removes @role from @user  \n" +
+        botCommand + "puppy = special surprise :]                    \n" +
+        botCommand + "mental-health = mental health resources        \n" +
+        botCommand + "help = I think you can figure this out         \n" +
         "################################################\n" +
         "Contact @Colonel Pineapple#3164 for questions   \n" +
         "################################################");
 }
 
-function pingCommand(message) {
-    message.channel.send("Pong");
+async function pingCommand(message) {
+    await message.channel.send("Pong");
 }
 
 async function role_command(message) {
@@ -51,7 +59,7 @@ async function role_command(message) {
         invalidRoleErrorHandler(message);
         console.log("Error (botCommands): role not found");
     } else {
-        addMemberRole(member, role, message).then(r => console);
+        await addMemberRole(member, role, message);
         await message.channel.send("Successfully added role \`" + role.name + "\` to user \`" + member.user.username + "\`");
     }
 }
@@ -63,7 +71,7 @@ async function remove_command(message) {
     if (!role) {
         invalidRoleErrorHandler(message);
     } else {
-        removeMemberRole(member, role, message).then(r => console.log(r));
+        await removeMemberRole(member, role, message).then(r => console.log(r));
         await message.channel.send("Successfully removed role \`" + role.name + "\` to user \`" + member.user.username + "\`");
     }
 }
@@ -76,16 +84,42 @@ function puppy_command(message) {
         })
 }
 
-function mental_health_command(message) {
-    message.channel.send("Mental health resources: https://www.ccmhs-ccsms.ca/mental-health-resources-1\n" +
+async function mental_health_command(message) {
+    await message.channel.send("Mental health resources: https://www.ccmhs-ccsms.ca/mental-health-resources-1\n" +
         "Mental health services: https://www.canada.ca/en/public-health/services/mental-health-services/mental-health-get-help.html\n" +
         "Information on mental illnesses, disorders and diseases: https://www.canada.ca/en/public-health/topics/mental-illness.html\n" +
         "About suicide, prevention, risk factors, how to get help when you or someone you know is in need: https://www.canada.ca/en/public-health/services/suicide-prevention.html\n" +
-        "Information on mental health and ways to improve it at work and in your daily life: https://www.canada.ca/en/public-health/topics/improving-your-mental-health.html\n")
-        .then(r => console.log("Mental Health Command successfully sent: " + r));
+        "Information on mental health and ways to improve it at work and in your daily life: https://www.canada.ca/en/public-health/topics/improving-your-mental-health.html\n");
 }
 
+async function meme_command(message) {
+    let messageArr = splitStringBySpace(message);
+
+    if (messageArr.length === 2) {
+        await send_meme(message, messageArr[1])
+    } else {
+        await send_meme(message, defaultSubreddit)
+    }
+}
+
+async function weather_command(message) {
+    await weather.find({search: defaultCity , degreeType: "C"}, function(err, result) {
+        if(err) {
+            console.log(err);
+        } else {
+            message.channel.send("The weather for \`" + result[0].location.name + "\` on \`" +
+                result[0].current.date + "\` is  " + result[0].current.skytext + " at " +
+                result[0].current.temperature + "°C, and feels like " + result[0].current.feelslike + "°C.");
+        }
+    });
+}
+
+
 // Helper Functions
+
+function containsCommand(message, command) {
+    return message.content.toLowerCase().startsWith(botCommand + command);
+}
 
 async function addMemberRole(member, role, message) {
     if (role.name !== "admin") {
@@ -125,6 +159,17 @@ function getRole(message) {
     } else {
         return message.guild.roles.cache.find(r => r.id === str1Id);
     }
+}
+
+async function send_meme(message, subreddit) {
+    await meme(subreddit, function(err, data) {
+        if (err) {
+            return console.error(err);
+        } else {
+            console.log(data);
+            message.channel.send(data.title + "\n" + data.url);
+        }
+    });
 }
 
 // Roles Botomir does not have access to

@@ -6,6 +6,7 @@ require("ejs");
 const express = require("express");
 const mongoose = require("mongoose");
 const Discord = require("discord.js");
+
 const {commandHandler} = require("./static/js/botCommands");
 const {messageScanner} = require("./static/js/botMessage");
 const {reactionHandler} = require("./static/js/botReactions");
@@ -50,16 +51,16 @@ client.on('message', async message => {
     console.log(message.content);
 
     // Check if message contains keywords
-    messageScanner(message);
+    await messageScanner(message);
     console.log("Successfully scanned message");
 
     // Check if message contains command and handle appropriately
-    commandHandler(message);
+    await commandHandler(message);
     console.log("Successfully handled message command");
 
     // Store messages in database
-    storeMessageInDB(message);
-    console.log("Successfully written to database");
+    // await storeMessageInDB(message);
+    // console.log("Successfully written to database");
 });
 
 client.on('messageReactionAdd', (reaction, user) => {
@@ -87,6 +88,7 @@ app.listen(port, function () {
     console.log("Server started on port " + port);
 });
 
+// Utility function to write to DB
 function storeMessageInDB(message) {
     const messagePost = new MessagePost({
         guild: message.guild,
