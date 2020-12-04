@@ -2,14 +2,12 @@
 // ======
 
 require("dotenv").config();
-require("ejs");
 const express = require("express");
-const {client} = require("./static/js/bot");
+const Bot = require("./lib/bot");
 
 const app = express();
 
-app.set('view engine', 'ejs');
-
+// So Kaffeine can ping the application
 app.get("/", function (req, res) {
     res.render("<h1>Hello world!</h1>h1>");
 });
@@ -20,6 +18,6 @@ if (port == null || port === "") {
 }
 
 app.listen(port, function () {
-    client.login(process.env.DISCORD_TOKEN);
+    Bot.client.login(process.env.DISCORD_TOKEN);
     console.log("Server started on port " + port);
 });
