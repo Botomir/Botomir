@@ -1,6 +1,6 @@
-# Skeleton-Discord-Bot
+# Discord-Bot
 
-This is the skeleton functionality for a discord bot written in Node.js
+This is a template bot for a Discord Bot written in Node.js
 
 ## Features
 
