@@ -1,22 +1,13 @@
-// bot.js
-// ======
-
-require("dotenv").config();
-require("ejs");
-const express = require("express");
-const mongoose = require("mongoose");
 const Discord = require("discord.js");
+const mongoose = require("mongoose");
 
-const {commandHandler} = require("./static/js/botCommands");
-const {messageScanner} = require("./static/js/botMessage");
-const {reactionHandler} = require("./static/js/botReactions");
+const {commandHandler} = require("./botCommands");
+const {messageScanner} = require("./botMessage");
+const {reactionHandler} = require("./botReactions");
 
-const client = new Discord.Client();
-const app = express();
+export const client = new Discord.Client();
 
-app.set('view engine', 'ejs');
-
-mongoose.connect(process.env.DATABASE_URL, {useNewUrlParser: true});
+mongoose.connect(process.env.DATABASE_URL, {useNewUrlParser: true}).then(r => console.log("Successfully connected to MongoDB - " + r));
 
 const MessagePost = mongoose.model("messages", {
     guild: String,
@@ -47,48 +38,32 @@ client.once("ready", () => {
 });
 
 client.on('message', async message => {
+    // If the message is from self then ignore
     if (message.author.bot) return;
+
+    // Log the message
     console.log(message.content);
 
     // Check if message contains keywords
-    await messageScanner(message);
-    console.log("Successfully scanned message");
+    messageScanner(message);
 
     // Check if message contains command and handle appropriately
-    await commandHandler(message);
-    console.log("Successfully handled message command");
+    commandHandler(message);
 
     // Store messages in database
-    // await storeMessageInDB(message);
-    // console.log("Successfully written to database");
+    storeMessageInDB(message);
 });
 
 client.on('messageReactionAdd', (reaction, user) => {
     // Handle reactions to cached messages
     reactionHandler(reaction, user);
-    console.log("Successfully handled reaction");
 });
 
 client.on("error", err => {
     console.log("Error: bot encountered error | " + err);
-    client.login(process.env.DISCORD_TOKEN);
+    client.login(process.env.DISCORD_TOKEN).then(r => console.log("Client successfully rebooted - " + r));
 });
 
-app.get("/", function (req, res) {
-    res.render("<h1>Hello world!</h1>h1>");
-});
-
-let port = process.env.PORT;
-if (port == null || port === "") {
-    port = 8300;
-}
-
-app.listen(port, function () {
-    client.login(process.env.DISCORD_TOKEN);
-    console.log("Server started on port " + port);
-});
-
-// Utility function to write to DB
 function storeMessageInDB(message) {
     const messagePost = new MessagePost({
         guild: message.guild,
@@ -99,5 +74,5 @@ function storeMessageInDB(message) {
         id: message.id
     });
 
-    messagePost.save();
+    messagePost.save().then(r => console.log("Successfully written message to data base - " + r));
 }

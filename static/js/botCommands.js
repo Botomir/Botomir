@@ -2,36 +2,36 @@
 // ==============
 
 const weather = require('weather-js');
-const randomPuppy = require('random-puppy');
-const { meme } = require('memejs');
+const { meme: reddit } = require('memejs');
+
 const botCommand = "!";
 const defaultSubreddit = "dankmemes";
 const defaultCity = "Toronto, ON";
 
 module.exports = {
-    commandHandler: async function (message) {
+    commandHandler: function (message) {
         if (containsCommand(message,  "ping")) {
-            await pingCommand(message);
+            pingCommand(message);
         } else if (containsCommand(message, "help")) {
-           await helpCommand(message);
+            helpCommand(message);
         } else if (containsCommand(message, "role")) {
-            await role_command(message);
+            role_command(message);
         } else if (containsCommand(message, "remove")) {
-            await remove_command(message);
+            remove_command(message);
         } else if (containsCommand(message,"puppy")) {
             puppy_command(message);
         } else if (containsCommand(message,"mental-health")) {
-            await mental_health_command(message);
+            mental_health_command(message);
         } else if (containsCommand(message,  "meme")) {
-            await meme_command(message);
+            meme_command(message);
         } else if (containsCommand(message, "weather")) {
-            await weather_command(message);
+            weather_command(message);
         }
     }
 };
 
-async function helpCommand(message) {
-    await message.channel.send("###############################################\n" +
+function helpCommand(message) {
+    message.channel.send("###############################################\n" +
         "                     Welcome to Help                     \n" +
         "You can use the following commands:                      \n" +
         botCommand + "ping = checks if the bot is alive              \n" +
@@ -44,14 +44,18 @@ async function helpCommand(message) {
         botCommand + "help = I think you can figure this out         \n" +
         "################################################\n" +
         "Contact @Colonel Pineapple#3164 for questions   \n" +
-        "################################################");
+        "################################################")
+        .then(r => console.log("Successfully completed help command - " + r))
+        .catch(e => console.log("Error: could not execute help command - " + e));
 }
 
-async function pingCommand(message) {
-    await message.channel.send("Pong");
+function pingCommand(message) {
+    message.channel.send("Pong")
+        .then(r => "Successfully completed ping command - " + r)
+        .catch(e => "Error: could not execute ping command -" + e);
 }
 
-async function role_command(message) {
+function role_command(message) {
     let member = getMember(message);
     let role = filterRole(getRole(message));
 
@@ -59,57 +63,61 @@ async function role_command(message) {
         invalidRoleErrorHandler(message);
         console.log("Error (botCommands): role not found");
     } else {
-        await addMemberRole(member, role, message);
-        await message.channel.send("Successfully added role \`" + role.name + "\` to user \`" + member.user.username + "\`");
+        addMemberRole(member, role, message);
+        message.channel.send("Successfully added role \`" + role.name + "\` to user \`" + member.user.username + "\`")
+            .then(r => "Successfully sent added role confirmation message - " + r)
+            .catch(e => "Error: encountered error when sending added role confirmation message - " + e);
     }
 }
 
-async function remove_command(message) {
+function remove_command(message) {
     let member = getMember(message);
     let role = filterRole(getRole(message));
 
     if (!role) {
         invalidRoleErrorHandler(message);
     } else {
-        await removeMemberRole(member, role, message).then(r => console.log(r));
-        await message.channel.send("Successfully removed role \`" + role.name + "\` to user \`" + member.user.username + "\`");
+        removeMemberRole(member, role, message).then(r => console.log(r));
+        message.channel.send("Successfully removed role \`" + role.name + "\` to user \`" + member.user.username + "\`")
+            .then(r => "Successfully sent removed role confirmation message - " + r)
+            .catch(e => "Error: encountered error when sending removed role confirmation message - " + e);
     }
 }
 
 function puppy_command(message) {
-    randomPuppy()
-        .then(url => {
-            message.channel.send(url)
-                .then(r => console.log("Successfully sent puppy pic: " + r))
-        })
+    sendRedditPost(message, "puppy");
 }
 
-async function mental_health_command(message) {
-    await message.channel.send("Mental health resources: https://www.ccmhs-ccsms.ca/mental-health-resources-1\n" +
+function mental_health_command(message) {
+    message.channel.send("Mental health resources: https://www.ccmhs-ccsms.ca/mental-health-resources-1\n" +
         "Mental health services: https://www.canada.ca/en/public-health/services/mental-health-services/mental-health-get-help.html\n" +
         "Information on mental illnesses, disorders and diseases: https://www.canada.ca/en/public-health/topics/mental-illness.html\n" +
         "About suicide, prevention, risk factors, how to get help when you or someone you know is in need: https://www.canada.ca/en/public-health/services/suicide-prevention.html\n" +
-        "Information on mental health and ways to improve it at work and in your daily life: https://www.canada.ca/en/public-health/topics/improving-your-mental-health.html\n");
+        "Information on mental health and ways to improve it at work and in your daily life: https://www.canada.ca/en/public-health/topics/improving-your-mental-health.html\n")
+        .then(r => "Successfully completed mental-health command - " + r)
+        .catch(e => "Error: could not execute mental-health command -" + e);
 }
 
-async function meme_command(message) {
+function meme_command(message) {
     let messageArr = splitStringBySpace(message);
 
     if (messageArr.length === 2) {
-        await send_meme(message, messageArr[1])
+        sendRedditPost(message, messageArr[1])
     } else {
-        await send_meme(message, defaultSubreddit)
+        sendRedditPost(message, defaultSubreddit)
     }
 }
 
-async function weather_command(message) {
-    await weather.find({search: defaultCity , degreeType: "C"}, function(err, result) {
+function weather_command(message) {
+    weather.find({search: defaultCity , degreeType: "C"}, function(err, result) {
         if(err) {
             console.log(err);
         } else {
             message.channel.send("The weather for \`" + result[0].location.name + "\` on \`" +
                 result[0].current.date + "\` is  " + result[0].current.skytext + " at " +
-                result[0].current.temperature + "°C, and feels like " + result[0].current.feelslike + "°C.");
+                result[0].current.temperature + "°C, and feels like " + result[0].current.feelslike + "°C.")
+                .then(r => "Successfully completed weather command - " + r)
+                .catch(e => "Error: could not execute weather command - " + e);
         }
     });
 }
@@ -121,19 +129,27 @@ function containsCommand(message, command) {
     return message.content.toLowerCase().startsWith(botCommand + command);
 }
 
-async function addMemberRole(member, role, message) {
+function addMemberRole(member, role, message) {
     if (role.name !== "admin") {
-        await member.roles.add(role);
+        member.roles.add(role)
+            .then(r => "Successfully added member role - " + r)
+            .catch(e => "Error: could not give member role - " + e);;
     } else {
-        await message.channel.send("Error (botCommands): cannot give admin role");
+        message.channel.send("Error (botCommands): cannot give admin role")
+            .then(r => "Successfully sent add privileged role error message - " + r)
+            .catch(e => "Error: could not send add privileged role error message - " + e);
     }
 }
 
-async function removeMemberRole(member, role, message) {
+function removeMemberRole(member, role, message) {
     if (role.name !== "admin") {
-        await member.roles.remove(role);
+        member.roles.remove(role)
+            .then(r => "Successfully removed member role - " + r)
+            .catch(e => "Error: could not remove member role - " + e);
     } else {
-        await message.channel.send("Error (botCommands): cannot remove admin role");
+        message.channel.send("Error (botCommands): cannot remove admin role")
+            .then(r => "Successfully completed mental-health command - " + r)
+            .catch(e => "Error: could not execute mental-health command -" + e);
     }
 }
 
@@ -161,18 +177,20 @@ function getRole(message) {
     }
 }
 
-async function send_meme(message, subreddit) {
-    await meme(subreddit, function(err, data) {
+function sendRedditPost(message, subreddit) {
+    reddit(subreddit, function(err, data) {
         if (err) {
-            return console.error(err);
+            console.log(err);
         } else {
             console.log(data);
-            message.channel.send(data.title + "\n" + data.url);
+            message.channel.send(data.title + "\n" + data.url)
+                .then(r => "Successfully sent Reddit post - " + r)
+                .catch(e => "Error: could not send Reddit post -" + e);
         }
     });
 }
 
-// Roles Botomir does not have access to
+// Roles Discord Bot does not have access to
 function filterRole(role) {
     if (!role || role.name === "admin") {
         return null;
@@ -182,7 +200,9 @@ function filterRole(role) {
 }
 
 function invalidRoleErrorHandler(message) {
-    message.channel.send("Error: role not found").then(r => console.log("Error (botCommands): role not found"));
+    message.channel.send("Error: role not found")
+        .then(r => console.log("Successfully sent role not found error message - " + r))
+        .catch(e => console.log("Error: failed to send role not found error message - " + e));
 }
 
 function splitStringBySpace(message) {

@@ -7,9 +7,21 @@ const badBotRegex = /(.*)([Bb][Aa][Dd](\s*)[Bb][Oo][Tt])(.*)/;
 module.exports = {
     messageScanner: function (message) {
         if (goodBotRegex.test(message)) {
-            message.channel.send(":]");
+            goodBotMessage(message);
         } else if (badBotRegex.test(message)) {
-            message.channel.send("Grrr");
+            badBotMessage(message);
         }
     }
 };
+
+function goodBotMessage(message) {
+    message.channel.send(":]")
+        .then(r => "Successfully sent good bot text reaction - " + r)
+        .catch(e => "Error: encountered error when sending good bot text reaction - " + e);
+}
+
+function badBotMessage(message) {
+    message.channel.send("Grrr")
+        .then(r => "Successfully sent bad bot text reaction - " + r)
+        .catch(e => "Error: encountered error when sending bad bot text reaction - " + e);
+}
