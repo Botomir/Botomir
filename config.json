@@ -1,0 +1,46 @@
+{
+  "commandPrompt": "!",
+  "defaultCity": "Toronto, ON",
+  "privilegedRoles": [
+    "Admin"
+  ],
+  "memeSubreddits": [
+    "dankmemes",
+    "memes",
+    "HistoryMemes",
+    "wholesomememes",
+    "onlywholesomememes",
+    "prequelmemes",
+    "OTmemes",
+    "sequelmemes",
+    "bikinibottomtwitter",
+    "blackpeopletwitter",
+    "whitepeopletwitter",
+    "2meirl4meirl",
+    "meirl",
+    "me_irl",
+    "anime_irl",
+    "MEOW_IRL",
+    "woof_irl",
+    "dankchristianmemes",
+    "deepfriedmemes",
+    "MemeEconomy"
+  ],
+  "cuteSubreddits": [
+    "aww",
+    "awwducational",
+    "animalsbeingderps",
+    "animalssmiling",
+    "eyebleach",
+    "babyelephantgifs",
+    "bearcubgifs",
+    "babyrhinogifs",
+    "delightfullyannoyed",
+    "otters",
+    "startledcats",
+    "floof",
+    "rarepuppers",
+    "NatureIsFuckingLit",
+    "SEUT"
+  ]
+}
