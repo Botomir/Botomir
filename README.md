@@ -2,29 +2,45 @@
 
 This is a template bot for a Discord Bot written in Node.js
 
+## How to run
+
+Install node modules `npm install`
+
+Run locally using `nodemon app.js`
+
 ## Features
 
 #### Commands
-- !ping, checks if the bot is alive
-- !help, sends help message describing how to use the bot
-- !role @role, gives self role (except admin)
-- !role @user @role, gives user role (except admin)
-- !remove @role, removes role from self (except admin)
-- !remove @user @role, removes role from user (except admin)
-- !mental-health, sends message with mental health resources
-- !puppy, sends a random puppy picture
+- Use `command-prompt` + `help` to view all commands.
+- To add a new command you add the command to `lib/commands/botCommands.js` and a corresponding module.
+
+#### Reactions
+- To add roles for specific emojis you can specify them in the `config.json` file.
+- You can add functionality for reactions to specified messages under `lib/reactions/botReactions.js` and a corresponding module. 
 
 #### Backup Messages
-
-Each message will be written to MongoDB. Data includes guild, channel, author, content, timestamp, and message id. 
+- Each message will be written to MongoDB. Data includes guild, channel, author, content, timestamp, and message id. 
+- You can specify a different schema or database under `lib/database`.
 
 #### Deployment
+- This app is deployed to Heroku. Kept awake using Kaffeine.
 
-This app is deployed to Heroku.
+#### Configurations
+- You can specify a string for the command prompt.
+- For the weather command, you can specify a default city and temperature unit.
+- You can add privileged roles for which the bot cannot add/remove. 
 
-## Requirements
-
-Bot needs highest level privileges, or a role below admin to permit it to manage roles.
+### Role permissions
+Requires following role permissions
+- Manage server
+- Manage roles
+- Manage channels
+- Send messages
+- Manage messages
+- Embed Links
+- Attach files
+- Read message history
+- Add reactions 
 
 ## Contact
 
