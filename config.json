@@ -1,12 +1,17 @@
 {
   "commandPrompt": "!",
   "defaultCity": "Toronto, ON",
+  "degreeType": "C",
   "privilegedRoles": [
     "Admin"
   ],
   "reactionRoles": [
     {
-      "emoji": "maple-leafs",
+      "emoji": "maple_leafs",
+      "role": "test"
+    },
+    {
+      "emoji": "\uD83D\uDE04",
       "role": "test"
     }
   ],
