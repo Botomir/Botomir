@@ -2,6 +2,8 @@
   "commandPrompt": "!",
   "defaultCity": "Toronto, ON",
   "degreeType": "C",
+  "spotify_playlist_name": "Awesome Discord Group Playlist",
+  "spotify_playlist_description": "A playlist that contains all the songs that the discord group posted in the last little while.",
   "privilegedRoles": [
     "Admin"
   ],
