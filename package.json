@@ -30,7 +30,9 @@
     "memejs": "^1.2.3",
     "mongoose": "^5.10.16",
     "nodemon": "^2.0.6",
+    "parse-duration": "^0.4.4",
     "random-puppy": "^1.1.0",
+    "spotify-web-api-node": "^5.0.0",
     "weather-js": "^2.0.0"
   }
 }
