@@ -4,22 +4,28 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
+  },
+  "jest": {
+    "testMatch": [
+      "**/test/**/*.test.js"
+    ]
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/SoorajModi/Discord-Bot-Test.git"
+    "url": "git+https://github.com/SoorajModi/Discord-Bot.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/SoorajModi/Discord-Bot-Test/issues"
+    "url": "https://github.com/SoorajModi/Discord-Bot/issues"
   },
-  "homepage": "https://github.com/SoorajModi/Discord-Bot-Test#readme",
+  "homepage": "https://github.com/SoorajModi/Discord-Bot#readme",
   "engines": {
     "node": "15.2.1"
   },
   "dependencies": {
+    "@jest/globals": "latest",
     "config.json": "^0.0.4",
     "discord.js": "^12.5.1",
     "dotenv": "^8.2.0",
@@ -30,7 +36,10 @@
     "memejs": "^1.2.3",
     "mongoose": "^5.10.16",
     "nodemon": "^2.0.6",
-    "random-puppy": "^1.1.0",
+    "rewire": "^5.0.0",
     "weather-js": "^2.0.0"
+  },
+  "devDependencies": {
+    "jest": "^26.6.3"
   }
 }
