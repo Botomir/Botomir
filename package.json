@@ -1,7 +1,7 @@
 {
   "name": "discord-bot-test",
   "version": "1.0.0",
-  "description": "",
+  "description": "A super awesome discord bot",
   "main": "index.js",
   "scripts": {
     "test": "jest"
@@ -15,8 +15,18 @@
     "type": "git",
     "url": "git+https://github.com/SoorajModi/Discord-Bot.git"
   },
-  "author": "",
-  "license": "ISC",
+  "author": [
+    {
+      "name": "Sooraj Modi",
+      "email": "modis@uoguelph.ca"
+    },
+    {
+      "name": "Marshall Asch",
+      "email": "maasch@rogers.com",
+      "url": "https://marshallasch.ca/"
+    }
+  ],
+  "license": "GPL-2.0-only",
   "bugs": {
     "url": "https://github.com/SoorajModi/Discord-Bot/issues"
   },
@@ -38,8 +48,8 @@
     "nodemon": "^2.0.6",
     "parse-duration": "^0.4.4",
     "random-puppy": "^1.1.0",
-    "spotify-web-api-node": "^5.0.0",
     "rewire": "^5.0.0",
+    "spotify-web-api-node": "^5.0.0",
     "weather-js": "^2.0.0"
   },
   "devDependencies": {
