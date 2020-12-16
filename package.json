@@ -4,7 +4,8 @@
   "description": "A super awesome discord bot",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "start": "nodemon app.js"
   },
   "jest": {
     "testMatch": [
@@ -35,24 +36,21 @@
     "node": "15.2.1"
   },
   "dependencies": {
-    "@jest/globals": "latest",
     "config.json": "^0.0.4",
     "discord.js": "^12.5.1",
     "dotenv": "^8.2.0",
-    "ejs": "^3.1.5",
-    "env": "^0.0.2",
     "express": "^4.17.1",
+    "express-handlebars": "^5.2.0",
     "lodash": "^4.17.20",
     "memejs": "^1.2.3",
     "mongoose": "^5.10.16",
-    "nodemon": "^2.0.6",
     "parse-duration": "^0.4.4",
-    "random-puppy": "^1.1.0",
-    "rewire": "^5.0.0",
+    "rfr": "^1.2.3",
     "spotify-web-api-node": "^5.0.0",
     "weather-js": "^2.0.0"
   },
   "devDependencies": {
-    "jest": "^26.6.3"
+    "jest": "^26.6.3",
+    "nodemon": "^2.0.6"
   }
 }

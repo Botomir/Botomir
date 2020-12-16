@@ -3,30 +3,39 @@
 
 require("dotenv").config();
 const express = require("express");
-const Bot = require("./lib/bot");
-const {getSpotifyAuthToken} = require("./lib/spotify/spotifyApi");
+const exphbs  = require('express-handlebars');
+const source = require("rfr");
+
+
+const Bot = source("lib/bot");
+const {getSpotifyAuthToken} = source("lib/spotify/spotifyApi");
 
 const app = express();
 
-// So Kaffeine can ping the application
+app.engine('handlebars', exphbs());
+app.set('view engine', 'handlebars');
+
+// home page so you can see that this is running
 app.get("/", function (req, res) {
-    res.render("<h1>Hello world!</h1>");
+    res.render('home');
 });
 
+// So Kaffeine can ping the application
+app.get("/status", function (req, res) {
+    res.status(204).end();        // no content but status okay
+});
 
 app.get("/authorize", function (req, res) {
     let userid = req.query.state;
     let code = req.query.code;
-    let error = req.query.error;
+    let error = req.query.error || "Missing the userid and the authentication code";
 
-    if (error) {
-        console.log("Failed to authenticate: " + error);
-        return res.render("<h1>Failed to authenticate. You can now close this window.</h1");
+    if (userid && code) {
+        getSpotifyAuthToken(userid, code);
+        error = null;
     }
 
-    getSpotifyAuthToken(userid, code);
-
-    res.render("<h1>Successfully authenticated, you can now close this window.</h1>");
+    return res.render('authenticate', {error: error});
 });
 
 let port = process.env.PORT;
