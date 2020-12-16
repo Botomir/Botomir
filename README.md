@@ -8,7 +8,7 @@ Install node modules `npm install`
 
 Copy the `template.env` file to `.env`, and set all of the values for those fields.
 
-Run locally using `nodemon app.js`
+Run locally using `node app.js`
 
 ## Features
 
