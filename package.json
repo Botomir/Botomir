@@ -50,6 +50,7 @@
     "parse-duration": "^0.4.4",
     "random-puppy": "^1.1.0",
     "rewire": "^5.0.0",
+    "rfr": "^1.2.3",
     "spotify-web-api-node": "^5.0.0",
     "weather-js": "^2.0.0"
   },

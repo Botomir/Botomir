@@ -3,10 +3,12 @@
 
 require("dotenv").config();
 const express = require("express");
-var exphbs  = require('express-handlebars');
+const exphbs  = require('express-handlebars');
+const source = require("rfr");
 
-const Bot = require("./lib/bot");
-const {getSpotifyAuthToken} = require("./lib/spotify/spotifyApi");
+
+const Bot = source("lib/bot");
+const {getSpotifyAuthToken} = source("lib/spotify/spotifyApi");
 
 const app = express();
 
