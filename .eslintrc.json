@@ -4,8 +4,7 @@
         "es6": true,
         "node": true
     },
-    "ignorePatterns": ["**/__tests__/**/*.js"],
-    "extends": "eslint:recommended",
+    "extends": "airbnb",
     "globals": {
         "Atomics": "readonly",
         "SharedArrayBuffer": "readonly"
@@ -18,17 +17,11 @@
             "error",
             4
         ],
-        "linebreak-style": [
-            "error",
-            "unix"
-        ],
-        "quotes": [
-            "error",
-            "single"
-        ],
-        "semi": [
-            "error",
-            "always"
-        ]
+        "object-curly-newline": ["error", {
+            "ObjectExpression": "always",
+            "ObjectPattern": { "multiline": true },
+            "ImportDeclaration": "never",
+            "ExportDeclaration": { "multiline": true, "minProperties": 3 }
+        }]
     }
 }
