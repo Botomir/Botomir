@@ -1,14 +1,14 @@
 // app.js
 // ======
 
-require("dotenv").config();
-const express = require("express");
+require('dotenv').config();
+const express = require('express');
 const exphbs  = require('express-handlebars');
-const source = require("rfr");
+const source = require('rfr');
 
 
-const Bot = source("lib/bot");
-const {getSpotifyAuthToken} = source("lib/spotify/spotifyApi");
+const Bot = source('lib/bot');
+const {getSpotifyAuthToken} = source('lib/spotify/spotifyApi');
 
 const app = express();
 
@@ -16,19 +16,19 @@ app.engine('handlebars', exphbs());
 app.set('view engine', 'handlebars');
 
 // home page so you can see that this is running
-app.get("/", function (req, res) {
+app.get('/', function (req, res) {
     res.render('home');
 });
 
 // So Kaffeine can ping the application
-app.get("/status", function (req, res) {
+app.get('/status', function (req, res) {
     res.status(204).end();        // no content but status okay
 });
 
-app.get("/authorize", function (req, res) {
+app.get('/authorize', function (req, res) {
     let userid = req.query.state;
     let code = req.query.code;
-    let error = req.query.error || "Missing the userid and the authentication code";
+    let error = req.query.error || 'Missing the userid and the authentication code';
 
     if (userid && code) {
         getSpotifyAuthToken(userid, code);
@@ -39,11 +39,11 @@ app.get("/authorize", function (req, res) {
 });
 
 let port = process.env.PORT;
-if (port == null || port === "") {
+if (port == null || port === '') {
     port = 8300;
 }
 
 app.listen(port, function () {
     Bot.client.login(process.env.DISCORD_TOKEN);
-    console.log("Server started on port " + port);
+    console.log('Server started on port ' + port);
 });
