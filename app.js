@@ -5,12 +5,15 @@ require('dotenv').config();
 const express = require('express');
 const exphbs = require('express-handlebars');
 const source = require('rfr');
+const helmet = require('helmet');
 
 const Bot = source('lib/bot');
 const { getSpotifyAuthToken } = source('lib/spotify/spotifyApi');
 const logger = source('lib/utils/logger');
 
 const app = express();
+
+app.use(helmet());
 
 app.engine('handlebars', exphbs());
 app.set('view engine', 'handlebars');
