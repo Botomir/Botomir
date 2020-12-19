@@ -1,0 +1,14 @@
+{
+    "ignore": [
+        "jsdoc/*",
+        "__tests__/*",
+        "node_modules/*",
+        "coverage/*",
+        "*.md",
+        "jest.config.js",
+        ".gitignore",
+        "template.env",
+        "TODO"
+    ],
+    "verbose": true
+}

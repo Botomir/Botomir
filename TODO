@@ -1,0 +1,24 @@
+
+- Add tests:
+
+    commands:
+    - [ ] botCommands
+    - [ ] changeRole
+    - [ ] botCommands
+    - [ ] nickname
+    - [ ] ping
+    - [ ] mentalHealth
+    - [ ] redditPost
+    - [ ] spotify
+    - [ ] weather
+
+    other modules:
+    - [ ] database
+    - [ ] initializer
+    - [ ] reactions
+    - [ ] scanner
+    - [ ] spotify
+    - [ ] bot
+
+- create logger module instead of using console.log
+- replace database module with one that can support multiple database backends transparently
