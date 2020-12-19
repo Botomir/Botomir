@@ -8,7 +8,7 @@ const { goodBotRegex } = source('./lib/scanner/goodBot');
 const { spotifyTrackRegex } = source('./lib/scanner/spotify');
 
 test('Check regex', () => {
-    const discordIDRegex = commandUtilities.__get__('discordIDRegex');
+    const discordIDRegex = commandUtilities.__get__('discordIDRegex'); // eslint-disable-line no-underscore-dangle
 
     expect(safe(discordIDRegex)).toBe(true);
     expect(safe(badBotRegex)).toBe(true);

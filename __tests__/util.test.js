@@ -4,7 +4,7 @@ test('should fetch users', () => {
     const channelSuccess = {
         send: (m) => {
             expect(m).toBe('abc');
-            return new Promise(((resolve, reject) => {
+            return new Promise(((resolve) => {
                 resolve('success');
             }));
         },
@@ -14,7 +14,7 @@ test('should fetch users', () => {
         send: (m) => {
             expect(m).toBe('myMessage');
             return new Promise(((resolve, reject) => {
-                reject('error');
+                reject(new Error('error'));
             }));
         },
     };

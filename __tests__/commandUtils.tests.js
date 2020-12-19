@@ -11,9 +11,15 @@ test('commandUtilities.splitStringBySpace', () => {
 
 test('commandUtilities.getMember', () => {
     const members = [
-        { id: '86890631690977280', },
-        { id: '788091112476770353', },
-        { id: '356984848574971914', },
+        {
+            id: '86890631690977280',
+        },
+        {
+            id: '788091112476770353',
+        },
+        {
+            id: '356984848574971914',
+        },
     ];
 
     const guild = {
@@ -43,9 +49,15 @@ test('commandUtilities.getMember', () => {
 
 test('commandUtilities.getRole', () => {
     const roles = [
-        { id: '1234567890', name: 'test', editable: true, },
-        { id: '0987654321', name: 'admin', editable: true, },
-        { id: '5432109876', name: 'bot', editable: false, },
+        {
+            id: '1234567890', name: 'test', editable: true,
+        },
+        {
+            id: '0987654321', name: 'admin', editable: true,
+        },
+        {
+            id: '5432109876', name: 'bot', editable: false,
+        },
     ];
 
     const guild = {
@@ -96,7 +108,7 @@ test('commandUtilities.filterRole', () => {
 });
 
 test('commandUtilities.trimDiscordID', () => {
-    const trimDiscordID = commandUtilities.__get__('trimDiscordID');
+    const trimDiscordID = commandUtilities.__get__('trimDiscordID'); // eslint-disable-line no-underscore-dangle
     expect(trimDiscordID('<@!356956593293754368>')).toBe('356956593293754368'); // with nickname
     expect(trimDiscordID('<@356984848574971914>')).toBe('356984848574971914'); // without nickname
     expect(trimDiscordID('<#788091112476770356>')).toBe('788091112476770356'); // channel id
