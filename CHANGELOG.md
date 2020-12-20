@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.0.1] - 2020-12-20
+### Changed
+- fixed a deployment bug where heroku would try to start the wrong start file.
+
+
 ## [2.0.0] - 2020-12-20
 ### Added
 - some unit tests
