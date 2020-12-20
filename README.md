@@ -1,5 +1,5 @@
-![Node.js CI testing](https://github.com/SoorajModi/Discord-Bot/workflows/Node.js%20CI%20testing/badge.svg)
-![Node.js CI linter](https://github.com/SoorajModi/Discord-Bot/workflows/Node.js%20CI%20linter/badge.svg)
+![Node.js CI testing](https://github.com/SoorajModi/Discord-Bot/workflows/testing/badge.svg)
+![Node.js CI linter](https://github.com/SoorajModi/Discord-Bot/workflows/linter/badge.svg)
 ![David](https://img.shields.io/david/SoorajModi/Discord-Bot?style=plastic)
 ![David](https://img.shields.io/david/dev/SoorajModi/Discord-Bot?style=plastic)
 ![Lines of code](https://img.shields.io/tokei/lines/github/SoorajModi/Discord-Bot?style=plastic)
