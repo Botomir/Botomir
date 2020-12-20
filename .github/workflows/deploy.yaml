@@ -29,7 +29,7 @@ jobs:
           buildpack: "https://github.com/heroku/heroku-buildpack-nodejs"
           env_file: ".env"
           justlogin: true
-        run: |
+      - run: |
           heroku container:login
           heroku git:remote -a whispering-harbor-22164
           git remote -v
