@@ -5,7 +5,7 @@
         "node": true,
         "jest": true
     },
-    "extends": "airbnb",
+    "extends": "airbnb-base",
     "globals": {
         "Atomics": "readonly",
         "SharedArrayBuffer": "readonly"
@@ -14,6 +14,7 @@
         "ecmaVersion": 2018
     },
     "rules": {
+        "camelcase": "warn",
         "indent": [
             "error",
             4
