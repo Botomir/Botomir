@@ -25,12 +25,5 @@ jobs:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: "whispering-harbor-22164"
           heroku_email: "maasch@rogers.com"
-          branch: "main"
           buildpack: "https://github.com/heroku/heroku-buildpack-nodejs"
           env_file: ".env"
-          justlogin: true
-      - run: |
-          heroku container:login
-          heroku git:remote -a whispering-harbor-22164
-          git remote -v
-          git push heroku main
