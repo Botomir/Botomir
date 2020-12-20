@@ -3,13 +3,14 @@ name: Deploy
 on: "push"
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
+    environment: deployment
     steps:
       - uses: actions/checkout@v2
       - name: Make envfile
         uses: SpicyPizza/create-envfile@v1
-        env:
+        with:
           envkey_DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
           envkey_DATABASE_URL: ${{ secrets.DATABASE_URL }}
           envkey_DISCORD_GUILD_ID: ${{ secrets.DISCORD_GUILD_ID }}
