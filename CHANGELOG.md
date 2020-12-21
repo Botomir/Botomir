@@ -5,6 +5,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Added
+- added support for the bot to be on multiple discord servers
+- added support for bot admin commands to configure the bot settings
+- added the ability to automatically parse the role reaction emojs
+
+### Changed
+- Now uses a database for the bot configuration and not config file
 
 ## [2.0.1] - 2020-12-20
 ### Changed

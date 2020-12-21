@@ -34,7 +34,6 @@
     "node": "15.2.1"
   },
   "dependencies": {
-    "config.json": "^0.0.1",
     "discord.js": "^12.5.1",
     "dotenv": "^8.2.0",
     "emoji-regex": "^8.0.0",

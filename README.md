@@ -23,9 +23,10 @@ Run locally using `node app.js`
 - manage nicknames
 - view channels
 - send Messages
-- embeded Links
+- embedded Links
 - read message history
 
+In order to use any of the bot configuration commands you must have the role `botmir-admin` assigned to you.
 
 ## Features
 
