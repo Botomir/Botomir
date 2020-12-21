@@ -50,13 +50,13 @@ test('commandUtilities.getMember', () => {
 test('commandUtilities.getRole', () => {
     const roles = [
         {
-            id: '1234567890', name: 'test', editable: true,
+            id: '1234567890', name: 'test',
         },
         {
-            id: '0987654321', name: 'admin', editable: true,
+            id: '0987654321', name: 'admin',
         },
         {
-            id: '5432109876', name: 'bot', editable: false,
+            id: '5432109876', name: 'bot',
         },
     ];
 
@@ -87,24 +87,17 @@ test('commandUtilities.getRole', () => {
 
 test('commandUtilities.filterRole', () => {
     const validRole = {
-        name: 'test', editable: true,
+        name: 'test',
     };
     const invalidRole1 = {
-        name: 'test', editable: false,
+        name: 'admin',
     };
-    const invalidRole2 = {
-        name: 'admin', editable: false,
-    };
-    const invalidRole3 = {
-        name: 'admin', editable: true,
-    };
-    const invalidRole4 = null;
+
+    const invalidRole2 = null;
 
     expect(commandUtilities.filterRole(validRole)).toEqual(validRole);
     expect(commandUtilities.filterRole(invalidRole1)).toEqual(null);
     expect(commandUtilities.filterRole(invalidRole2)).toEqual(null);
-    expect(commandUtilities.filterRole(invalidRole3)).toEqual(null);
-    expect(commandUtilities.filterRole(invalidRole4)).toEqual(null);
 });
 
 test('commandUtilities.trimDiscordID', () => {

@@ -17,6 +17,16 @@ Copy the `template.env` file to `.env`, and set all of the values for those fiel
 
 Run locally using `node app.js`
 
+### needed permissions
+- manage server
+- change nickname
+- manage nicknames
+- view channels
+- send Messages
+- embeded Links
+- read message history
+
+
 ## Features
 
 #### Commands
