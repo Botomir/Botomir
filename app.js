@@ -43,6 +43,13 @@ app.get('/authorize', (req, res) => {
     });
 });
 
+
+app.get('/discord/authorize', (req, res) => {
+    console.log(req.query);
+
+    return res.render('authenticate');
+});
+
 let port = process.env.PORT;
 if (port == null || port === '') {
     port = 8300;
