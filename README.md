@@ -17,6 +17,17 @@ Copy the `template.env` file to `.env`, and set all of the values for those fiel
 
 Run locally using `node app.js`
 
+### needed permissions
+- manage server
+- change nickname
+- manage nicknames
+- view channels
+- send Messages
+- embedded Links
+- read message history
+
+In order to use any of the bot configuration commands you must have the role `botmir-admin` assigned to you.
+
 ## Features
 
 #### Commands
