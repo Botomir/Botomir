@@ -14,7 +14,7 @@ test('settings.parseEmoji', () => {
     expect(parseEmoji('<:code monkey:790612474290110505>')).toEqual('code monkey');
     expect(parseEmoji('<:code monkey:790612474290110505> another emoji <:waggle:7901232474290110505>')).toEqual(null);
     expect(parseEmoji('🔥')).toEqual('🔥');
-    expect(parseEmoji('🔥should not match')).toEqual(null);
+    expect(parseEmoji('🔥should not match')).toEqual('🔥');
     expect(parseEmoji('not a match')).toEqual(null);
 });
 
