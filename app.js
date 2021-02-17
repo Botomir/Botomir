@@ -21,7 +21,9 @@ app.set('view engine', 'handlebars');
 
 // home page so you can see that this is running
 app.get('/', (req, res) => {
-    res.render('home', {clientID: Bot.client.user.id});
+    res.render('home', {
+        clientID: Bot.client.user.id,
+    });
 });
 
 // So Kaffeine can ping the application
