@@ -2,6 +2,8 @@ name: Create Release and Deploy
 
 on:
   push:
+    branches:
+      - main
     tags:
       - 'v*'
 
