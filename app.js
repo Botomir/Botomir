@@ -6,6 +6,7 @@ const express = require('express');
 const exphbs = require('express-handlebars');
 const source = require('rfr');
 const helmet = require('helmet');
+const mongoose = require('mongoose');
 
 const Bot = source('lib/bot');
 const { getSpotifyAuthToken } = source('lib/spotify/spotifyApi');
@@ -52,3 +53,10 @@ app.listen(port, () => {
     Bot.client.login(process.env.DISCORD_TOKEN);
     logger.log(`Server started on port ${port}`);
 });
+
+mongoose.connect(process.env.DATABASE_URL, {
+    useNewUrlParser: true,
+    useFindAndModify: false,
+})
+    .then((r) => logger.log(`Successfully connected to MongoDB: ${r}`))
+    .catch((e) => logger.log(`Error starting up mongo: ${e}`));
