@@ -19,6 +19,8 @@ app.use(helmet());
 app.engine('handlebars', exphbs());
 app.set('view engine', 'handlebars');
 
+app.use('/assets', express.static('assets'));
+
 // home page so you can see that this is running
 app.get('/', (req, res) => {
     res.render('home');
