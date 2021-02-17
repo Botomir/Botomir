@@ -35,7 +35,6 @@ In order to use any of the bot configuration commands you must have the role `bo
 - To add a new command you add the command to `lib/commands/botCommands.js` and a corresponding module.
 
 #### Reactions
-- To add roles for specific emojis you can specify them in the `config.json` file.
 - You can add functionality for reactions to specified messages under `lib/reactions/botReactions.js` and a corresponding module.
 
 #### Backup Messages
@@ -48,7 +47,6 @@ In order to use any of the bot configuration commands you must have the role `bo
 - This app is deployed to the free tier of Heroku. Kept awake using Kaffeine.
 
 #### Configurations
-- There are additional configurations that can be specified in the `config.json` file.
 - You can specify a string for the command prompt.
 - For the weather command, you can specify a default city and temperature unit.
 - You can specify the Spotify playlist name (the date will get added to the end still) and the playlist description text.
@@ -59,6 +57,7 @@ Requires following role permissions
 - Manage server
 - Manage roles
 - Manage channels
+- Manage nicknames
 - Send messages
 - Manage messages
 - Embed Links
