@@ -19,6 +19,7 @@
             "error",
             4
         ],
+        "no-param-reassign": ["error", { "props": false}],
         "object-curly-newline": ["error", {
             "ObjectExpression": "always",
             "ObjectPattern": { "multiline": true },
