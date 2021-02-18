@@ -19,6 +19,11 @@ app.use(helmet());
 app.engine('handlebars', exphbs());
 app.set('view engine', 'handlebars');
 
+app.use((req, res, next) => {
+    logger.http(`${req.method} ${req.originalUrl} ${req.ip}`);
+    next();
+});
+
 app.use('/assets', express.static('assets'));
 
 // home page so you can see that this is running
@@ -30,6 +35,7 @@ app.get('/', (req, res) => {
 
 // So Kaffeine can ping the application
 app.get('/status', (req, res) => {
+    logger.info('status ping');
     res.status(204).end(); // no content but status okay
 });
 
@@ -55,12 +61,14 @@ if (port == null || port === '') {
 
 app.listen(port, () => {
     Bot.client.login(process.env.DISCORD_TOKEN);
-    logger.log(`Server started on port ${port}`);
+    logger.info(`Server started on port ${port}`);
 });
 
 mongoose.connect(process.env.DATABASE_URL, {
     useNewUrlParser: true,
     useFindAndModify: false,
+    useCreateIndex: true,
+    useUnifiedTopology: true,
 })
-    .then((r) => logger.log(`Successfully connected to MongoDB: ${r}`))
-    .catch((e) => logger.log(`Error starting up mongo: ${e}`));
+    .then((r) => logger.info(`Successfully connected to MongoDB: ${r}`))
+    .catch((e) => logger.error(`Error starting up mongo: ${e}`));
