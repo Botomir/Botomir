@@ -1,15 +1,8 @@
 const rewire = require('rewire');
 
-const commandUtilities = rewire('../lib/commands/commandUtilities');
+const util = rewire('../lib/utils/util');
 
-test('commandUtilities.splitStringBySpace', () => {
-    expect(commandUtilities.splitStringBySpace('!test')).toEqual(['!test']);
-    expect(commandUtilities.splitStringBySpace('!test waffle')).toEqual(['!test', 'waffle']);
-    expect(commandUtilities.splitStringBySpace('!test          cats   ')).toEqual(['!test', 'cats']);
-    expect(commandUtilities.splitStringBySpace('!test          cats   dogs')).toEqual(['!test', 'cats', 'dogs']);
-});
-
-test('commandUtilities.getMember', () => {
+test('util.getMember', () => {
     const members = [
         {
             id: '86890631690977280',
@@ -39,15 +32,15 @@ test('commandUtilities.getMember', () => {
         },
     };
 
-    expect(commandUtilities.getMember(guild, '<@86890631690977280>')).toEqual(members[0]);
-    expect(commandUtilities.getMember(guild, '<@!788091112476770353>')).toEqual(members[1]);
-    expect(commandUtilities.getMember(guild, '<@!356984848574971914>')).toEqual(members[2]);
-    expect(commandUtilities.getMember(guild, '<@&1111111111>')).toEqual(undefined);
-    expect(commandUtilities.getMember(guild, '')).toEqual(undefined);
-    expect(commandUtilities.getMember(guild, null)).toEqual(undefined);
+    expect(util.getMember(guild, '<@86890631690977280>')).toEqual(members[0]);
+    expect(util.getMember(guild, '<@!788091112476770353>')).toEqual(members[1]);
+    expect(util.getMember(guild, '<@!356984848574971914>')).toEqual(members[2]);
+    expect(util.getMember(guild, '<@&1111111111>')).toEqual(undefined);
+    expect(util.getMember(guild, '')).toEqual(undefined);
+    expect(util.getMember(guild, null)).toEqual(undefined);
 });
 
-test('commandUtilities.getRole', () => {
+test('util.getRole', () => {
     const roles = [
         {
             id: '1234567890', name: 'test',
@@ -73,19 +66,20 @@ test('commandUtilities.getRole', () => {
                     }
                     return undefined;
                 },
+                find: (f) => roles.find(f),
             },
         },
     };
 
-    expect(commandUtilities.getRole(guild, '<@&1234567890>')).toEqual(roles[0]);
-    expect(commandUtilities.getRole(guild, '<@&0987654321>')).toEqual(roles[1]);
-    expect(commandUtilities.getRole(guild, '<@&5432109876>')).toEqual(roles[2]);
-    expect(commandUtilities.getRole(guild, '<@&1111111111>')).toEqual(undefined);
-    expect(commandUtilities.getRole(guild, '')).toEqual(undefined);
-    expect(commandUtilities.getRole(guild, null)).toEqual(undefined);
+    expect(util.lookupRoleName(guild, 'test')).toEqual(roles[0]);
+    expect(util.lookupRoleName(guild, 'admin')).toEqual(roles[1]);
+    expect(util.lookupRoleName(guild, 'bot')).toEqual(roles[2]);
+    expect(util.lookupRoleName(guild, 'hahahah')).toEqual(undefined);
+    expect(util.lookupRoleName(guild, '')).toEqual(undefined);
+    expect(util.lookupRoleName(guild, null)).toEqual(undefined);
 });
 
-test('commandUtilities.filterRole', () => {
+test('util.filterRole', () => {
     const validRole = {
         name: 'test',
     };
@@ -95,13 +89,13 @@ test('commandUtilities.filterRole', () => {
 
     const invalidRole2 = null;
 
-    expect(commandUtilities.filterRole(validRole)).toEqual(validRole);
-    expect(commandUtilities.filterRole(invalidRole1)).toEqual(null);
-    expect(commandUtilities.filterRole(invalidRole2)).toEqual(null);
+    expect(util.filterRole(validRole)).toEqual(validRole);
+    expect(util.filterRole(invalidRole1)).toEqual(null);
+    expect(util.filterRole(invalidRole2)).toEqual(null);
 });
 
-test('commandUtilities.trimDiscordID', () => {
-    const trimDiscordID = commandUtilities.__get__('trimDiscordID'); // eslint-disable-line no-underscore-dangle
+test('util.trimDiscordID', () => {
+    const trimDiscordID = util.__get__('trimDiscordID'); // eslint-disable-line no-underscore-dangle
     expect(trimDiscordID('<@!356956593293754368>')).toBe('356956593293754368'); // with nickname
     expect(trimDiscordID('<@356984848574971914>')).toBe('356984848574971914'); // without nickname
     expect(trimDiscordID('<#788091112476770356>')).toBe('788091112476770356'); // channel id
@@ -109,11 +103,4 @@ test('commandUtilities.trimDiscordID', () => {
     expect(trimDiscordID('this is a cool <@&134362454976102401> role')).toBe('134362454976102401'); // role id
     expect(trimDiscordID('false')).toBe(undefined); // invalid
     expect(trimDiscordID('')).toBe(undefined); // invalid
-});
-
-test('commandUtilities.discardCommand', () => {
-    expect(commandUtilities.discardCommand('!test')).toBe('');
-    expect(commandUtilities.discardCommand('!test waffle')).toBe('waffle');
-    expect(commandUtilities.discardCommand('!test          cats   ')).toBe('cats');
-    expect(commandUtilities.discardCommand('!test          cats   dogs')).toBe('cats   dogs');
 });
