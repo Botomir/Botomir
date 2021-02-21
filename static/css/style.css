@@ -10,7 +10,6 @@ body {
 
 main {
     position: relative;
-    /*min-height: 100vh;*/
     color: white;
 }
 
@@ -33,24 +32,24 @@ footer {
     background-color: #242526;
 }
 
-.navbar-brand, .navbar-text, .nav-item a {
-    color: #B14EB5;
-}
-
-.navbar-brand:hover, .navbar-text {
+.navbar-brand, .navbar-text, .nav-item {
     color: white;
 }
 
+.navbar-brand:hover, .navbar-text {
+    color: #B14EB5;
+}
+
 .btn-custom {
-    background-color: #B14EB5;
+    background-color: white;
     color: black;
 }
 
 .btn-custom:hover {
-    background-color: white;
+    background-color: #B14EB5;
 }
 
-.vertically-center {
+.center-content {
     width: 100%;
     padding-top: 15vh;
 }
