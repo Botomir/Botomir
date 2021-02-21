@@ -9,7 +9,7 @@ const helmet = require('helmet');
 const mongoose = require('mongoose');
 
 const Bot = source('lib/bot');
-const { getSpotifyAuthToken } = source('lib/spotify/spotifyApi');
+const {getSpotifyAuthToken} = source('lib/spotify/spotifyApi');
 const logger = source('lib/utils/logger');
 
 const app = express();
@@ -33,6 +33,10 @@ app.get('/', (req, res) => {
     });
 });
 
+app.get('/documentation', (req, res) => {
+    res.render('docs');
+});
+
 // So Kaffeine can ping the application
 app.get('/status', (req, res) => {
     logger.info('status ping');
@@ -41,7 +45,7 @@ app.get('/status', (req, res) => {
 
 app.get('/authorize', (req, res) => {
     const userid = req.query.state;
-    const { code } = req.query;
+    const {code} = req.query;
     let error = req.query.error || 'Missing the userid and the authentication code';
 
     if (userid && code) {

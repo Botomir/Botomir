@@ -36,13 +36,15 @@ footer {
     color: white;
 }
 
-.navbar-brand:hover, .navbar-text {
+.navbar-brand:hover, .navbar-text, .nav-item:hover {
     color: #B14EB5;
 }
 
 .btn-custom {
     background-color: white;
     color: black;
+    width: 100%;
+    align-items: center;
 }
 
 .btn-custom:hover {
