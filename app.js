@@ -24,7 +24,7 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use('/assets', express.static('assets'));
+app.use(express.static('static'));
 
 // home page so you can see that this is running
 app.get('/', (req, res) => {
