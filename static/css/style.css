@@ -13,6 +13,10 @@ main {
     color: white;
 }
 
+h1 {
+    padding-top: 20px;
+}
+
 h5 {
     padding-top: 20px;
     padding-bottom: 30px;
