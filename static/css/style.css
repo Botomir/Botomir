@@ -1,0 +1,61 @@
+* {
+    font-family: 'Ubuntu', sans-serif;
+    position: static;
+}
+
+body {
+    background: #18191a;
+    text-align: center;
+}
+
+main {
+    position: relative;
+    color: white;
+}
+
+h1 {
+    padding-top: 20px;
+}
+
+h5 {
+    padding-top: 20px;
+    padding-bottom: 30px;
+}
+
+footer {
+    background-color: #242526;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 2.5rem;
+    color: white;
+    padding: 10px;
+}
+
+.navbar-custom {
+    background-color: #242526;
+}
+
+.navbar-brand, .navbar-text, .nav-item {
+    color: white;
+}
+
+.navbar-brand:hover, .navbar-text, .nav-item:hover {
+    color: #B14EB5;
+}
+
+.btn-custom {
+    background-color: white;
+    color: black;
+    width: 100%;
+    align-items: center;
+}
+
+.btn-custom:hover {
+    background-color: #B14EB5;
+}
+
+.center-content {
+    width: 100%;
+    padding-top: 15vh;
+}
