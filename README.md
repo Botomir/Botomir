@@ -5,9 +5,13 @@
 ![Lines of code](https://img.shields.io/tokei/lines/github/SoorajModi/Discord-Bot?style=plastic)
 ![GitHub](https://img.shields.io/github/license/SoorajModi/Discord-Bot?style=plastic)
 
-# Discord-Bot
+# Botomir
 
-This is a template bot for a Discord Bot written in Node.js
+Your friendly neighbourhood Discord Bot.
+
+## How to add to your server
+
+Go to this [site](https://botomir.com) and click `Add to Server`. 
 
 ## How to run
 
@@ -17,7 +21,7 @@ Copy the `template.env` file to `.env`, and set all of the values for those fiel
 
 Run locally using `node app.js`
 
-### needed permissions
+### Required Permissions
 - manage server
 - change nickname
 - manage nicknames
@@ -44,7 +48,7 @@ In order to use any of the bot configuration commands you must have the role `bo
 - You can specify a different schema or database under `lib/database`.
 
 #### Deployment
-- This app is deployed to the free tier of Heroku. Kept awake using Kaffeine.
+- This app is deployed to the hobby tier of Heroku. Available 24/7.
 
 #### Configurations
 - You can specify a string for the command prompt.

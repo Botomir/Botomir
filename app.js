@@ -1,6 +1,3 @@
-// app.js
-// ======
-
 require('dotenv').config();
 const express = require('express');
 const exphbs = require('express-handlebars');
@@ -24,13 +21,17 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use('/assets', express.static('assets'));
+app.use(express.static('static'));
 
 // home page so you can see that this is running
 app.get('/', (req, res) => {
     res.render('home', {
         clientID: Bot.client.user.id,
     });
+});
+
+app.get('/documentation', (req, res) => {
+    res.render('docs');
 });
 
 // So Kaffeine can ping the application
@@ -52,6 +53,11 @@ app.get('/authorize', (req, res) => {
     return res.render('authenticate', {
         error,
     });
+});
+
+// 404 Errors
+app.use((req, res) => {
+    res.render('404');
 });
 
 let port = process.env.PORT;
