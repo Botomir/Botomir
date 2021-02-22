@@ -2,13 +2,14 @@
   "name": "discord-bot-test",
   "version": "2.3.0",
   "description": "Your friendly neighbourhood Discord bot",
-  "main": "server.js",
+  "main": "app.js",
   "scripts": {
+    "run": "node app.js",
+    "start": "nodemon app.js",
     "test": "jest",
     "coverage": "jest --collect-coverage",
     "lint": "eslint .",
-    "lint-fix": "eslint --fix .",
-    "start": "nodemon server.js"
+    "lint-fix": "eslint --fix ."
   },
   "repository": {
     "type": "git",
