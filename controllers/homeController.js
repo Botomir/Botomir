@@ -1,4 +1,5 @@
 const source = require('rfr');
+
 const Bot = source('lib/bot');
 
 const HomeController = {
