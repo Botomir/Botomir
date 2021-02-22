@@ -1,16 +1,13 @@
 const rewire = require('rewire');
 
 const roleParsing = rewire('../lib/utils/roleParsing');
-const source = require('rfr');
-
-const { Role } = source('lib/database/models/role');
 
 const roleMessage = `
 Hello Welcome to the Scarborough Support Squad. This is the list of available channels, you gain access to the channels by receiving the role associated with it
 React to give yourself a role.
-
-<:code monkey:790612474290110505> : Code Monkey
-🔥: Keeb`;
+---
+<:code_monkey:790612474290110505> : Code Monkey : crazy keyboard person
+🔥 : Keeb`;
 
 test('roleParsing.parseEmoji', () => {
     const parseEmoji = roleParsing.__get__('parseEmoji'); // eslint-disable-line no-underscore-dangle
@@ -23,32 +20,34 @@ test('roleParsing.parseEmoji', () => {
 
 test('roleParsing.parseRoleMessage', () => {
     const parseRoleMessage = roleParsing.__get__('parseRoleMessage'); // eslint-disable-line no-underscore-dangle
-    const expected = [
-        new Role().setEmoji('code monkey').setRole('Code Monkey'),
-        new Role().setEmoji('🔥').setRole('Keeb'),
-    ];
 
     const res = parseRoleMessage(roleMessage);
-    expect(res).toHaveLength(2);
-    expect(res[0].guildID).not.toBeDefined();
-    expect(res[1].guildID).not.toBeDefined();
+    expect(res).toHaveProperty('header', 'Hello Welcome to the Scarborough Support Squad. This is the list of available channels, you gain access to the channels by receiving the role associated with it\nReact to give yourself a role.');
+    expect(res).toHaveProperty('mappings');
 
-    expect(res[0].emoji).toBe(expected[0].emoji);
-    expect(res[1].emoji).toBe(expected[1].emoji);
+    expect(res.mappings).toHaveLength(2);
 
-    expect(res[0].roleName).toBe(expected[0].roleName);
-    expect(res[1].roleName).toBe(expected[1].roleName);
+    expect(res.mappings[0]).toHaveProperty('emoji', 'code_monkey');
+    expect(res.mappings[0]).toHaveProperty('roleName', 'Code Monkey');
+    expect(res.mappings[0]).toHaveProperty('label', 'crazy keyboard person');
+
+    expect(res.mappings[1]).toHaveProperty('emoji', '🔥');
+    expect(res.mappings[1]).toHaveProperty('roleName', 'Keeb');
+    expect(res.mappings[1]).toHaveProperty('label', 'Keeb');
 });
 
-test('roleParsing.removeRoleHeader', () => {
-    const removeRoleHeader = roleParsing.__get__('removeRoleHeader'); // eslint-disable-line no-underscore-dangle
-    const expected = '<:code monkey:790612474290110505> : Code Monkey\n🔥: Keeb';
+test('roleParsing.splitHeader', () => {
+    const splitHeader = roleParsing.__get__('splitHeader'); // eslint-disable-line no-underscore-dangle
 
-    expect(removeRoleHeader(roleMessage)).toEqual(expected);
+    expect(splitHeader(roleMessage)).toHaveProperty('header');
+    expect(splitHeader(roleMessage)).toHaveProperty('body');
 
-    expect(removeRoleHeader('this is just another message')).toEqual('');
-    expect(removeRoleHeader('')).toEqual('');
+    expect(splitHeader('this is just another message').body).toEqual('');
+    expect(splitHeader('this is just another message').header).toEqual('this is just another message');
+    expect(splitHeader('').body).toEqual('');
+    expect(splitHeader('').header).toEqual('');
 
-    expect(removeRoleHeader('this is a test with multiple new lines\n\nbody part1.\n\nbody part2.')).toEqual('body part1.\n\nbody part2.');
-    expect(removeRoleHeader('this is a test with trailing newline\n\nbody part1.\n\nbody part2.\n')).toEqual('body part1.\n\nbody part2.');
+    expect(splitHeader('this is a test with multiple new lines\n---\nbody part1.\n\nbody part2.').header).toEqual('this is a test with multiple new lines');
+    expect(splitHeader('this is a test with multiple new lines\n---\nbody part1.\n\nbody part2.').body).toEqual('body part1.\n\nbody part2.');
+    expect(splitHeader('this is a test with trailing newline\n---\nbody part1.\n\nbody part2.\n').body).toEqual('body part1.\n\nbody part2.');
 });
