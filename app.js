@@ -5,60 +5,17 @@ const source = require('rfr');
 const helmet = require('helmet');
 const mongoose = require('mongoose');
 
-const Bot = source('lib/bot');
-const { getSpotifyAuthToken } = source('lib/spotify/spotifyApi');
 const logger = source('lib/utils/logger');
+const router = source('routes');
+const Bot = source('lib/bot');
 
 const app = express();
 
 app.use(helmet());
-
 app.engine('handlebars', exphbs());
 app.set('view engine', 'handlebars');
-
-app.use((req, res, next) => {
-    logger.http(`${req.method} ${req.originalUrl} ${req.ip}`);
-    next();
-});
-
 app.use(express.static('static'));
-
-// home page so you can see that this is running
-app.get('/', (req, res) => {
-    res.render('home', {
-        clientID: Bot.client.user.id,
-    });
-});
-
-app.get('/documentation', (req, res) => {
-    res.render('docs');
-});
-
-// So Kaffeine can ping the application
-app.get('/status', (req, res) => {
-    logger.info('status ping');
-    res.status(204).end(); // no content but status okay
-});
-
-app.get('/authorize', (req, res) => {
-    const userid = req.query.state;
-    const { code } = req.query;
-    let error = req.query.error || 'Missing the userid and the authentication code';
-
-    if (userid && code) {
-        getSpotifyAuthToken(userid, code);
-        error = null;
-    }
-
-    return res.render('authenticate', {
-        error,
-    });
-});
-
-// 404 Errors
-app.use((req, res) => {
-    res.render('404');
-});
+app.use(router);
 
 let port = process.env.PORT;
 if (port == null || port === '') {

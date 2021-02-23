@@ -1,18 +1,19 @@
 {
   "name": "discord-bot-test",
-  "version": "2.2.0",
-  "description": "A super awesome discord bot",
-  "main": "index.js",
+  "version": "2.3.0",
+  "description": "Your friendly neighbourhood Discord bot",
+  "main": "app.js",
   "scripts": {
+    "run": "node app.js",
+    "start": "nodemon app.js",
     "test": "jest",
     "coverage": "jest --collect-coverage",
     "lint": "eslint .",
-    "lint-fix": "eslint --fix .",
-    "start": "nodemon app.js"
+    "lint-fix": "eslint --fix ."
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/SoorajModi/Discord-Bot.git"
+    "url": "git+https://github.com/SoorajModi/Botomir.git"
   },
   "author": [
     {
@@ -28,9 +29,9 @@
   ],
   "license": "GPL-2.0-only",
   "bugs": {
-    "url": "https://github.com/SoorajModi/Discord-Bot/issues"
+    "url": "https://github.com/SoorajModi/Botomir/issues"
   },
-  "homepage": "https://github.com/SoorajModi/Discord-Bot#readme",
+  "homepage": "https://github.com/SoorajModi/Botomir#readme",
   "engines": {
     "node": "15.2.1"
   },
