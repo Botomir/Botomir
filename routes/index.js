@@ -7,6 +7,7 @@ const HomeController = require('./controllers/homeController');
 const DocsController = require('./controllers/docsController');
 const SpotifyController = require('./controllers/spotifyController');
 const NotFoundController = require('./controllers/notFoundController');
+const AboutController = require('./controllers/aboutController');
 
 const router = express();
 
@@ -18,6 +19,7 @@ router.use((req, res, next) => {
 router.get('/', HomeController.get);
 router.get('/documentation', DocsController.get);
 router.get('/authorize', SpotifyController.get);
+router.get('/about', AboutController.get);
 router.use(NotFoundController.get);
 
 module.exports = router;

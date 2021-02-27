@@ -59,3 +59,7 @@ footer {
     width: 100%;
     padding-top: 15vh;
 }
+
+.card {
+    background-color: #242526;
+}
