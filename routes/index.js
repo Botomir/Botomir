@@ -3,10 +3,10 @@ const source = require('rfr');
 const express = require('express');
 
 const logger = source('lib/utils/logger');
-const HomeController = source('controllers/homeController');
-const DocsController = source('controllers/docsController');
-const SpotifyController = source('controllers/spotifyController');
-const NotFoundController = source('controllers/notFoundController');
+const HomeController = require('./controllers/homeController');
+const DocsController = require('./controllers/docsController');
+const SpotifyController = require('./controllers/spotifyController');
+const NotFoundController = require('./controllers/notFoundController');
 
 const router = express();
 
