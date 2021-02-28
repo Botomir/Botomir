@@ -32,6 +32,10 @@ footer {
     padding: 10px;
 }
 
+.align-text-left {
+    text-align: left;
+}
+
 .navbar-custom {
     background-color: #242526;
 }
