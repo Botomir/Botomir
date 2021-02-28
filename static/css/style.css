@@ -32,6 +32,14 @@ footer {
     padding: 10px;
 }
 
+.footer-icon {
+    color: white;
+}
+
+.footer-icon:hover {
+    color: #B14EB5;
+}
+
 .align-text-left {
     text-align: left;
 }
