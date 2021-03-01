@@ -1,4 +1,4 @@
- const StatisticsController = {
+const StatisticsController = {
     get(req, res) {
         const servers = 10;
         const numCommands = 15;
