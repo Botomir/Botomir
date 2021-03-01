@@ -23,13 +23,39 @@ h5 {
 }
 
 footer {
+    clear: both;
     background-color: #242526;
-    position: absolute;
     bottom: 0;
-    width: 100%;
-    height: 2.5rem;
     color: white;
     padding: 10px;
+    position: absolute;
+    width: 100%;
+    height: 2.5rem;            /* Footer height */
+}
+
+#page-container {
+    position: relative;
+    min-height: 100vh;
+}
+
+#content-wrap {
+    padding-bottom: 2.5rem;    /* Footer height */
+}
+
+.footer-icon {
+    color: white;
+}
+
+#footer {
+
+}
+
+.footer-icon:hover {
+    color: #B14EB5;
+}
+
+.align-text-left {
+    text-align: left;
 }
 
 .navbar-custom {
@@ -58,4 +84,8 @@ footer {
 .center-content {
     width: 100%;
     padding-top: 15vh;
+}
+
+.card {
+    background-color: #242526;
 }
