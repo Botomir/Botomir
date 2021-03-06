@@ -19,3 +19,4 @@ Checklist:
 - [ ] Verify that all automated tests pass
 - [ ] Verify that the changes work as expected on Discord
 - [ ] Update the README and other applicable documentation pages
+- [ ] Update the changelog
