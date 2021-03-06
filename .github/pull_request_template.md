@@ -14,7 +14,7 @@ Checklist:
 
 <!-- To check an item, fill the brackets with the letter x; the result should look like `[x]`.  Feel free to leave unchecked items that are not applicable or that you could not perform. -->
 
-- [ ] Add automated tests cases if applicable
+- [ ] Add automated tests cases
 - [ ] Run `npm run lint-fix` and ensure linter is still passing
 - [ ] Verify that all automated tests pass
 - [ ] Verify that the changes work as expected on Discord
