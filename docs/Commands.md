@@ -4,164 +4,297 @@
 
 #### Ping
 
-- Command: `!ping`
-- Returns: `pong`
+- Command: `ping`
+- Returns: `Pong`
 - Example usage:
-  - `!ping`
+```
+User
+> !ping
+
+Botomir
+> Pong
+```
 
 #### Help
 
-- Command: `!help`
-- Returns: list of commands available to Botomir
-- Specification:
-  - Can add command as argument to gain more information about that specific command
+- Command: `help`
+- Args:
+    - optional,`<command>`
+- Returns: 
+    - list of commands available to Botomir
+    - specific information about the passed in command if command specified
 - Example usage:
-  - `!help`
-  - `!help ping`
+```
+User
+> !help
+
+Botomir
+> <embedded help message>
+```
+```
+User
+> !help ping
+
+Botomir
+> <embedded message with information about ping command>
+```
 
 #### Site
 
-- Command: `!site`
+- Command: `site`
 - Returns: an embedded message with a link to Botomir.com
 - Example usage:
-  - `!site`
+```
+User
+> !site
+
+Botomir
+> <embedded message with link to Botomir.com>
+```
 
 #### Docs
 
-- Command: `!docs`
+- Command: `docs`
 - Returns: an embedded message with a link to Botomir.com/documentation.
 - Example usage:
-  - `!docs`
+```
+User
+> !docs
+
+Botomir
+> <embedded message with link to Botmir's documentation>
+```
 
 #### Source
 
-- Command: `!source`
+- Command: `source`
 - Returns: an embedded message with a link to Botomir's source code on GitHub
 - Example usage:
-  - `!source`
+```
+User
+> !source
+
+Botomir
+> <embedded message with link to source code>
+```
 
 #### Weather
 
-- Command: `!weather`
+- Command: `weather`
 - Returns: an embedded message with the weather information for a city
 - Example usage:
-  - `!weather`
+```
+User
+> !weather
+
+Botomir
+> <embedded weather message>
+```
 
 #### Reddit
 
-- Command: `!reddit subreddit`
+- Command: `reddit`
+- Args:
+    - required, `<subreddit>`
 - Returns: an embedded link to a post from the specified subreddit
 - Limitations:
   - Cannot send links to text, video, or audio posts. Only pictures or gifs
 - Example usage:
   - `!reddit funny`
+```
+User
+> !reddit funny
+
+Botomir
+> <embedded message with reddit post>
+```
 
 #### Meme
 
-- Command: `!meme`
+- Command: `meme`
 - Returns: an embedded link to a post from a set of default subreddits
-- List of default subreddits:
 - How to configure:
+  - `botomir-admin` role required to configure
   - `!add-meme-sub subreddit` will add a specified subreddit to the list of subreddits meme will randomly pull from
-  - Requires `botomir-admin` role to configure
 - Example usage:
-  - `!meme`
+```
+User
+> !meme
+
+Botomir
+> <embedded message with meme>
+```
 
 #### Cute
 
-- Command: `!cute`
+- Command: `cute`
 - Returns: an embedded link to a post from a set of default subreddits
-- List of default subreddits:
 - How to configure:
+  - `botomir-admin` role required to configure
   - `!add-cute-sub subreddit` will add a specified subreddit to the list of subreddits meme will randomly pull from
-  - Requires `botomir-admin` role to configure
 - Example usage:
-  - `!cute`
+```
+User
+> !cute
+
+Botomir
+> <embedded message with image of cute animal>
+```
 
 #### Puppy
 
-- Command: `!puppy`
+- Command: `puppy`
 - Returns: an embedded link to a post from r/puppy
 - Example usage:
-  - `!puppy`
+```
+User
+> !puppy
+
+Botomir
+> <embedded message with puppy image>
+```
 
 #### Mental Health
 
-- Command: `!mental-health`
+- Command: `mental-health`
 - Returns: embedded message with mental health resources
 - Example usage:
-  - `!mental-health`
+```
+User
+> !mental-health
+
+Botomir
+> <embedded message with link to mental-health resources>
+```
 
 #### Mechanical Keyboard
 
-- Command: `!keeb`
+- Command: `keeb`
 - Returns: embedded message with mechanical keyboard resources
 - Example usage:
-  - `!keeb`
+```
+User
+> !keeb
+
+Botomir
+> <embedded message with links to mechanical keyboard resources>
+```
 
 ### Moderation Commands
 
 #### Assign role to self
 
-- Command: `!role <name_of_role>`
+- Command: `role`
+- Args:
+    - requires`<name_of_role>` as only argument
 - Returns: user is assigned the specified role and a success or failure message is sent
-- Specifications:
+- Limitations:
   - role must be assignable, cannot be a privileged role or a higher role than Botomir
   - role must be spelt exactly as it appears
-  - do not specify role with @ tag
+  - do not specify role with `@` tag
 - Example usage:
-  - `!role minecraft`
+```
+User
+> !role minecraft
+
+Botomir
+> Successfully added role `minecraft` to user `User`
+```
 
 #### Assign user a role
 
-- Command: `!give @user <name of role>`
+- Command: `give`
+- Args:
+    - requires `@user` as first argument
+    - requires `<name_of_role>`as second argument
 - Returns: specified user is assigned the specified role and a success or failure message is sent
-- Specifications:
-  - user must be specified with @ tag
+- Limitations:
+  - user must be specified with `@` tag
   - role must be assignable, cannot be a privileged role or a higher role than Botomir
   - role must be spelt exactly as it appears
-  - do not specify role with @ tag
+  - do not specify role with `@` tag
 - Example usage:
   - `!give @user minecraft`
+```
+User
+> !give @User minecraft
+
+Botomir
+> Successfully added role `minecraft` to user `User`
+```
 
 #### Remove role from self
 
-- Command: `!remove <name_of_role>`
+- Command: `remove`
+- Args:
+    - requires`<name_of_role>` as only argument
 - Returns: specified role assignment is removed from user and a success or failure message is sent
-- Specifications:
+- Limitations:
   - role must be assignable, cannot be a privileged role or a higher role than Botomir
   - role must be spelt exactly as it appears
-  - do not specify role with @ tag
+  - do not specify role with `@` tag
 - Example usage:
-  - `!remove minecraft`
+```
+User
+> !remove minecraft
+
+Botomir
+> Successfully removed role `minecraft` from user `User`
+```
 
 #### Revoke role from user
 
-- Command: `!revoke @user name_of_role`
+- Command: `revoke`
+- Args:
+    - requires `@user` as first argument
+    - requires `<name_of_role>`as second argument
 - Returns: specified role assignment is removed from specified user and a success or failure message is sent
-- Specifications:
-  - user must be specified with @ tag
+- Limitations:
+  - user must be specified with `@` tag
   - role must be assignable, cannot be a privileged role or a higher role than Botomir
   - role must be spelt exactly as it appears
-  - do not specify role with @ tag
+  - do not specify role with `@` tag
 - Example usage:
-  - `!revoke @user minecraft`
+```
+User
+> !revoke @User minecraft
 
+Botomir
+> Successfully removed role `minecraft` from user `User`
+```
 ### Admin Commands (require botomir-admin role)
 
 #### Set command prefix
 
-- Command: `!set-prefix new_prefix`
+- Command: `set-prefix`
+- Args:
+    - requires`<new_prefix>` as only argument
 - Returns: Botomir is updated to use the new command prefix and a success or failure message is sent
 - Specifications:
   - Use the ping command to confirm the prefix is updated
+- Example usage:
+```
+User
+> !set-prefix \
+
+Botomir
+> Settings updated.
+```
 
 #### Set channel for role reactions
 
-- Command: `!set-role-channel <channel tag>`
+- Command: `set-role-channel`
+- Args:
+    - requires `<channel tag>` as only argument
 - Returns: Role watch channel set and success or failure message is sent
 - Example usage
-  - `!set-role-channel #welcome`
+```
+User
+> !set-role-channel #welcome
+
+Botomir
+> Settings updated.
+```
 
 #### Set role mappings for reaction assgnment
 
