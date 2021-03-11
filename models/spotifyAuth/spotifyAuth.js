@@ -5,7 +5,7 @@ const source = require('rfr');
 
 const schema = require('./schema.js');
 
-const logger = source('lib/utils/logger');
+const logger = source('bot/utils/logger');
 
 const SpotifyAuth = mongoose.model('spotifyAuth', schema);
 
