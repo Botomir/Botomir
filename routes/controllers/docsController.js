@@ -13,12 +13,13 @@ const gettingStartedMD = require('../../docs/GettingStarted.md');
 const configurationsMD = require('../../docs/Configurations.md');
 const roleReactionsMD = require('../../docs/RoleReactions.md');
 const spotifyPluginMD = require('../../docs/SpotifyPlugin.md');
-const commandsMD = require('../../docs/Commands.md');
+const gettingHelpMD = require('../../docs/GettingHelp.md');
 
-function temp(c) {
+function renderMarkdown(c) {
     if (c.docs) {
         return md.render(c.docs);
     }
+    return null;
 }
 
 const DocsController = {
@@ -26,17 +27,14 @@ const DocsController = {
         const client = {
         };
         setupCommands(client);
-        console.log(client);
-        const tempCommand = client.commands.map((c) => temp(c))
-            .filter(Boolean);
-        console.log(tempCommand);
+        const commands = client.commands.map((command) => renderMarkdown(command)).filter(Boolean);
         res.render('docs', {
             gettingStarted: md.render(gettingStartedMD),
             configurations: md.render(configurationsMD),
             roleReactions: md.render(roleReactionsMD),
             spotifyPlugin: md.render(spotifyPluginMD),
-            commands: md.render(commandsMD),
-            tempCommands: tempCommand,
+            commands,
+            gettingHelp: md.render(gettingHelpMD),
         });
     },
 };
