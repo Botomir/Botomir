@@ -2,9 +2,9 @@ const rewire = require('rewire');
 const source = require('rfr');
 const safe = require('safe-regex');
 
-const util = rewire('../lib/utils/util');
-const { badBotRegex, goodBotRegex } = source('./lib/scanner/botResponse');
-const { spotifyTrackRegex } = source('./lib/scanner/spotify');
+const util = rewire('../bot/utils/util');
+const { badBotRegex, goodBotRegex } = source('./bot/scanner/botResponse');
+const { spotifyTrackRegex } = source('./bot/scanner/spotify');
 
 test('Check regex', () => {
     const discordIDRegex = util.__get__('discordIDRegex'); // eslint-disable-line no-underscore-dangle

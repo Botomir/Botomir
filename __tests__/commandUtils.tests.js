@@ -1,6 +1,6 @@
 const rewire = require('rewire');
 
-const util = rewire('../lib/utils/util');
+const util = rewire('../bot/utils/util');
 
 test('util.getMember', () => {
     const members = [
