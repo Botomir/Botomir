@@ -1,6 +1,6 @@
 const rewire = require('rewire');
 
-const roleParsing = rewire('../lib/utils/roleParsing');
+const roleParsing = rewire('../bot/utils/roleParsing');
 
 const roleMessage = `
 Hello Welcome to the Scarborough Support Squad. This is the list of available channels, you gain access to the channels by receiving the role associated with it

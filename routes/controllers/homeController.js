@@ -1,6 +1,6 @@
 const source = require('rfr');
 
-const Bot = source('lib/bot');
+const Bot = source('bot');
 
 const HomeController = {
     get(req, res) {
