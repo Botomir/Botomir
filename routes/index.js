@@ -2,7 +2,7 @@ require('dotenv').config();
 const source = require('rfr');
 const express = require('express');
 
-const logger = source('lib/utils/logger');
+const logger = source('bot/utils/logger');
 const HomeController = require('./controllers/homeController');
 const DocsController = require('./controllers/docsController');
 const StatisticsController = require('./controllers/statisticsController');

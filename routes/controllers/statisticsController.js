@@ -1,13 +1,13 @@
 const source = require('rfr');
 
-const Bot = source('lib/bot');
+const Bot = source('bot');
 
 const { Statistics, EventTypes } = source('models/statistics');
 const { Message } = source('models/message');
 const { Role } = source('models/role');
 const { Song } = source('models/song');
 
-const logger = source('lib/utils/logger');
+const logger = source('bot/utils/logger');
 
 const StatisticsController = {
     get(req, res) {

@@ -1,6 +1,6 @@
 const source = require('rfr');
 
-const { getSpotifyAuthToken } = source('lib/spotify/spotifyApi');
+const { getSpotifyAuthToken } = source('bot/spotify/spotifyApi');
 
 const SpotifyController = {
     get(req, res) {
