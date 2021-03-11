@@ -175,7 +175,7 @@ class Settings {
             guild: serverID,
         })
             .then((res) => {
-                if (res === null) return new Settings().setGuild(serverID);
+                if (res === null) return new Settings().setGuild(serverID).save();
                 const s = new Settings();
                 s._model = res;
                 return s;
