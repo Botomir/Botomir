@@ -7,25 +7,19 @@ const { Role } = source('models/role');
 const { parseRoleMessage } = source('bot/utils/roleParsing');
 const logger = source('bot/utils/logger');
 
+function generateMessageContent(header, mappings) {
+    return mappings.reduce((acc, m) => `${acc}${m.reactionEmoji} : \`${m.mapping.label}\`\n`, `${header}\n\n`);
+}
+
 function postRoleReactions(guild, header, mappings, config) {
-    let watchMessage;
-
-    const content = mappings.reduce((acc, m) => `${acc}${m.reactionEmoji} : \`${m.mapping.label}\`\n`, `${header}\n\n`);
-
     return new Promise(((resolve, reject) => {
         const welcomeChannel = guild.channels.cache.get(config.welcomeChannel);
 
-        if (welcomeChannel === undefined) {
-            return reject(new Error(`need to set the channel to post the role message too, use the \`${config.commandPrefix}set-role-channel\` command`));
-        }
-        return resolve(welcomeChannel);
+        if (welcomeChannel !== undefined) return resolve(welcomeChannel);
+
+        return reject(new Error(`need to set the channel to post the role message too, use the \`${config.commandPrefix}set-role-channel\` command`));
     }))
-        .then((welcomeChannel) => sendMessage(welcomeChannel, content))
-        .then((message) => {
-            watchMessage = message;
-            return config.setRoleMessage(message.id).save();
-        })
-        .then(() => watchMessage);
+        .then((c) => sendMessage(c, generateMessageContent(header, mappings)));
 }
 
 function reactToMessage(message, mappings) {
@@ -48,8 +42,40 @@ function setRoleMessageCommand(message, args, config) {
         };
     });
 
-    return postRoleReactions(message.guild, parts.header, mappings, config)
-        .then((m) => reactToMessage(m, mappings))
+    let watchMessage;
+    let prom;
+
+    if (!config.roleMessage || !config.welcomeChannel) {
+        prom = postRoleReactions(message.guild, parts.header, mappings, config);
+    } else {
+        prom = new Promise(((resolve, reject) => {
+            const channel = message.guild.channels.cache.get(config.welcomeChannel);
+            if (!channel) return reject(new Error('role watch channel does not exist'));
+
+            return resolve(
+                channel.messages.fetch(config.roleMessage)
+                    .catch(() => {
+                        sendMessage(message.channel, 'The message seems to be gone, creating a new one');
+                        return postRoleReactions(message.guild, parts.header, mappings, config);
+                    })
+                    .then((mess) => {
+                    // if it was created less than a second ago it was probably just made
+                        if (new Date().valueOf() - mess.createdAt < 1000) return mess;
+
+                        if (!mess.editable) {
+                            sendMessage(message.channel, 'Can not edit message, creating a new one');
+                            return postRoleReactions(message.guild, parts.header, mappings, config);
+                        }
+                        return mess.edit(generateMessageContent(parts.header, mappings));
+                    }),
+            );
+        }));
+    }
+
+    return prom.then((m) => {
+        watchMessage = m;
+        return config.setRoleMessage(m.id).save();
+    })
         .then(() => Role.removeServerRoles(message.guild.id))
         .then(() => {
             const promises = mappings.map((m) => new Role()
@@ -59,9 +85,8 @@ function setRoleMessageCommand(message, args, config) {
                 .save());
             return Promise.all(promises);
         })
-        .then(() => {
-            sendMessage(message.channel, 'Role reactions updated');
-        })
+        .then(() => sendMessage(message.channel, 'Role reactions updated'))
+        .then(() => reactToMessage(watchMessage, mappings))
         .catch((e) => {
             sendMessage(message.channel, `Failed to update the reaction roles: ${e.message}`);
             logger.error('something went wrong saving the roles:', e);
