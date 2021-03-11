@@ -201,7 +201,7 @@ Botomir
 > Successfully added role `minecraft` to user `User`
 ```
 
-#### Assign user a role
+#### Assign role
 
 - Command: `give`
 - Args:
@@ -223,7 +223,7 @@ Botomir
 > Successfully added role `minecraft` to user `User`
 ```
 
-#### Remove role from self
+#### Remove role
 
 - Command: `remove`
 - Args:
@@ -296,7 +296,7 @@ Botomir
 > Settings updated.
 ```
 
-#### Set role mappings for reaction assgnment
+#### Set role mappings for reaction assignment
 
 - Command: `!set-roles <message>`
 - Returns: Botomir will autogenerate a role assignment message to the specified role watch channel

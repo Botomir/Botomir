@@ -16,13 +16,13 @@ First set a role channel. Then specify the message that members will see using t
 #### Example
 
 ```
-User: 
+User
 > !set-role-channel #welcome
 
-Botomir: 
+Botomir 
 > Settings updated.
 
-User:
+User
 > !set-roles This is a really cool message about automated role assignment
 >      
 > ---

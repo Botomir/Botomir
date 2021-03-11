@@ -10,7 +10,10 @@
             <hr>
             {{{ spotifyPlugin }}}
             <hr>
-            {{{ commands }}}
+            <h2>Commands</h2>
+            {{#each tempCommands }}
+                {{{ this }}}
+            {{/each}}
         </div>
     </div>
 </main>
