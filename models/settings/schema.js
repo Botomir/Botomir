@@ -57,7 +57,7 @@ module.exports = new mongoose.Schema({
     music_channel: String,
     command_prefix: {
         type: String,
-        maxLength: 1,
+        minLength: 1,
         required: true,
         default: '!',
     },
