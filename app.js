@@ -5,9 +5,9 @@ const source = require('rfr');
 const helmet = require('helmet');
 const mongoose = require('mongoose');
 
-const logger = source('lib/utils/logger');
+const logger = source('bot/utils/logger');
 const router = source('routes');
-const Bot = source('lib/bot');
+const Bot = source('bot');
 
 const app = express();
 

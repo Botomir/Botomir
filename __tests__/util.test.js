@@ -1,4 +1,4 @@
-const util = require('../lib/utils/util');
+const util = require('../bot/utils/util');
 
 test('should fetch users', () => {
     const channelSuccess = {
