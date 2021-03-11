@@ -2,10 +2,10 @@ const source = require('rfr');
 
 const Bot = source('lib/bot');
 
-const { Statistics, EventTypes } = source('lib/database/models/statistics');
-const { Message } = source('lib/database/models/message');
-const { Role } = source('lib/database/models/role');
-const { Song } = source('lib/database/models/song');
+const { Statistics, EventTypes } = source('models/statistics');
+const { Message } = source('models/message');
+const { Role } = source('models/role');
+const { Song } = source('models/song');
 
 const logger = source('lib/utils/logger');
 
