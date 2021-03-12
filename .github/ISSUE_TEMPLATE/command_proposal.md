@@ -1,8 +1,8 @@
 ---
 name: Command Proposal
 about: Propose a new command to be added to Botomir
-title: Command Proposal: <name of new command>
-labels: command proposal, enhancement
+title: Command Proposal - <name of new command>
+labels: command-proposal
 ---
 
 Include the following information in your issue:
