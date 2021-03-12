@@ -3,23 +3,16 @@ const MarkdownIt = require('markdown-it');
 const fs = require('fs');
 
 const { setupCommands } = source('lib/scanner/commandHandler');
-
-require.extensions['.md'] = (module, filename) => {
-    module.exports = fs.readFileSync(filename, 'utf8');
-};
-
 const md = new MarkdownIt();
-const gettingStartedMD = require('../../docs/GettingStarted.md');
-const configurationsMD = require('../../docs/Configurations.md');
-const roleReactionsMD = require('../../docs/RoleReactions.md');
-const spotifyPluginMD = require('../../docs/SpotifyPlugin.md');
-const gettingHelpMD = require('../../docs/GettingHelp.md');
 
-function renderMarkdown(c) {
-    if (c.docs) {
-        return md.render(c.docs);
-    }
-    return null;
+const gettingStartedMD = fs.readFileSync('docs/GettingStarted.md', 'utf-8');
+const configurationsMD = fs.readFileSync('docs/Configurations.md', 'utf-8');
+const roleReactionsMD = fs.readFileSync('docs/RoleReactions.md', 'utf-8');
+const spotifyPluginMD = fs.readFileSync('docs/SpotifyPlugin.md', 'utf-8');
+const gettingHelpMD = fs.readFileSync('docs/GettingHelp.md', 'utf-8');
+
+function renderMarkdown(command) {
+    return (command.docs) ? md.render(command.docs) : null;
 }
 
 const DocsController = {
