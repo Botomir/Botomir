@@ -9,7 +9,7 @@ function diceRoleCommand(message) {
 
     return randomNumber(1, 6)
       .then(number => sendMessage(message.channel, `:game_die: ${number}`))
-      .catch(err => logger.error('error getting settings:', err))
+      .catch(err => logger.error('error rolling a die:', err))
 }
 
 module.exports = {
