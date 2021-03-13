@@ -7,7 +7,8 @@ Hello Welcome to the Scarborough Support Squad. This is the list of available ch
 React to give yourself a role.
 ---
 <:code_monkey:790612474290110505> : Code Monkey : crazy keyboard person
-🔥 : Keeb`;
+🔥 : Keeb
+🔥:key:description`;
 
 test('roleParsing.parseEmoji', () => {
     const parseEmoji = roleParsing.__get__('parseEmoji'); // eslint-disable-line no-underscore-dangle
@@ -25,7 +26,7 @@ test('roleParsing.parseRoleMessage', () => {
     expect(res).toHaveProperty('header', 'Hello Welcome to the Scarborough Support Squad. This is the list of available channels, you gain access to the channels by receiving the role associated with it\nReact to give yourself a role.');
     expect(res).toHaveProperty('mappings');
 
-    expect(res.mappings).toHaveLength(2);
+    expect(res.mappings).toHaveLength(3);
 
     expect(res.mappings[0]).toHaveProperty('emoji', 'code_monkey');
     expect(res.mappings[0]).toHaveProperty('roleName', 'Code Monkey');
@@ -34,6 +35,10 @@ test('roleParsing.parseRoleMessage', () => {
     expect(res.mappings[1]).toHaveProperty('emoji', '🔥');
     expect(res.mappings[1]).toHaveProperty('roleName', 'Keeb');
     expect(res.mappings[1]).toHaveProperty('label', 'Keeb');
+
+    expect(res.mappings[2]).toHaveProperty('emoji', '🔥');
+    expect(res.mappings[2]).toHaveProperty('roleName', 'key');
+    expect(res.mappings[2]).toHaveProperty('label', 'description');
 });
 
 test('roleParsing.splitHeader', () => {
