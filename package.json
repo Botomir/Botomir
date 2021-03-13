@@ -49,6 +49,7 @@
     "parse-duration": "^0.4.4",
     "rfr": "^1.2.3",
     "spotify-web-api-node": "^5.0.0",
+    "true-random": "^1.1.1",
     "weather-promise": "^2.0.3",
     "winston": "^3.3.3"
   },

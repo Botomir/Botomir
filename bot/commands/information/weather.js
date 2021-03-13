@@ -61,15 +61,15 @@ function weatherEmbedMessage(result) {
 }
 
 function sendWeather(message, result) {
-    const payload = result.length !== 0 ? weatherEmbedMessage(result[0]) : 'Error: counld not find specified city';
+    const payload = result.length !== 0 ? weatherEmbedMessage(result[0]) : 'Error: counld not find specified location';
     sendMessage(message.channel, payload);
 }
 
 function weatherCommand(message, args, config) {
-    const city = args.length > 1 ? `${args[0]}, ON` : undefined;
+    const location = args.length > 1 ? args.join(' ') : config.weatherLocation;
 
     return weather.find({
-        search: city || config.weatherLocation,
+        search: location,
         degreeType: config.tempUnit,
     })
         .then((result) => sendWeather(message, result))
@@ -80,8 +80,8 @@ module.exports = {
     args: false,
     name: 'weather',
     botAdmin: false,
-    description: 'Gets the weather information for the city, or a default location for the server',
-    usage: '[city]',
+    description: 'Gets the weather information for the specified location, or a default location for the server',
+    usage: '[location]',
     aliases: [],
     execute: weatherCommand,
     docs: `#### Weather
