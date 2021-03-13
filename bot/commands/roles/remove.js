@@ -13,8 +13,8 @@ function removeRoleCommand(message, args, config) {
         sendMessage(message.channel, 'Error: role not found');
     } else {
         changeRole(member, role, Mode.REMOVE, config.unassignableRoles)
-            .then(() => sendMessage(message.channel, `Successfully removed role \`${roleName}\` from user \`${member.user.username}\``))
-            .catch((e) => sendMessage(message.channel, `Failed to removed role \`${roleName}\` from user \`${member.user.username}\``));
+            .then(() => sendMessage(message.channel, `Successfully removed role from \`${member.user.username}\``))
+            .catch((e) => sendMessage(message.channel, `Failed to removed role from \`${member.user.username}\` - ${e.mesage}`));
     }
 }
 

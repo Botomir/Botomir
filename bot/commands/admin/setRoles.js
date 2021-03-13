@@ -31,18 +31,18 @@ function setRoleMessageCommand(message, args, config) {
 
     // lookup the actual emoji to use react with
     const mappings = parts.mappings
-        .filter(m => !config.unassignableRoles.includes(m.roleName))
-    .map((m) => {
-        let reactionEmoji = m.emoji;
+        .filter((m) => !config.unassignableRoles.includes(m.roleName))
+        .map((m) => {
+            let reactionEmoji = m.emoji;
 
-        if (!emojiRegex().test(m.emoji)) {
-            reactionEmoji = message.guild.emojis.cache.find((emoji) => emoji.name === m.emoji);
-        }
+            if (!emojiRegex().test(m.emoji)) {
+                reactionEmoji = message.guild.emojis.cache.find((emoji) => emoji.name === m.emoji);
+            }
 
-        return {
-            reactionEmoji, mapping: m,
-        };
-    });
+            return {
+                reactionEmoji, mapping: m,
+            };
+        });
 
     let watchMessage;
     let prom;

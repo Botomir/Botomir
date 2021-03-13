@@ -139,5 +139,5 @@ module.exports = new mongoose.Schema({
     },
     unassignable_roles: {
         type: [String],
-    }
+    },
 });

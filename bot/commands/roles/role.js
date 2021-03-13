@@ -13,8 +13,8 @@ function addRoleCommand(message, args, config) {
         sendMessage(message.channel, 'Error: role not found');
     } else {
         changeRole(member, role, Mode.ADD, config.unassignableRoles)
-            .then(() => sendMessage(message.channel, `Successfully added role \`${roleName}\` to user \`${member.user.username}\``))
-            .catch((e) => sendMessage(message.channel, `Failed to added role \`${roleName}\` to user \`${member.user.username}\``));
+            .then(() => sendMessage(message.channel, `Successfully added role to \`${member.user.username}\``))
+            .catch((e) => sendMessage(message.channel, `Failed to added role to \`${member.user.username}\` - ${e.message}`));
     }
 }
 
