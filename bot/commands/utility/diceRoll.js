@@ -1,15 +1,13 @@
 const source = require('rfr');
-const randomNumber = require('pure-random-number')
-
+const randomNumber = require('pure-random-number');
 
 const { sendMessage } = source('bot/utils/util');
 const logger = source('bot/utils/logger');
 
 function diceRoleCommand(message) {
-
     return randomNumber(1, 6)
-      .then(number => sendMessage(message.channel, `:game_die: ${number}`))
-      .catch(err => logger.error('error rolling a die:', err))
+        .then((number) => sendMessage(message.channel, `:game_die: ${number}`))
+        .catch((err) => logger.error('error rolling a die:', err));
 }
 
 module.exports = {
