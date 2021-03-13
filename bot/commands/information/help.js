@@ -5,9 +5,8 @@ const { findRole } = source('bot/roles/roles');
 
 const helpEmbeded = {
     color: 0x0099ff,
-    author: {
-        name: 'Botomir Commands',
-        icon_url: `${process.env.BASE_URL}/static/logo.jpg`,
+    thumbnail: {
+        url: `${process.env.BASE_URL}/static/logo.jpg`,
     },
     timestamp: new Date(),
     footer: {
@@ -16,22 +15,25 @@ const helpEmbeded = {
 };
 
 function helpGeneral(message, commands, config) {
-    const fields = commands.map((command) => {
-        // check if the command should should be shown in the help list
-        if (config.disabledCommands.includes(command.name)) return null;
-        if (command.botAdmin && !findRole(message.member, config.botAdminRole)) return null;
+    const isAdmin = findRole(message.member, config.botAdminRole);
 
-        return {
-            name: command.name + (command.botAdmin ? ' - bot admin only' : ''),
+    const fields = commands.filter((c) => !config.disabledCommands.includes(c.name))
+        .filter((c) => !(c.botAdmin && !isAdmin))
+        .map((command) => ({
+            name: config.commandPrefix + command.name + (command.botAdmin ? ' - bot admin only' : ''),
             value: command.description,
-        };
-    })
-        .filter((f) => f !== null);
+        }));
 
-    helpEmbeded.fields = fields;
-    return sendMessage(message.channel, {
-        embed: helpEmbeded,
-    });
+    let partNum = 1;
+    const numParts = Math.ceil(fields.length / 25);
+
+    while (fields.length !== 0) {
+        helpEmbeded.title = `Botomir Commands (${partNum += 1}/${numParts})`;
+        helpEmbeded.fields = fields.splice(0, 25);
+        sendMessage(message.channel, {
+            embed: helpEmbeded,
+        });
+    }
 }
 
 function helpSpecific(message, command, config) {
