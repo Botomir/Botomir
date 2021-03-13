@@ -79,21 +79,6 @@ test('util.getRole', () => {
     expect(util.lookupRoleName(guild, null)).toEqual(undefined);
 });
 
-test('util.filterRole', () => {
-    const validRole = {
-        name: 'test',
-    };
-    const invalidRole1 = {
-        name: 'admin',
-    };
-
-    const invalidRole2 = null;
-
-    expect(util.filterRole(validRole)).toEqual(validRole);
-    expect(util.filterRole(invalidRole1)).toEqual(null);
-    expect(util.filterRole(invalidRole2)).toEqual(null);
-});
-
 test('util.trimDiscordID', () => {
     const trimDiscordID = util.__get__('trimDiscordID'); // eslint-disable-line no-underscore-dangle
     expect(trimDiscordID('<@!356956593293754368>')).toBe('356956593293754368'); // with nickname

@@ -1,26 +1,21 @@
 const source = require('rfr');
 
-const { sendMessage, filterRole, lookupRoleName, getMember } = source('bot/utils/util');
-const { changeRole } = source('bot/roles/roles');
+const { sendMessage, lookupRoleName, getMember } = source('bot/utils/util');
+const { changeRole, Mode } = source('bot/roles/roles');
 
-const privilegedRoles = [
-    'Admin',
-];
-
-function giveRoleCommand(message, args) {
+function giveRoleCommand(message, args, config) {
     const memberText = args.shift();
     const roleName = args.join(' ');
 
     const member = getMember(message.guild, memberText);
-    const role = filterRole(lookupRoleName(message.guild, roleName));
+    const role = lookupRoleName(message.guild, roleName);
 
     if (!role) {
         sendMessage(message.channel, 'Error: role not found');
-    } else if (privilegedRoles.includes(role)) {
-        sendMessage(message.channel, 'Error: cannot give a privileged role');
     } else {
-        changeRole(member, role, 'add');
-        sendMessage(message.channel, `Successfully added role \`${roleName}\` to user \`${member.user.username}\``);
+        changeRole(member, role, Mode.ADD, config.unassignableRoles)
+            .then(() => sendMessage(message.channel, `Successfully added role \`${roleName}\` to user \`${member.user.username}\``))
+            .catch((e) => sendMessage(message.channel, `Failed to added role \`${roleName}\` to user \`${member.user.username}\``));
     }
 }
 

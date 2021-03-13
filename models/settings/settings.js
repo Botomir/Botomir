@@ -70,6 +70,10 @@ class Settings {
         return this._model.mental_health;
     }
 
+    get unassignableRoles() {
+        return this._model.unassignable_roles;
+    }
+
     setGuild(guild) {
         if (typeof guild === 'string') {
             this._model.guild = guild;
@@ -150,6 +154,21 @@ class Settings {
     addCuteSub(sub) {
         if (typeof sub === 'string') {
             this._model.cute_subreddits.push(sub);
+        }
+        return this;
+    }
+
+    addUnassignable(roleName) {
+        if (typeof roleName === 'string') {
+            this._model.unassignable_roles.push(roleName);
+        }
+        return this;
+    }
+
+    removeUnassignable(roleName) {
+        if (typeof roleName === 'string') {
+            const index = this._model.unassignable_roles.indexOf(roleName);
+            if (index > -1) this._model.unassignable_roles.splice(index, 1);
         }
         return this;
     }

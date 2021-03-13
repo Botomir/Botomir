@@ -137,4 +137,7 @@ module.exports = new mongoose.Schema({
         type: [linkMappingSchema],
         default: mentalHealthDefaults,
     },
+    unassignable_roles: {
+        type: [String],
+    }
 });
