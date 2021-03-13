@@ -22,4 +22,21 @@ module.exports = {
     usage: '[<numSides>]',
     aliases: [],
     execute: diceRoleCommand,
+    docs: `#### Roll dice
+- Command: \`roll\`
+- Returns: randomly generated number from 1 to 6, or 1 to N
+- Example usage:
+\`\`\`
+User
+> !roll
+
+Botomir
+> 🎲 1
+
+User
+> !roll 100
+
+Botomir
+> 🎲 48
+\`\`\``,
 };

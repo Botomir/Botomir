@@ -12,10 +12,21 @@ function coinTossCommand(message) {
 
 module.exports = {
     args: false,
-    name: 'toss-coin',
+    name: 'flip',
     botAdmin: false,
     description: 'flips a fair coin',
     usage: '',
-    aliases: ['coin-flip'],
+    aliases: [],
     execute: coinTossCommand,
+    docs: `#### Flip coin
+- Command: \`toss-coin\`
+- Returns: \`heads\` or \`tails\`
+- Example usage:
+\`\`\`
+User
+> !toss-coin
+
+Botomir
+> heads
+\`\`\``,
 };
