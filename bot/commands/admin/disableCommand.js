@@ -21,11 +21,11 @@ function disableCommand(message, args, config) {
 
 module.exports = {
     args: 1,
-    name: 'disable-command',
+    name: 'disable',
     botAdmin: true,
     alwaysEnabled: true,
     description: 'disables a command on this server',
     usage: '<command>',
-    aliases: [],
+    aliases: ['disable-command'],
     execute: disableCommand,
 };
