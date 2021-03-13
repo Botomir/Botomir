@@ -16,4 +16,15 @@ module.exports = {
     usage: '<location>',
     aliases: [],
     execute: setDefaultWeatherLocation,
+    docs: `#### Weather Location
+- Command: \`set-weather-location\`
+- Returns: sets server weather location for weather command and sends success or failure message
+- Example usage:
+\`\`\`
+User
+> !set-weather-location Vancouver
+
+Botomir
+> Updated settings.
+\`\`\``,
 };
