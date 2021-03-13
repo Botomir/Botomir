@@ -1,15 +1,13 @@
 const source = require('rfr');
-const randomNumber = require('pure-random-number');
+const { rand: Random } = require('true-random');
 
 const { sendMessage } = source('bot/utils/util');
-const logger = source('bot/utils/logger');
+
+const generator = new Random();
 
 function coinTossCommand(message) {
-    return randomNumber(1, 2)
-        .then((number) => {
-            sendMessage(message.channel, `:coin: ${number === 1 ? 'heads' : 'tails'}`);
-        })
-        .catch((err) => logger.error('error tossing the coin:', err));
+    const number = Math.trunc(generator.integer(0, 2));
+    return sendMessage(message.channel, `:coin: ${number === 1 ? 'heads' : 'tails'}`);
 }
 
 module.exports = {
