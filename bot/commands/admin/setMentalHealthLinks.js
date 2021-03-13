@@ -28,4 +28,16 @@ module.exports = {
     usage: '<name> : <url>',
     aliases: ['set-mh'],
     execute: setMentalHealth,
+    docs: `#### Mental Health Links
+- Command: \`set-mental-health\`
+- Returns: Sends a message saying if the settings were updated successfully or not.
+- Example usage:
+\`\`\`
+User
+> !set-mental-health Mental Health Resources : https://www.ccmhs-ccsms.ca/mental-health-resources-1
+Mental Health Services : https://switchandclick.com/2020/01/23/guide-to-mechanical-keyboard-cases/
+
+Botomir
+> Updated settings.
+\`\`\``,
 };
