@@ -20,6 +20,7 @@ const StatisticsController = {
             Message.count(), // 5
             Role.count(), // 6
             Song.count(), // 7
+            Statistics.totalEvents(EventTypes.ROLE_REMOVED), // 8
         ]).then((values) => {
             res.render('statistics', {
                 numServer: Bot.client.guilds.cache.size,
@@ -28,6 +29,7 @@ const StatisticsController = {
                 messages: values[5].count,
                 numRoles: values[6].count,
                 rolesAssigned: values[4].count,
+                rolesRemoved: values[8].count,
                 numSongs: values[7].count,
                 numPlaylists: values[3].count,
                 goodBot: values[1].count,

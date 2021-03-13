@@ -30,17 +30,19 @@ function setRoleMessageCommand(message, args, config) {
     const parts = parseRoleMessage(args.join(' '));
 
     // lookup the actual emoji to use react with
-    const mappings = parts.mappings.map((m) => {
-        let reactionEmoji = m.emoji;
+    const mappings = parts.mappings
+        .filter((m) => !config.unassignableRoles.includes(m.roleName))
+        .map((m) => {
+            let reactionEmoji = m.emoji;
 
-        if (!emojiRegex().test(m.emoji)) {
-            reactionEmoji = message.guild.emojis.cache.find((emoji) => emoji.name === m.emoji);
-        }
+            if (!emojiRegex().test(m.emoji)) {
+                reactionEmoji = message.guild.emojis.cache.find((emoji) => emoji.name === m.emoji);
+            }
 
-        return {
-            reactionEmoji, mapping: m,
-        };
-    });
+            return {
+                reactionEmoji, mapping: m,
+            };
+        });
 
     let watchMessage;
     let prom;
@@ -109,6 +111,7 @@ module.exports = {
   - You can specify role reactions using the following format: \`<emoji> :<name of role>\`
   - To set a custom name for the role you can use the following format: \`<emoji> : <name of role> : <custom name>\`
   - This command can only be called after the \`set-role-channel\` command is executed
+  - Will filter out any roles that have been marked as unassignable on the server
 - Example usage:
 \`\`\`
 User
@@ -119,7 +122,7 @@ User
 : waffle: : role B
 \`\`\`
 
-And will auto-generate the following message: 
+And will auto-generate the following message:
 \`\`\`
 This is a really cool message about automated role assignment
 :fire: a super cool role

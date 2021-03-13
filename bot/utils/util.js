@@ -9,7 +9,7 @@ const discordIDRegex = /<[@#][&!]?([0-9]+)>/;
 function sendMessage(channel, message) {
     return channel.send(message)
         .then((m) => {
-            logger.info('Successfully sent message:', m);
+            logger.info(`Successfully sent message: ${m.cleanContent}`);
             return m;
         })
         .catch((e) => logger.error('could not send message:', e));
@@ -36,14 +36,6 @@ function getChannel(guild, channel) {
     return guild.channels.cache.get(str1Id);
 }
 
-// Roles Discord Bot does not have access to
-function filterRole(role) {
-    if (!role || role.name === 'admin') {
-        return null;
-    }
-    return role;
-}
-
 function lookupRoleName(guild, string) {
     return guild.roles.cache.find((role) => role.name === string);
 }
@@ -52,6 +44,5 @@ module.exports = {
     sendMessage,
     getChannel,
     lookupRoleName,
-    filterRole,
     getMember,
 };

@@ -4,34 +4,30 @@ const { Statistics, EventTypes } = source('models/statistics');
 
 const logger = source('bot/utils/logger');
 
-function removeRole(member, role) {
-    member.roles.remove(role)
-        .then((r) => logger.info('Successfully removed member role:', r))
-        .catch((e) => logger.error('Error: could not remove member role:', e));
-}
+const Mode = Object.freeze({
+    ADD: 'added',
+    REMOVE: 'removed',
+});
 
-function addRole(member, role) {
-    member.roles.add(role)
-        .then((r) => logger.info('Successfully added member role:', r))
-        .then(() => new Statistics()
-            .setGuild(member.guild.id)
-            .setEvent(EventTypes.ROLE_ASSIGNED)
-            .save())
+function recordRoleStats(serverID, mode) {
+    return new Statistics()
+        .setGuild(serverID)
+        .setEvent(mode === Mode.ADD ? EventTypes.ROLE_ASSIGNED : EventTypes.ROLE_REMOVED)
+        .save()
         .then(() => logger.info('statistics saved'))
-        .catch((e) => logger.error('Error: could not give member role:', e));
+        .catch((e) => logger.error('failed to save statistics', e));
 }
 
-function changeRole(member, role, mode) {
-    if (!role) {
-        logger.warn('role not found');
-        return;
-    }
+function changeRole(member, role, mode, unassignable = []) {
+    return new Promise(((resolve, reject) => {
+        if (unassignable.includes(role.name)) {
+            return reject(new Error(`attempting to change unassaignable role '${role.name}'`));
+        }
 
-    if (mode === 'add') {
-        addRole(member, role);
-    } else if (mode === 'remove') {
-        removeRole(member, role);
-    }
+        return resolve(mode === Mode.ADD ? member.roles.add(role) : member.roles.remove(role));
+    }))
+        .then((r) => logger.info(`Successfully ${mode} member role:`, r))
+        .then(() => recordRoleStats(member.guild.id, mode));
 }
 
 function findRole(member, roleName) {
@@ -41,4 +37,5 @@ function findRole(member, roleName) {
 module.exports = {
     findRole,
     changeRole,
+    Mode,
 };

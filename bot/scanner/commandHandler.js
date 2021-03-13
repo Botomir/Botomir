@@ -28,7 +28,7 @@ function commandHandler(message) {
     const { commands } = message.client;
     Settings.getServerSettings(message.guild.id)
         .then((config) => {
-            logger.verbose(config);
+            // logger.verbose(config);
             const prefix = config.commandPrefix;
             if (!message.content.startsWith(prefix)) return null;
 

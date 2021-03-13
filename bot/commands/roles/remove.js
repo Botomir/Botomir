@@ -1,25 +1,20 @@
 const source = require('rfr');
 
-const { sendMessage, filterRole, lookupRoleName } = source('bot/utils/util');
-const { changeRole } = source('bot/roles/roles');
+const { sendMessage, lookupRoleName } = source('bot/utils/util');
+const { changeRole, Mode } = source('bot/roles/roles');
 
-const privilegedRoles = [
-    'Admin',
-];
-
-function removeRoleCommand(message, args) {
+function removeRoleCommand(message, args, config) {
     const roleName = args.join(' ');
 
     const { member } = message;
-    const role = filterRole(lookupRoleName(message.guild, roleName));
+    const role = lookupRoleName(message.guild, roleName);
 
     if (!role) {
         sendMessage(message.channel, 'Error: role not found');
-    } else if (privilegedRoles.includes(role)) {
-        sendMessage(message.channel, 'Error: cannot remove a privileged role');
     } else {
-        changeRole(member, role, 'remove');
-        sendMessage(message.channel, `Successfully removed role \`${roleName}\` from user \`${member.user.username}\``);
+        changeRole(member, role, Mode.REMOVE, config.unassignableRoles)
+            .then(() => sendMessage(message.channel, `Successfully removed role from \`${member.user.username}\``))
+            .catch((e) => sendMessage(message.channel, `Failed to removed role from \`${member.user.username}\` - ${e.message}`));
     }
 }
 
