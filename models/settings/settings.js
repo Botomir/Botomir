@@ -66,6 +66,10 @@ class Settings {
         return this._model.disabled_commands;
     }
 
+    get mentalHealth() {
+        return this._model.mental_health;
+    }
+
     setGuild(guild) {
         if (typeof guild === 'string') {
             this._model.guild = guild;
@@ -162,6 +166,13 @@ class Settings {
             const index = this._model.disabled_commands.indexOf(command);
 
             if (index > -1) this._model.disabled_commands.splice(index, 1);
+        }
+        return this;
+    }
+
+    setMentalHealthLinks(links) {
+        if (Array.isArray(links)) {
+            this._model.mental_health = links;
         }
         return this;
     }

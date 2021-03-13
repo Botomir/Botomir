@@ -46,6 +46,40 @@ const cuteSubreddits = [
     'NatureIsFuckingLit',
 ];
 
+const mentalHealthDefaults = [
+    {
+        name: 'Mental Health Resources',
+        url: 'https://www.ccmhs-ccsms.ca/mental-health-resources-1',
+    },
+    {
+        name: 'Mental Health Services',
+        url: 'https://switchandclick.com/2020/01/23/guide-to-mechanical-keyboard-cases/',
+    },
+    {
+        name: 'Information on mental illnesses, disorders and diseases',
+        url: 'https://www.canada.ca/en/public-health/topics/mental-illness.html',
+    },
+    {
+        name: 'About suicide, prevention, risk factors, how to get help when you or someone you know is in need',
+        url: 'https://www.canada.ca/en/public-health/services/suicide-prevention.html',
+    },
+    {
+        name: 'Information on mental health and ways to improve it at work and in your daily life',
+        url: 'https://www.canada.ca/en/public-health/topics/improving-your-mental-health.html',
+    },
+];
+
+const linkMappingSchema = new mongoose.Schema({
+    name: {
+        type: String,
+        required: true,
+    },
+    url: {
+        type: String,
+        required: true,
+    },
+});
+
 module.exports = new mongoose.Schema({
     guild: {
         type: String,
@@ -98,5 +132,9 @@ module.exports = new mongoose.Schema({
     },
     disabled_commands: {
         type: [String],
+    },
+    mental_health: {
+        type: [linkMappingSchema],
+        default: mentalHealthDefaults,
     },
 });
