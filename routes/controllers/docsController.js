@@ -2,7 +2,7 @@ const source = require('rfr');
 const MarkdownIt = require('markdown-it');
 const fs = require('fs');
 
-const { setupCommands } = source('lib/scanner/commandHandler');
+const { setupCommands } = source('bot/scanner/commandHandler');
 const md = new MarkdownIt();
 
 const gettingStartedMD = fs.readFileSync('docs/GettingStarted.md', 'utf-8');
