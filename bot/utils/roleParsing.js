@@ -24,7 +24,7 @@ function splitHeader(text) {
 function parseRoleMessage(text) {
     const parts = splitHeader(text);
 
-    const roleRegex = /^\s*((?:<:)?[^:]*(?::[0-9]+>)?)\s+:\s+([^:]*)(?:\s+:\s+(.*))?$/;
+    const roleRegex = /^\s*((?:<:)?[^:]*(?::[0-9]+>)?)\s*:\s*([^:]*)(?:\s*:\s*(.*))?$/;
 
     const mappings = parts.body.split('\n')
         .map((l) => roleRegex.exec(l))
