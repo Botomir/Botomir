@@ -3,6 +3,12 @@
 Many servers choose to have roles that are assigned upon a user reacting to a message. You can set this up for your 
 server using Botomir.
 
+To do so, Botomir requires the following permissions:
+- Send messages
+- Manage messages
+- Add reactions
+- Read message history
+
 ### Set Role Channel
 
 You must specify a role channel for Botomir to generate its message.
@@ -32,7 +38,7 @@ User
 
 ### How to update role reactions
 
-You can update this message by calling the `set-roles` command again with your new message and removing the old message. 
+You can update this message by calling the `set-roles` command again with your new message and Botomir will update the message.
 
 ### Common errors
 

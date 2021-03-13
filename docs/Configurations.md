@@ -4,7 +4,7 @@ There are a number of ways you can configure Botomir to suit it to your server's
 
 #### Command Prefix
 
-The default command prefix is `!`, however you can change it by using the the `set-prefix` command.
+The default command prefix is `!`, however you can change it by using the the `prefix` command.
 
 #### Enable Command
 
@@ -21,7 +21,7 @@ You can configure the meme subreddits used in the `!meme` using the `add-meme-su
 
 #### Cute subreddits
 
-You can configure the meme subreddits used in the `!cute` using the `add-meme-sub` command
+You can configure the meme subreddits used in the `!cute` using the `add-cute-sub` command
 
 #### Good bot response
 

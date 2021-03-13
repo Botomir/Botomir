@@ -6,8 +6,11 @@ To add Botomir to your Discord server, go to [Botomir.com](https://botomir.com) 
 
 - Manage server
 - Change nickname
+- Manage nicknames
 - View channels
 - Send messages
+- Manage messages
+- Add reactions
 - Embedded links
 - Read message history
 
