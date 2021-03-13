@@ -22,12 +22,12 @@ function enableCommand(message, args, config) {
 
 module.exports = {
     args: 1,
-    name: 'enable-command',
+    name: 'enable',
     botAdmin: true,
     alwaysEnabled: true,
     description: 'enables a command that has previously been disabled on this server',
     usage: '<command>',
-    aliases: [],
+    aliases: ['enable-command'],
     execute: enableCommand,
     docs: `#### Enable Command
 - Command: \`!enable-command <name of command>\`
