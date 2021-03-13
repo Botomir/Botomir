@@ -1,5 +1,9 @@
 const emojiRegex = require('emoji-regex/RGI_Emoji.js');
 
+// note this is an unsafe regex, and can lead to a denial of service.
+// fix this in a future version
+const roleRegex = /^\s*((?:<:)?[^:]*(?::[0-9]+>)?)\s*:\s*([^:]*)(?:\s*:\s*(.*))?$/;
+
 function parseEmoji(text) {
     const discordRegex = /^<:([^:]+):[0-9]+>$/;
 
@@ -23,8 +27,6 @@ function splitHeader(text) {
 // { header: str, mappings: [ {emoji: 'str', roleName: 'str', label: 'str'}]
 function parseRoleMessage(text) {
     const parts = splitHeader(text);
-
-    const roleRegex = /^\s*((?:<:)?[^:]*(?::[0-9]+>)?)\s*:\s*([^:]*)(?:\s*:\s*(.*))?$/;
 
     const mappings = parts.body.split('\n')
         .map((l) => roleRegex.exec(l))
