@@ -8,55 +8,55 @@ const logger = source('bot/utils/logger');
 function weatherEmbedMessage(result) {
     return {
         embed:
-        {
-            color: 0x0099ff,
-            title: 'Weather',
-            fields: [
-                {
-                    name: 'Location',
-                    value: result.location.name,
-                },
-                {
-                    name: 'Date',
-                    value: result.current.date,
-                },
-                {
-                    name: 'Overview',
-                    value: result.current.skytext,
-                    inline: true,
-                },
-                {
-                    name: 'Temperature',
-                    value: result.current.temperature,
-                    inline: true,
-                },
-                {
-                    name: 'Feels Like',
-                    value: result.current.feelslike,
-                    inline: true,
-                },
-                {
-                    name: 'Humidity',
-                    value: result.current.humidity,
-                    inline: true,
-                },
-                {
-                    name: 'Windspeed',
-                    value: result.current.windspeed,
-                    inline: true,
-                },
-                {
-                    name: 'Low',
-                    value: result.forecast[0].low,
-                    inline: true,
-                },
-                {
-                    name: 'High',
-                    value: result.forecast[0].high,
-                    inline: true,
-                },
-            ],
-        },
+            {
+                color: 0x0099ff,
+                title: 'Weather',
+                fields: [
+                    {
+                        name: 'Location',
+                        value: result.location.name,
+                    },
+                    {
+                        name: 'Date',
+                        value: result.current.date,
+                    },
+                    {
+                        name: 'Overview',
+                        value: result.current.skytext,
+                        inline: true,
+                    },
+                    {
+                        name: 'Temperature',
+                        value: result.current.temperature,
+                        inline: true,
+                    },
+                    {
+                        name: 'Feels Like',
+                        value: result.current.feelslike,
+                        inline: true,
+                    },
+                    {
+                        name: 'Humidity',
+                        value: result.current.humidity,
+                        inline: true,
+                    },
+                    {
+                        name: 'Windspeed',
+                        value: result.current.windspeed,
+                        inline: true,
+                    },
+                    {
+                        name: 'Low',
+                        value: result.forecast[0].low,
+                        inline: true,
+                    },
+                    {
+                        name: 'High',
+                        value: result.forecast[0].high,
+                        inline: true,
+                    },
+                ],
+            },
     };
 }
 
@@ -84,4 +84,15 @@ module.exports = {
     usage: '[location]',
     aliases: [],
     execute: weatherCommand,
+    docs: `#### Weather
+- Command: \`weather\`
+- Returns: an embedded message with the weather information for a city
+- Example usage:
+\`\`\`
+User
+> !weather
+
+Botomir
+> <embedded weather message>
+\`\`\``,
 };

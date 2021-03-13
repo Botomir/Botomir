@@ -31,4 +31,21 @@ module.exports = {
     usage: '<role-name>',
     aliases: [],
     execute: removeRoleCommand,
+    docs: `#### Remove role
+- Command: \`remove\`
+- Args:
+    - requires \`<name of role>\` as only argument
+- Returns: specified role assignment is removed from user and a success or failure message is sent\
+- Limitations:
+  - role must be assignable, cannot be a privileged role or a higher role than Botomir
+  - role must be spelt exactly as it appears
+  - do not specify role with \`@\` tag
+- Example usage:
+\`\`\`
+User
+> !remove minecraft
+
+Botomir
+> Successfully removed role \`minecraft\` from user \`User\`
+\`\`\``,
 };

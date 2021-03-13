@@ -14,4 +14,15 @@ module.exports = {
     usage: '',
     aliases: [],
     execute: pingCommand,
+    docs: `#### Ping
+- Command: \`ping\`
+- Returns: \`Pong\`
+- Example usage:
+\`\`\`
+User
+> !ping
+
+Botomir
+> Pong
+\`\`\``,
 };

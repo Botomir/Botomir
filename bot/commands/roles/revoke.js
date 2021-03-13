@@ -32,4 +32,23 @@ module.exports = {
     usage: '@<user> <role-name>',
     aliases: [],
     execute: revokeRoleCommand,
+    docs: `#### Revoke role from user
+- Command: \`revoke\`
+- Args:
+  - requires \`@user\` as first argument
+  - requires \`<name of role>\`as second argument
+- Returns: specified role assignment is removed from specified user and a success or failure message is sent
+- Limitations:
+  - user must be specified with \`@\` tag
+  - role must be assignable, cannot be a privileged role or a higher role than Botomir\n'
+  - role must be spelt exactly as it appears\n'
+  - do not specify role with \`@\` tag
+- Example usage:\n'
+\`\`\`
+User
+> !revoke @User minecraft
+
+Botomir
+> Successfully removed role \`minecraft\` from user \`User\`
+\`\`\``,
 };

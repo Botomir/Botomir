@@ -21,4 +21,15 @@ module.exports = {
     usage: '',
     aliases: [],
     execute: docsCommand,
+    docs: `#### Docs
+- Command: \`docs\`
+- Returns: an embedded message with a link to Botomir.com/documentation.
+- Example usage:
+\`\`\`
+User
+> !docs
+
+Botomir
+> <embedded message with link to Botmir's documentation>
+\`\`\``,
 };

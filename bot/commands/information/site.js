@@ -21,4 +21,15 @@ module.exports = {
     usage: '',
     aliases: [],
     execute: siteCommand,
+    docs: `#### Site
+- Command: \`site\`
+- Returns: an embedded message with a link to Botomir.com
+- Example usage:
+\`\`\`
+User
+> !site
+
+Botomir
+> <embedded message with link to Botomir.com>
+\`\`\``,
 };

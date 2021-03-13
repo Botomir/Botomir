@@ -32,4 +32,23 @@ module.exports = {
     usage: '@<user> <role-name>',
     aliases: [],
     execute: giveRoleCommand,
+    docs: `#### Assign user role
+- Command: \`give\`
+- Args:
+    - requires \`@user\` as first argument
+    - requires \`<name of role>\` as second argument
+- Returns: specified user is assigned the specified role and a success or failure message is sent
+- Limitations:
+  - user must be specified with \`@\` tag
+  - role must be assignable, cannot be a privileged role or a higher role than Botomir
+  - role must be spelt exactly as it appears
+  - do not specify role with \`@\` tag
+- Example usage:
+\`\`\`
+User
+> !give @User minecraft
+
+Botomir
+> Successfully added role \`minecraft\` to user \`User\`
+\`\`\``,
 };

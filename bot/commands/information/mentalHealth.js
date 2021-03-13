@@ -25,4 +25,15 @@ module.exports = {
     usage: '',
     aliases: ['mh'],
     execute: mentalHealthCommand,
+    docs: `#### Mental Health
+- Command: \`mental-health\`
+- Returns: embedded message with mental health resources
+- Example usage:
+\`\`\`
+User
+> !mental-health
+
+Botomir
+> <embedded message with link to mental-health resources>
+\`\`\``,
 };

@@ -21,4 +21,15 @@ module.exports = {
     usage: '',
     aliases: [],
     execute: sourceCommand,
+    docs: `#### Source
+- Command: \`source\`
+- Returns: an embedded message with a link to Botomir's source code on GitHub
+- Example usage:
+\`\`\`
+User
+> !source
+
+Botomir
+> <embedded message with link to source code>
+\`\`\``,
 };

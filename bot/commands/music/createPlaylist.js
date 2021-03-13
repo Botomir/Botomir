@@ -17,7 +17,8 @@ function generateContributions(tracks) {
         counts.set(track.authorID, (counts.get(track.authorID) || 0) + 1);
     });
 
-    return Array.from(counts).sort((a, b) => b[1] - a[1]);
+    return Array.from(counts)
+        .sort((a, b) => b[1] - a[1]);
 }
 
 // Create the message payload with playlist link and who added the most songs
@@ -68,4 +69,12 @@ module.exports = {
     usage: '[time period]',
     aliases: [],
     execute: generatePlaylistCommand,
+    docs: `#### Create playlist
+- Command: \`!createplaylist\`
+- Returns: creates a new playlist with recently posted songs in the music channel, can also specify time period
+- Example usage:
+\`\`\`
+User
+> !create-playlist
+\`\`\``,
 };

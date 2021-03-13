@@ -1,0 +1,51 @@
+.docs-header {
+    padding-top: 4%;
+    padding-bottom: 4%;
+}
+
+.docs-header h1 {
+    padding-bottom: 2%;
+}
+
+.docs {
+    text-align: left;
+    background: #242526;
+    padding: 1% 2% 2%;
+    border-radius: 5px;
+}
+
+.docs h2 {
+    padding-top: 2%;
+    padding-bottom: 2%;
+    text-align: center;
+}
+
+.docs a {
+    color: white;
+}
+
+.docs code {
+    color: #B14EB5;
+    background-color: #181818;
+    padding: 4px;
+}
+
+.docs pre {
+    padding-left: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: #181818;
+    border-radius: 5px;
+}
+
+.docs pre code {
+    color: white;
+}
+
+.docs hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #B14EB5;
+    margin: 1em 0;
+}

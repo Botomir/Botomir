@@ -76,4 +76,15 @@ module.exports = {
     usage: '',
     aliases: [],
     execute: keebCommand,
+    docs: `#### Mechanical Keyboard
+- Command: \`keeb\`
+- Returns: embedded message with mechanical keyboard resources
+- Example usage:
+\`\`\`
+User
+> !keeb
+
+Botomir
+> <embedded message with links to mechanical keyboard resources>
+\`\`\``,
 };

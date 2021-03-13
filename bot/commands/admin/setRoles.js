@@ -101,4 +101,28 @@ module.exports = {
     usage: 'text to parse into the reaction roles',
     aliases: [],
     execute: setRoleMessageCommand,
+    docs: `#### Set role mappings for reaction assignment
+- Command: \`!set-roles <message>\`
+- Returns: Botomir will autogenerate a role assignment message to the specified role watch channel
+- Specifications
+  - The role assignment can start with a message and be followed by \`---\` to specify role reactions
+  - You can specify role reactions using the following format: \`<emoji> :<name of role>\`
+  - To set a custom name for the role you can use the following format: \`<emoji> : <name of role> : <custom name>\`
+  - This command can only be called after the \`set-role-channel\` command is executed
+- Example usage:
+\`\`\`
+User
+!set-roles This is a really cool message about automated role assignment
+
+---
+: fire: : role A : a super cool role
+: waffle: : role B
+\`\`\`
+
+And will auto-generate the following message: 
+\`\`\`
+This is a really cool message about automated role assignment
+:fire: a super cool role
+:waffle: role B
+\`\`\``,
 };

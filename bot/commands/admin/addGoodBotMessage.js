@@ -29,4 +29,15 @@ module.exports = {
     usage: '<message>',
     aliases: [],
     execute: addGoodBotCommand,
+    docs: `#### Add good bot response
+- Command: \`!add-goodbot <custom response>\`
+- Returns: new response to user sending \`good bot\` and success or failure message is sent
+- Example usage:
+\`\`\`
+User:
+> !add-goodbot <3
+
+Botomir
+> Settings updated.
+\`\`\``,
 };

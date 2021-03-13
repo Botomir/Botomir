@@ -17,4 +17,15 @@ module.exports = {
     usage: '',
     aliases: [],
     execute: authenticateSpotify,
+    docs: `#### Authenticate Spotify
+- Command: \`!authspotify\`
+- Returns: DM is sent to caller with link to authenticate Spotify
+- Example usage:
+\`\`\`
+User
+> !authspotify
+
+Botomir
+> <sends DM with authentication link>
+\`\`\``,
 };

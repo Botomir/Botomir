@@ -13,7 +13,8 @@ function setRoleChannelCommand(message, args, config) {
 
     logger.info('updating the server to send the reaction messages to channel:', channel);
 
-    return config.setWelcomeChannel(channel.id).save()
+    return config.setWelcomeChannel(channel.id)
+        .save()
         .then(() => sendMessage(message.channel, 'Settings updated.'))
         .catch((err) => sendMessage(message.channel, `Error Something went wrong: ${err}`));
 }
@@ -26,4 +27,17 @@ module.exports = {
     usage: '<channel>',
     aliases: [],
     execute: setRoleChannelCommand,
+    docs: `#### Set channel for role reactions
+- Command: \`set-role-channel\`
+- Args:
+    - requires \`<channel tag>\` as only argument
+- Returns: Role watch channel set and success or failure message is sen
+- Example usage
+\`\`\`
+User
+> !set-role-channel #welcome
+
+Botomir
+> Settings updated.
+\`\`\``,
 };

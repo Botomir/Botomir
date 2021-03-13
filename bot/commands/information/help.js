@@ -25,7 +25,8 @@ function helpGeneral(message, commands, config) {
             name: command.name + (command.botAdmin ? ' - bot admin only' : ''),
             value: command.description,
         };
-    }).filter((f) => f !== null);
+    })
+        .filter((f) => f !== null);
 
     helpEmbeded.fields = fields;
     return sendMessage(message.channel, {
@@ -37,7 +38,7 @@ function helpSpecific(message, command, config) {
     // check if the command is disabled
     if (config.disabledCommands.includes(command.name)) {
         return sendMessage(message.channel, `${command.name} is not allowed on this server, `
-                + 'contact one of the server admins if you think this is a mistake!');
+            + 'contact one of the server admins if you think this is a mistake!');
     }
 
     // dont provide help if the user is not authorized for that command
@@ -47,25 +48,30 @@ function helpSpecific(message, command, config) {
 
     const fields = [
         {
-            name: 'Name', value: command.name,
+            name: 'Name',
+            value: command.name,
         }, {
-            name: 'Bot Admin Only', value: command.botAdmin ? 'yes' : 'no',
+            name: 'Bot Admin Only',
+            value: command.botAdmin ? 'yes' : 'no',
         },
     ];
 
     if (command.aliases && command.aliases.length > 0) {
         fields.push({
-            name: 'Aliases', value: command.aliases.join(', '),
+            name: 'Aliases',
+            value: command.aliases.join(', '),
         });
     }
     if (command.description) {
         fields.push({
-            name: 'Description', value: command.description,
+            name: 'Description',
+            value: command.description,
         });
     }
     if (command.usage) {
         fields.push({
-            name: 'Usage', value: `${config.commandPrefix}${command.name} ${command.usage}`,
+            name: 'Usage',
+            value: `${config.commandPrefix}${command.name} ${command.usage}`,
         });
     }
 
@@ -83,7 +89,7 @@ function helpCommand(message, args, config) {
     }
     const name = args[0].toLowerCase();
     const command = commands.get(name)
-    || commands.find((c) => c.aliases && c.aliases.includes(name));
+        || commands.find((c) => c.aliases && c.aliases.includes(name));
 
     if (!command) return sendMessage(message.channel, `${name} is not a valid command!`);
 
@@ -99,4 +105,26 @@ module.exports = {
     usage: '[command name]',
     aliases: ['commands'],
     execute: helpCommand,
+    docs: `#### Help
+- Command: \`help\`
+- Args:
+    - optional, \`<command>\`
+- Returns:
+    - list of commands available to Botomir\n'
+    - specific information about the passed in command if command specified\n'
+- Example usage:
+\`\`\`
+User
+'> !help
+
+Botomir
+> <embedded help message>
+\`\`\`
+\`\`\`
+User
+> !help ping
+
+Botomir
+> <embedded message with information about ping command>
+\`\`\``,
 };

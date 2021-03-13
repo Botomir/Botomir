@@ -18,4 +18,18 @@ module.exports = {
     usage: '',
     aliases: [],
     execute: cuteCommand,
+    docs: `#### Cute
+- Command: \`cute\`
+- Returns: an embedded link to a post from a set of default subreddits
+- How to configure:
+  - \`botomir-admin\` role required to configure
+  - \`!add-cute-sub subreddit\` will add a specified subreddit to the list of subreddits meme will randomly pull from
+- Example usage:
+\`\`\`
+User
+> !cute
+
+Botomir
+> <embedded message with image of cute animal>
+\`\`\``,
 };

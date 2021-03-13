@@ -21,4 +21,15 @@ module.exports = {
     usage: '',
     aliases: [],
     execute: puppyCommand,
+    docs: `#### Puppy
+- Command: \`puppy\`
+- Returns: an embedded link to a post from r/puppy
+- Example usage:
+\`\`\`
+User
+> !puppy
+
+Botomir
+> <embedded message with puppy image>
+\`\`\``,
 };

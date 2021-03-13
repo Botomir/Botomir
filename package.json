@@ -43,6 +43,7 @@
     "express-handlebars": "^5.2.0",
     "helmet": "^4.2.0",
     "lodash": "^4.17.20",
+    "markdown-it": "^12.0.4",
     "memejs": "^1.2.3",
     "mongoose": "^5.10.16",
     "parse-duration": "^0.4.4",

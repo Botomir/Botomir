@@ -24,4 +24,18 @@ module.exports = {
     usage: '',
     aliases: [],
     execute: memeCommand,
+    docs: `#### Meme
+- Command: \`meme\`
+- Returns: an embedded link to a post from a set of default subreddits
+- How to configure:
+  - \`botomir-admin\` role required to configure
+  - \`!add-meme-sub subreddit\` will add a specified subreddit to the list of subreddits meme will randomly pull from
+- Example usage:
+\`\`\`
+User
+> !meme
+
+Botomir
+> <embedded message with meme>
+\`\`\``,
 };
