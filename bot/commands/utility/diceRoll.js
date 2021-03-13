@@ -5,7 +5,6 @@ const { sendMessage } = source('bot/utils/util');
 const logger = source('bot/utils/logger');
 
 function diceRoleCommand(message, args) {
-
     const sides = Number.parseInt(args[0], 10) || 6;
 
     if (sides <= 1) return sendMessage(message.channel, `Sorry I can't figure out how to role a ${sides} die.`);
