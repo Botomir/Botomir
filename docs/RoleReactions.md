@@ -3,7 +3,7 @@
 Many servers choose to have roles that are assigned upon a user reacting to a message. You can set this up for your 
 server using Botomir.
 
-To do so, Botomir requires the following permissions:
+To do so, Botomir requires the following permissions for the specified role channel:
 - Send messages
 - Manage messages
 - Add reactions

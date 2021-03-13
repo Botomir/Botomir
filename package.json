@@ -47,7 +47,6 @@
     "memejs": "^1.2.3",
     "mongoose": "^5.10.16",
     "parse-duration": "^0.4.4",
-    "require-extension": "^0.0.4",
     "rfr": "^1.2.3",
     "spotify-web-api-node": "^5.0.0",
     "weather-promise": "^2.0.3",
