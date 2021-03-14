@@ -1,0 +1,179 @@
+<div class="container center-content" style="padding: 0">
+    <h1 class="statistics-header-padding">Settings for '{{guildName}}'</h1>
+
+    <form method="post">
+
+        <div class="form-group">
+
+        <div class="row">
+            <div class="col">
+                <label for="roles">Select a Bot Admin role</label>
+                <div>
+                    <select id="roles" name="roles" aria-describedby="rolesHelpBlock" required="required" class="custom-select">
+                        <option value="-1">unset</option>
+                        {{#each roles}}
+                            <option value="{{id}}" {{#if isAdmin}} selected {{/if}}>{{name}}</option>
+                        {{/each}}
+                    </select>
+                    <span id="rolesHelpBlock" class="form-text text-muted">Select a server to configure</span>
+                </div>
+
+            </div>
+            <div class="col">
+                <label for="roleWatchChannel">Select a Role watch channel</label>
+                <div>
+                    <select id="roleWatchChannel" name="roleWatchChannel" aria-describedby="roleWatchChannelHelpBlock" required="required" class="custom-select">
+                        <option value="-1">unset</option>
+                        {{#each channels}}
+                            <option value="{{id}}" {{#if isRoleWatch}} selected {{/if}}>{{name}} </option>
+                        {{/each}}
+                    </select>
+                    <span id="roleWatchHelpBlock" class="form-text text-muted">Select a channel to post the role reaction message to</span>
+                </div>
+            </div>
+
+            <div class="col">
+                <label for="musicWatchChannel">Select a Music watch channel</label>
+                <div>
+                    <select id="musicWatchChannel" name="musicWatchChannel" aria-describedby="musicWatchChannelHelpBlock" required="required" class="custom-select">
+                        <option value="-1">unset</option>
+                        {{#each channels}}
+                            <option value="{{id}}" {{#if isMusic}} selected {{/if}}>{{name}} </option>
+                        {{/each}}
+                    </select>
+                    <span id="musicWatchHelpBlock" class="form-text text-muted">Select a channel to watch for spotify tracks in</span>
+                </div>
+            </div>
+
+        </div>
+        </div>
+
+        <div class="form-group">
+            <div class="row">
+                <div class="col-2">
+                    <label for="commandPreix">Command prefix</label>
+                    <input id="commandPreix" name="commandPreix" placeholder="!" value="{{config.commandPreix}}" type="text" class="form-control">
+                </div>
+
+                <div class="col-2">
+                    <label for="tempUnit">Tempature unit</label>
+                    <select id="tempUnit" name="tempUnit" required="required" class="custom-select">
+                        <option value="C" >Celsius</option>
+                        <option value="F" >Fahrenheit</option>
+                    </select>
+                </div>
+
+                <div class="col-2">
+                    <label for="weatherLocation">Weather Location</label>
+                    <input id="weatherLocation" name="weatherLocation" placeholder="city, Province" value="{{config.weatherLocation}}" type="text" class="form-control">
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="playlistName">Spotify Playlist Name</label>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">
+                        <i class="fa fa-spotify"></i>
+                    </div>
+                </div>
+                <input id="playlistName" name="playlistName" placeholder="playlistName" type="text" aria-describedby="playlistNameHelpBlock" value="{{config.playlistName}}" class="form-control">
+                <div class="input-group-append">
+                    <div class="input-group-text">- date</div>
+                </div>
+            </div>
+            <span id="playlistNameHelpBlock" class="form-text text-muted">the name for creates Spotify playlists</span>
+        </div>
+
+        <div class="form-group">
+            <label for="playlistDescription">Playlist Description</label>
+            <input id="playlistDescription" name="playlistDescription" placeholder="description" type="text" value="{{config.playlistDescription}}" class="form-control">
+        </div>
+
+
+
+        <div class="form-group">
+            <label>Enabled Commands</label>
+            <div>
+                {{#each commands}}
+                <div class="form-check col-3">
+                    <input name="enabledCommands" id="enabledCommands_{{@index}}" {{#if enabled}} checked="checked" {{/if}} type="checkbox" aria-describedby="enabledCommandsHelpBlock" class="form-check-input" value="{{name}}">
+                    <label for="enabledCommands_{{@index}}" class="form-check-label">{{name}}</label>
+                </div>
+                {{/each}}
+
+                <span id="enabledCommandsHelpBlock" class="form-text text-muted">Only checked commands will be enabled on this server</span>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label>Assingable Roles</label>
+            <div>
+                {{#each roles}}
+                <div class="form-check">
+                    <input name="assignableRoles" id="enabledCommands_{{@index}}" {{#if assignable}} checked="checked" {{/if}} type="checkbox" aria-describedby="enabledCommandsHelpBlock" class="form-check-input" value="{{id}}">
+                    <label for="assignableRoles_{{@index}}" class="form-check-label">{{name}}</label>
+                </div>
+                {{/each}}
+
+                <span id="assignableRolesHelpBlock" class="form-text text-muted">Only checked roles can be assigned by Botomir on this server</span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Mental Health supports</label>
+            {{#each config.mentalHealth}}
+                <div class="form-row">
+                    <div class="form-group col-5">
+                        <input id="mentalHealth_name_{{@index}}" name="mentalHealthName_{{@index}}" type="text" class="form-control" value="{{name}}">
+                    </div>
+                    <div class="form-group  col">
+                        <input id="mentalHealth_url_{{@index}}" name="mentalHealthURL_{{@index}}" type="text" class="form-control" value="{{url}}">
+                    </div>
+                </div>
+            {{/each}}
+        </div>
+
+
+        <div class="form-group">
+            <label>Cute subreddits</label>
+            {{#each config.cuteSubs}}
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <div class="input-group-text">r/</div>
+                  </div>
+                  <input id="cuteSubreddit_{{@index}}" name="cuteSubreddit_{{@index}}" placeholder="puppy" type="text" class="form-control" value="{{this}}">
+                  <div class="input-group-append">
+                    <div class="input-group-text">
+                      <i class="fa fa-reddit-alien"></i>
+                    </div>
+                  </div>
+                </div>
+            {{/each}}
+        </div>
+
+        <div class="form-group">
+            <label>Meme subreddits</label>
+            {{#each config.memeSubs}}
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <div class="input-group-text">r/</div>
+                  </div>
+                  <input id="memeSubreddit_{{@index}}" name="memeSubreddit_{{@index}}" placeholder="programmerhumor" type="text" class="form-control" value="{{this}}">
+                  <div class="input-group-append">
+                    <div class="input-group-text">
+                      <i class="fa fa-reddit-alien"></i>
+                    </div>
+                  </div>
+                </div>
+            {{/each}}
+        </div>
+
+        <div class="form-group row">
+            <div class="offset-4 col-8">
+                <button name="submit" type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </div>
+    </div>
