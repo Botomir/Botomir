@@ -6,9 +6,15 @@ const HomeController = require('./controllers/homeController');
 const DocsController = require('./controllers/docsController');
 const StatisticsController = require('./controllers/statisticsController');
 const SpotifyController = require('./controllers/spotifyController');
-const NotFoundController = require('./controllers/notFoundController');
 const AboutController = require('./controllers/aboutController');
 const { SettingsController, ConfigController } = require('./controllers/settingsController');
+const {
+    catchNotFound,
+    logErrors,
+    clientErrorHandler,
+    errorHandler,
+} = require('./errorHandler');
+
 
 const logger = source('bot/utils/logger');
 
@@ -35,15 +41,15 @@ router.get('/about', AboutController.get);
 router.get('/settings', checkAuth, SettingsController.get);
 router.get('/configure', checkAuth, ConfigController.get);
 
-router.use(NotFoundController.get);
-
-// eslint-disable-next-line no-unused-vars
-router.use((err, req, res, next) => {
-    logger.error(err);
-
-    res.status(500).render('500', {
-        errorMessage: err.message,
-    });
+router.get('/info',(req, res, next) => {
+    next({status: 403, message: 'not authorized'})
 });
+
+
+// error handlers, these MUST be last in the chain
+router.use(catchNotFound);
+router.use(logErrors);
+router.use(clientErrorHandler);
+router.use(errorHandler);
 
 module.exports = router;
