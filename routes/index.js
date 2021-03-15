@@ -15,7 +15,6 @@ const {
     errorHandler,
 } = require('./errorHandler');
 
-
 const logger = source('bot/utils/logger');
 
 const router = express();
@@ -41,10 +40,11 @@ router.get('/about', AboutController.get);
 router.get('/settings', checkAuth, SettingsController.get);
 router.get('/configure', checkAuth, ConfigController.get);
 
-router.get('/info',(req, res, next) => {
-    next({status: 403, message: 'not authorized'})
+router.get('/info', (req, res, next) => {
+    next({
+        status: 403, message: 'not authorized',
+    });
 });
-
 
 // error handlers, these MUST be last in the chain
 router.use(catchNotFound);
