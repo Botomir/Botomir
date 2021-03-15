@@ -41,8 +41,8 @@ router.use(NotFoundController.get);
 router.use((err, req, res, next) => {
     logger.error(err);
 
-    res.status(500).send({
-        error: 'Something failed!',
+    res.status(500).render('500', {
+        errorMessage: err.message,
     });
 });
 
