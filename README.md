@@ -19,6 +19,8 @@ Install node modules `npm install`
 
 Copy the `template.env` file to `.env`, and set all of the values for those fields.
 
+Add husky for commit hooks `npm run prepare`
+
 Run locally using `node app.js`
 
 ### Required Permissions
