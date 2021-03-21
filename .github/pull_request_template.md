@@ -1,6 +1,8 @@
-Describe what the changes are meant to address.
+Describe what the changes are meant to address. If the implementation is non trivial, please also include a short overview.
 
-If the implementation is non trivial, please also include a short overview.
+
+
+---
 
 <!-- Tags (fill and keep as many as applicable): -->
 
