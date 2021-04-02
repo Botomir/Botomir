@@ -36,13 +36,10 @@ mongoose.connect(process.env.DATABASE_URL, {
     .then((r) => logger.info(`Successfully connected to MongoDB: ${r}`))
     .catch((e) => logger.error(`Error starting up mongo: ${e}`));
 
-
-
 process.on('SIGTERM', () => {
-  logger.info('SIGTERM signal received: closing HTTP server');
+    logger.info('SIGTERM signal received: closing HTTP server');
 
-  server.close(() => logger.info('HTTP server closed'));
-  Bot.client.destroy();
-  mongoose.connection.close().then(() => logger.info('database connection closed'))
-
+    server.close(() => logger.info('HTTP server closed'));
+    Bot.client.destroy();
+    mongoose.connection.close().then(() => logger.info('database connection closed'));
 });
