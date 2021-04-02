@@ -39,7 +39,11 @@ function helpGeneral(message, commands, config, category) {
             value: command.description,
         }));
 
-    sendChunks(message.channel, fields, category);
+    if (fields.length === 0) {
+        sendMessage(message.channel, 'oh no! There are no commands here!!');
+    } else {
+        sendChunks(message.channel, fields, category);
+    }
 }
 
 function helpSpecific(message, command, config) {
