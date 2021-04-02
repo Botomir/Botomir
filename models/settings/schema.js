@@ -120,7 +120,7 @@ module.exports = new mongoose.Schema({
     bot_admin_role: {
         type: String,
         required: true,
-        default: 'botmir-admin',
+        default: 'botomir-admin',
     },
     meme_subreddits: {
         type: [String],
