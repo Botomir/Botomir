@@ -147,7 +147,7 @@ module.exports = {
 
     // The glob patterns Jest uses to detect test files
     // testMatch: [
-    //   "**/__tests__/**/*.[jt]s?(x)",
+    //   "**/test/**/*.[jt]s?(x)",
     //   "**/?(*.)+(spec|test).[tj]s?(x)"
     // ],
 
@@ -157,7 +157,8 @@ module.exports = {
     // ],
 
     // The regexp pattern or array of patterns that Jest uses to detect test files
-    // testRegex: [],
+    testRegex: '/test/.*\\.(test|spec)?\\.js$',
+
 
     // This option allows the use of a custom results processor
     // testResultsProcessor: undefined,
