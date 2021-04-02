@@ -22,7 +22,7 @@ if (port == null || port === '') {
     port = 8300;
 }
 
-app.listen(port, () => {
+const server = app.listen(port, () => {
     Bot.client.login(process.env.DISCORD_TOKEN);
     logger.info(`Server started on port ${port}`);
 });
@@ -35,3 +35,14 @@ mongoose.connect(process.env.DATABASE_URL, {
 })
     .then((r) => logger.info(`Successfully connected to MongoDB: ${r}`))
     .catch((e) => logger.error(`Error starting up mongo: ${e}`));
+
+
+
+process.on('SIGTERM', () => {
+  logger.info('SIGTERM signal received: closing HTTP server');
+
+  server.close(() => logger.info('HTTP server closed'));
+  Bot.client.destroy();
+  mongoose.connection.close().then(() => logger.info('database connection closed'))
+
+});
