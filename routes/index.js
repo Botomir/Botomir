@@ -11,7 +11,7 @@ const { SettingsController, ConfigController } = require('./controllers/settings
 const {
     catchNotFound,
     logErrors,
-    clientErrorHandler,
+    notImplemented,
     errorHandler,
 } = require('./errorHandler');
 
@@ -39,6 +39,7 @@ router.get('/authorize', SpotifyController.get);
 router.get('/about', AboutController.get);
 router.get('/settings', checkAuth, SettingsController.get);
 router.get('/configure', checkAuth, ConfigController.get);
+router.post('/configure', checkAuth, notImplemented);
 
 router.get('/info', (req, res, next) => {
     next({
@@ -49,7 +50,6 @@ router.get('/info', (req, res, next) => {
 // error handlers, these MUST be last in the chain
 router.use(catchNotFound);
 router.use(logErrors);
-router.use(clientErrorHandler);
 router.use(errorHandler);
 
 module.exports = router;

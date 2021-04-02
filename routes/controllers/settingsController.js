@@ -37,8 +37,6 @@ const ConfigController = {
             .then((config) => {
                 const canManage = user.roles.cache.find((r) => r.name === config.botAdminRole);
 
-                console.log(user.roles.cache);
-                console.log(canManage);
                 if (!canManage) {
                     return next({
                         status: 403, message: 'not authorized',
