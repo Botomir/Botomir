@@ -37,6 +37,9 @@ module.exports = new mongoose.Schema({
     trackURI: {
         type: String,
         required: true,
+        maxLength: 36,
+        minLength: 36,
+        validate: (uri) => /^spotify:track:[0-9a-zA-Z]{22}$/.test(uri),
     },
     timestamp: {
         type: Date,
