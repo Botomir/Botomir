@@ -13,8 +13,15 @@ module.exports = new mongoose.Schema({
     guild: {
         type: String,
         maxLength: 20,
+        required: true,
         validate: snowflakeValidator,
     },
-    message: String,
-    botMode: String,
+    message: {
+        type:String,
+        required: true,
+    },
+    botMode: {
+        type: String,
+        required: true,
+    },
 });
