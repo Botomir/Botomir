@@ -83,6 +83,13 @@ class Audit {
         return this;
     }
 
+    setCommand(command) {
+        if (typeof command === 'string') {
+            this._model.command = command;
+        }
+        return this;
+    }
+
     setEvent(event) {
         if (typeof event === 'string') {
             this._model.event = event;
