@@ -6,8 +6,8 @@
 
 const mongoose = require('mongoose');
 const source = require('rfr');
-const { snowflakeValidator } = source('models/util');
 
+const { snowflakeValidator } = source('models/util');
 
 module.exports = new mongoose.Schema({
     guild: {

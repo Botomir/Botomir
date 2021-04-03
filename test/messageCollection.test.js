@@ -104,6 +104,163 @@ describe('messages database', () => {
         return expect(message.save()).rejects.toThrow('required');
     });
 
+    test('invalid guildID - server name', () => {
+        const message = new Message()
+            .setGuild('botomir testing server')
+            .setChannel(fields.channel)
+            .setMessage(fields.message)
+            .setAuthor(fields.user)
+            .setContent(fields.content);
+
+        expect(message._mongoId).toBeDefined();
+
+        return expect(message.save()).rejects.toThrow('validation failed');
+    });
+
+    test('invalid guildID - id too long', () => {
+        const message = new Message()
+            .setGuild('788091112476770353788091112476770353')
+            .setChannel(fields.channel)
+            .setMessage(fields.message)
+            .setAuthor(fields.user)
+            .setContent(fields.content);
+
+        expect(message._mongoId).toBeDefined();
+
+        return expect(message.save()).rejects.toThrow('validation failed');
+    });
+
+    test('invalid guildID - object', () => {
+        const message = new Message()
+            .setGuild({
+                id: '12345',
+            })
+            .setChannel(fields.channel)
+            .setMessage(fields.message)
+            .setAuthor(fields.user)
+            .setContent(fields.content);
+
+        expect(message._mongoId).toBeDefined();
+
+        return expect(message.save()).rejects.toThrow('validation failed');
+    });
+
+    test('invalid channelID - channel name', () => {
+        const message = new Message()
+            .setGuild(fields.guild)
+            .setChannel('test-bot')
+            .setMessage(fields.message)
+            .setAuthor(fields.user)
+            .setContent(fields.content);
+
+        expect(message._mongoId).toBeDefined();
+
+        return expect(message.save()).rejects.toThrow('validation failed');
+    });
+
+    test('invalid channelID - id too long', () => {
+        const message = new Message()
+            .setGuild(fields.guild)
+            .setChannel('793573047550345237793573047550345237')
+            .setMessage(fields.message)
+            .setAuthor(fields.user)
+            .setContent(fields.content);
+
+        expect(message._mongoId).toBeDefined();
+
+        return expect(message.save()).rejects.toThrow('validation failed');
+    });
+
+    test('invalid channelID - object', () => {
+        const message = new Message()
+            .setGuild(fields.guild)
+            .setChannel({
+                id: '12345',
+            })
+            .setMessage(fields.message)
+            .setAuthor(fields.user)
+            .setContent(fields.content);
+
+        expect(message._mongoId).toBeDefined();
+        return expect(message.save()).rejects.toThrow('validation failed');
+    });
+
+    test('missing messageID - message text', () => {
+        const message = new Message()
+            .setGuild(fields.guild)
+            .setChannel(fields.channel)
+            .setMessage('a super cool message about bots')
+            .setAuthor(fields.user)
+            .setContent(fields.content);
+
+        expect(message._mongoId).toBeDefined();
+        return expect(message.save()).rejects.toThrow('validation failed');
+    });
+
+    test('missing messageID - id too long', () => {
+        const message = new Message()
+            .setGuild(fields.guild)
+            .setChannel(fields.channel)
+            .setMessage('827754923844042802827754923844042802')
+            .setAuthor(fields.user)
+            .setContent(fields.content);
+
+        expect(message._mongoId).toBeDefined();
+        return expect(message.save()).rejects.toThrow('validation failed');
+    });
+
+    test('missing messageID - object', () => {
+        const message = new Message()
+            .setGuild(fields.guild)
+            .setChannel(fields.channel)
+            .setMessage({
+                id: '12345',
+            })
+            .setAuthor(fields.user)
+            .setContent(fields.content);
+
+        expect(message._mongoId).toBeDefined();
+        return expect(message.save()).rejects.toThrow('validation failed');
+    });
+
+    test('missing userID - user name', () => {
+        const message = new Message()
+            .setGuild(fields.guild)
+            .setChannel(fields.channel)
+            .setMessage(fields.message)
+            .setAuthor('botomir')
+            .setContent(fields.content);
+
+        expect(message._mongoId).toBeDefined();
+        return expect(message.save()).rejects.toThrow('validation failed');
+    });
+
+    test('missing userID - id too long', () => {
+        const message = new Message()
+            .setGuild(fields.guild)
+            .setChannel(fields.channel)
+            .setMessage(fields.message)
+            .setAuthor('356984848574971914356984848574971914')
+            .setContent(fields.content);
+
+        expect(message._mongoId).toBeDefined();
+        return expect(message.save()).rejects.toThrow('validation failed');
+    });
+
+    test('missing userID - object', () => {
+        const message = new Message()
+            .setGuild(fields.guild)
+            .setChannel(fields.channel)
+            .setMessage(fields.message)
+            .setAuthor({
+                id: '12345',
+            })
+            .setContent(fields.content);
+
+        expect(message._mongoId).toBeDefined();
+        return expect(message.save()).rejects.toThrow('validation failed');
+    });
+
     test('missing message content', async () => {
         const message = new Message()
             .setGuild(fields.guild)

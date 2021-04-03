@@ -6,6 +6,7 @@
 
 const mongoose = require('mongoose');
 const source = require('rfr');
+
 const { snowflakeValidator } = source('models/util');
 
 // move this later
@@ -95,12 +96,12 @@ module.exports = new mongoose.Schema({
         maxLength: 20,
         validate: snowflakeValidator,
     },
-    welcome_channel:  {
+    welcome_channel: {
         type: String,
         maxLength: 20,
         validate: snowflakeValidator,
     },
-    music_channel:  {
+    music_channel: {
         type: String,
         maxLength: 20,
         validate: snowflakeValidator,

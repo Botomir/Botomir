@@ -6,10 +6,11 @@
 
 const mongoose = require('mongoose');
 const source = require('rfr');
+
 const { snowflakeValidator } = source('models/util');
 
 module.exports = new mongoose.Schema({
-    guild:  {
+    guild: {
         type: String,
         maxLength: 20,
         validate: snowflakeValidator,
