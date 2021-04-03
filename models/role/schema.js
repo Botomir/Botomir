@@ -12,9 +12,16 @@ const { snowflakeValidator } = source('models/util');
 module.exports = new mongoose.Schema({
     guild: {
         type: String,
+        required: true,
         maxLength: 20,
         validate: snowflakeValidator,
     },
-    emoji_name: String,
-    role_name: String,
+    emoji_name: {
+        type: String,
+        required: true,
+    },
+    role_name: {
+        type: String,
+        required: true,
+    },
 });
