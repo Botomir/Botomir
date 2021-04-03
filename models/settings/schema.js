@@ -5,6 +5,8 @@
  */
 
 const mongoose = require('mongoose');
+const source = require('rfr');
+const { snowflakeValidator } = source('models/util');
 
 // move this later
 const memeSubreddits = [
@@ -85,10 +87,24 @@ module.exports = new mongoose.Schema({
         type: String,
         index: true,
         unique: true,
+        maxLength: 20,
+        validate: snowflakeValidator,
     },
-    role_watch_message: String,
-    welcome_channel: String,
-    music_channel: String,
+    role_watch_message: {
+        type: String,
+        maxLength: 20,
+        validate: snowflakeValidator,
+    },
+    welcome_channel:  {
+        type: String,
+        maxLength: 20,
+        validate: snowflakeValidator,
+    },
+    music_channel:  {
+        type: String,
+        maxLength: 20,
+        validate: snowflakeValidator,
+    },
     command_prefix: {
         type: String,
         minLength: 1,

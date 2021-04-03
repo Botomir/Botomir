@@ -36,7 +36,6 @@ describe('messages database', () => {
 
     beforeEach(() => mongoose.connection.db.dropDatabase());
 
-
     test('Create and save message', async () => {
         const message = new Message()
             .setGuild(fields.guild)
@@ -110,7 +109,7 @@ describe('messages database', () => {
             .setGuild(fields.guild)
             .setChannel(fields.channel)
             .setMessage(fields.message)
-            .setAuthor(fields.user)
+            .setAuthor(fields.user);
 
         expect(message._mongoId).toBeDefined();
         const savedMessage = await message.save();
@@ -171,5 +170,4 @@ describe('messages database', () => {
         expect(res).toHaveProperty('count', 2);
         expect(res).toHaveProperty('database', 'Message');
     });
-
 });
