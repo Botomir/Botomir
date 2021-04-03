@@ -6,8 +6,8 @@
   "scripts": {
     "run": "node app.js",
     "start": "nodemon app.js",
-    "test": "jest",
-    "coverage": "jest --collect-coverage",
+    "test": "jest --runInBand",
+    "coverage": "jest --runInBand --collect-coverage",
     "lint": "eslint .",
     "lint-fix": "eslint --fix .",
     "prepare": "husky install"

@@ -44,7 +44,6 @@ describe('Statistics database', () => {
             .setDetails('some cool details');
 
         expect(statsEvent._mongoId).toBeDefined();
-
         const savedEvent = await statsEvent.save();
 
         // Object Id should be defined when successfully saved to MongoDB.
@@ -61,8 +60,39 @@ describe('Statistics database', () => {
             .setDetails('some cool details');
 
         expect(statsEvent._mongoId).toBeDefined();
-
         return expect(statsEvent.save()).rejects.toThrow('required');
+    });
+
+    test('invalid guild - server name', () => {
+        const statsEvent = new Statistics()
+            .setGuild('test botomir server')
+            .setEvent(EventTypes.PLAYLIST_CREATED)
+            .setDetails('some cool details');
+
+        expect(statsEvent._mongoId).toBeDefined();
+        return expect(statsEvent.save()).rejects.toThrow('validation failed');
+    });
+
+    test('invalid guild - id too long', () => {
+        const statsEvent = new Statistics()
+            .setGuild('788091112476770353788091112476770353')
+            .setEvent(EventTypes.PLAYLIST_CREATED)
+            .setDetails('some cool details');
+
+        expect(statsEvent._mongoId).toBeDefined();
+        return expect(statsEvent.save()).rejects.toThrow('validation failed');
+    });
+
+    test('invalid guild - object', () => {
+        const statsEvent = new Statistics()
+            .setGuild({
+                id: '1234',
+            })
+            .setEvent(EventTypes.PLAYLIST_CREATED)
+            .setDetails('some cool details');
+
+        expect(statsEvent._mongoId).toBeDefined();
+        return expect(statsEvent.save()).rejects.toThrow('validation failed');
     });
 
     test('missing event', () => {
@@ -71,7 +101,6 @@ describe('Statistics database', () => {
             .setDetails('some cool details');
 
         expect(statsEvent._mongoId).toBeDefined();
-
         return expect(statsEvent.save()).rejects.toThrow('required');
     });
 
@@ -81,7 +110,6 @@ describe('Statistics database', () => {
             .setEvent(EventTypes.PLAYLIST_CREATED);
 
         expect(statsEvent._mongoId).toBeDefined();
-
         const savedEvent = await statsEvent.save();
 
         expect(savedEvent.timestamp).toBeDefined();

@@ -105,6 +105,120 @@ describe('Audit database', () => {
         return expect(auditEvent.save()).rejects.toThrow('required');
     });
 
+    test('invalid guild - server name', () => {
+        const auditEvent = new Audit()
+            .setGuild('botomir test server')
+            .setChannel(fields.channel)
+            .setUser(fields.user)
+            .setCommand(fields.command)
+            .setEvent(Events.MESSAGE_DELETED)
+            .setDetails('some cool details');
+
+        return expect(auditEvent.save()).rejects.toThrow('validation failed');
+    });
+
+    test('invalid guild - id too long', () => {
+        const auditEvent = new Audit()
+            .setGuild('788091112476770353788091112476770353')
+            .setChannel(fields.channel)
+            .setUser(fields.user)
+            .setCommand(fields.command)
+            .setEvent(Events.MESSAGE_DELETED)
+            .setDetails('some cool details');
+
+        return expect(auditEvent.save()).rejects.toThrow('validation failed');
+    });
+
+    test('invalid guild - object', () => {
+        const auditEvent = new Audit()
+            .setGuild({
+                id: '1235',
+            })
+            .setChannel(fields.channel)
+            .setUser(fields.user)
+            .setCommand(fields.command)
+            .setEvent(Events.MESSAGE_DELETED)
+            .setDetails('some cool details');
+
+        return expect(auditEvent.save()).rejects.toThrow('validation failed');
+    });
+
+    test('invalid channel - channel name', () => {
+        const auditEvent = new Audit()
+            .setGuild(fields.guild)
+            .setChannel('test-channel')
+            .setUser(fields.user)
+            .setCommand(fields.command)
+            .setEvent(Events.MESSAGE_DELETED)
+            .setDetails('some cool details');
+
+        return expect(auditEvent.save()).rejects.toThrow('validation failed');
+    });
+
+    test('invalid channel - id too long', () => {
+        const auditEvent = new Audit()
+            .setGuild(fields.guild)
+            .setChannel('793573047550345237793573047550345237')
+            .setUser(fields.user)
+            .setCommand(fields.command)
+            .setEvent(Events.MESSAGE_DELETED)
+            .setDetails('some cool details');
+
+        return expect(auditEvent.save()).rejects.toThrow('validation failed');
+    });
+
+    test('invalid channel - object', () => {
+        const auditEvent = new Audit()
+            .setGuild(fields.guild)
+            .setChannel({
+                id: '1234',
+            })
+            .setUser(fields.user)
+            .setCommand(fields.command)
+            .setEvent(Events.MESSAGE_DELETED)
+            .setDetails('some cool details');
+
+        return expect(auditEvent.save()).rejects.toThrow('validation failed');
+    });
+
+    test('invalid user - user name', () => {
+        const auditEvent = new Audit()
+            .setGuild(fields.guild)
+            .setChannel(fields.channel)
+            .setUser('botomir')
+            .setCommand(fields.command)
+            .setEvent(Events.MESSAGE_DELETED)
+            .setDetails('some cool details');
+
+        return expect(auditEvent.save()).rejects.toThrow('validation failed');
+    });
+
+    test('invalid user - id too long', () => {
+        const auditEvent = new Audit()
+            .setGuild(fields.guild)
+            .setChannel(fields.channel)
+            .setUser('788093095543177216788093095543177216')
+            .setCommand(fields.command)
+            .setEvent(Events.MESSAGE_DELETED)
+            .setDetails('some cool details');
+
+        return expect(auditEvent.save()).rejects.toThrow('validation failed');
+    });
+
+    test('invalid user - object', () => {
+        const auditEvent = new Audit()
+            .setGuild(fields.guild)
+            .setChannel(fields.channel)
+            .setUser({
+                id: '1234',
+            })
+            .setCommand(fields.command)
+            .setEvent(Events.MESSAGE_DELETED)
+            .setDetails('some cool details');
+
+        return expect(auditEvent.save()).rejects.toThrow('validation failed');
+    });
+
     test('missing command', () => {
         const auditEvent = new Audit()
             .setGuild(fields.guild)
