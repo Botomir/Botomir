@@ -17,7 +17,7 @@ module.exports = new mongoose.Schema({
         validate: snowflakeValidator,
     },
     message: {
-        type:String,
+        type: String,
         required: true,
     },
     botMode: {
