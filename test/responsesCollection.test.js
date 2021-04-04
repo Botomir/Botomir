@@ -44,7 +44,7 @@ describe('responses database', () => {
 
     beforeEach(() => mongoose.connection.db.dropDatabase());
 
-    test('Create and save responses discord', async () => {
+    test('Create and save responses', async () => {
         const response = new Responses()
             .setGuild(fields1.guild)
             .setMessage(fields1.message)

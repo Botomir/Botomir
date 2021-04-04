@@ -88,6 +88,7 @@ module.exports = new mongoose.Schema({
         type: String,
         index: true,
         unique: true,
+        required: true,
         maxLength: 20,
         validate: snowflakeValidator,
     },
@@ -127,6 +128,7 @@ module.exports = new mongoose.Schema({
         uppercase: true,
         maxLength: 1,
         required: true,
+        enum: ['C', 'F'],
         default: 'C',
     },
     weather_location: {
