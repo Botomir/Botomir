@@ -1005,3 +1005,78 @@ describe('add / remove cute subreddit', () => {
         ]);
     });
 });
+
+describe('settings static functions', () => {
+    beforeAll(() => {
+        const mongooseOpts = {
+            useNewUrlParser: true,
+            useFindAndModify: false,
+            useCreateIndex: true,
+            useUnifiedTopology: true,
+        };
+        return mongoose.connect(process.env.MONGO_URL, mongooseOpts);
+    });
+
+    afterAll(() => mongoose.connection.close());
+
+    beforeEach(() => mongoose.connection.db.dropDatabase());
+
+    test('get all none', async () => {
+        const res = await Settings.getAll();
+        expect(res).toHaveLength(0);
+    });
+
+    test('get all one', async () => {
+        const settings1 = new Settings()
+            .setGuild(fields.guild);
+
+        await settings1.save();
+
+        const res = await Settings.getAll();
+        expect(res).toHaveLength(1);
+        expect(res[0]).toBeInstanceOf(Settings);
+    });
+
+    test('get all multiple', async () => {
+        const settings1 = new Settings()
+            .setGuild(fields.guild);
+
+        const settings2 = new Settings()
+            .setGuild('698257589716123781');
+
+        await settings1.save();
+        await settings2.save();
+
+        const res = await Settings.getAll();
+        expect(res).toHaveLength(2);
+        expect(res[0]).toBeInstanceOf(Settings);
+        expect(res[1]).toBeInstanceOf(Settings);
+    });
+
+    test('lookup server settings none', async () => {
+        const res = await Settings.getServerSettings('788091112476770353');
+        expect(res).toBeInstanceOf(Settings);
+        expect(res.guildID).toStrictEqual('788091112476770353');
+
+        const res2 = await Settings.getAll();
+        expect(res2).toHaveLength(1);
+    });
+
+    test('lookup server settings multiple', async () => {
+        const settings1 = new Settings()
+            .setGuild('788091112476770353');
+
+        const settings2 = new Settings()
+            .setGuild('698257589716123781');
+
+        await settings1.save();
+        await settings2.save();
+
+        const res = await Settings.getServerSettings('788091112476770353');
+        expect(res).toBeInstanceOf(Settings);
+        expect(res.guildID).toStrictEqual('788091112476770353');
+
+        const res2 = await Settings.getAll();
+        expect(res2).toHaveLength(2);
+    });
+});
