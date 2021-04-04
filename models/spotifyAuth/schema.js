@@ -12,10 +12,20 @@ const { snowflakeValidator } = source('models/util');
 module.exports = new mongoose.Schema({
     user: {
         type: String,
+        required: true,
         maxLength: 20,
         validate: snowflakeValidator,
     },
-    access_token: String,
-    refresh_token: String,
-    expires_at: Date,
+    access_token: {
+        type: String,
+        required: true,
+    },
+    refresh_token: {
+        type: String,
+        required: true,
+    },
+    expires_at: {
+        type: Date,
+        required: true,
+    },
 });
