@@ -1,8 +1,6 @@
 const util = require('../bot/utils/util');
 
-
 describe('test sendmessage', () => {
-
     test('underlying channel.send resolves', async () => {
         const channelSuccess = {
             send: (m) => {
