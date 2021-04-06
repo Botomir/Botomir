@@ -16,6 +16,7 @@ const logger = createLogger({
                 format.timestamp(),
                 myFormat,
             ),
+            silent: process.env.NODE_ENV === 'test',
         }),
     ],
 });
