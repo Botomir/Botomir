@@ -10,7 +10,7 @@ const helpEmbeded = {
     },
     timestamp: new Date(),
     footer: {
-        text: 'For any questions contact @Colonel Pineapple#3164',
+        text: `For any questions contact ${process.env.BOT_MODS || '@Colonel Pineapple#3164'}`,
     },
 };
 
