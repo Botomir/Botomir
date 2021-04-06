@@ -1,11 +1,7 @@
-const source = require('rfr');
-
-const Bot = source('bot');
-
 const HomeController = {
     get(req, res) {
         res.render('home', {
-            clientID: Bot.client.user.id,
+            clientID: process.env.DISCORD_CLIENT_ID,
         });
     },
 };
