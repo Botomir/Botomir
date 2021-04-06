@@ -91,6 +91,7 @@ const EventTypes = {
     BAD_BOT: 'BAD_BOT',
     PUPPYS_SHOWN: 'PUPPYS_SHOWN',
     MEMES_SENT: 'MEMES_SENT',
+    MESSAGES_DELETED: 'MESSAGES_DELETED',
 };
 
 module.exports = {
