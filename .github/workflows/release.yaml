@@ -78,6 +78,10 @@ jobs:
           ENVKEY_SPOTIFY_CLIENT_ID: ${{ secrets.SPOTIFY_CLIENT_ID }}
           ENVKEY_SPOTIFY_CLIENT_SECRET: ${{ secrets.SPOTIFY_CLIENT_SECRET }}
           ENVKEY_BASE_URL: ${{ secrets.BASE_URL }}
+          ENVKEY_BOT_MODS: ${{ secrets.BOT_MODS }}
+          ENVKEY_SESSION_SECRET: ${{ secrets.SESSION_SECRET }}
+          ENVKEY_DISCORD_CLIENT_ID: ${{ secrets.DISCORD_CLIENT_ID }}
+          ENVKEY_DISCORD_CLIENT_SECRET: ${{ secrets.DISCORD_CLIENT_SECRET }}
           ENVKEY_MODE: 'production'
 
       - uses: akhileshns/heroku-deploy@v3.7.8 # This is the action
