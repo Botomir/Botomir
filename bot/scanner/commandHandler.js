@@ -14,14 +14,19 @@ function setupCommands(client) {
 
     const commandFolders = fs.readdirSync('./bot/commands');
 
+    const categories = [];
     commandFolders.forEach((folder) => {
         const commandFiles = fs.readdirSync(`./bot/commands/${folder}`).filter((file) => file.endsWith('.js'));
+        categories.push(folder);
 
         commandFiles.forEach((file) => {
             const command = source(`bot/commands/${folder}/${file}`);
+            command.category = folder;
             client.commands.set(command.name, command);
         });
     });
+
+    client.categories = categories;
 }
 
 function commandHandler(message) {
