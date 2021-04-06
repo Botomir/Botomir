@@ -7,7 +7,7 @@ const logger = createLogger({
 
     transports: [
         new transports.Console({
-            level: process.env.MODE === 'production' ? 'info' : 'silly',
+            level: process.env.NODE_ENV === 'production' ? 'info' : 'silly',
             format: format.combine(
                 format.colorize({
                     all: true,
