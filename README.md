@@ -3,6 +3,7 @@
 ![David](https://img.shields.io/david/SoorajModi/Discord-Bot?style=plastic)
 ![David](https://img.shields.io/david/dev/SoorajModi/Discord-Bot?style=plastic)
 ![Lines of code](https://img.shields.io/tokei/lines/github/SoorajModi/Discord-Bot?style=plastic)
+![Docker Pulls](https://img.shields.io/docker/pulls/marshallasch/botomir?style=plastic)
 ![GitHub](https://img.shields.io/github/license/SoorajModi/Discord-Bot?style=plastic)
 
 # Botomir
