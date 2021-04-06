@@ -63,3 +63,24 @@ jobs:
           heroku_email: ${{secrets.HEROKU_APP_EMAIL}}
           buildpack: "https://github.com/heroku/heroku-buildpack-nodejs"
           env_file: ".env"
+
+  docker:
+    runs-on: ubuntu-latest
+    environment: deployment
+    steps:
+      -
+        name: Checkout
+        uses: actions/checkout@v2
+      -
+        name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      -
+        name: Build and push
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          push: true
+          tags: marshallasch/botomir:latest
