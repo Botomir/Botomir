@@ -88,7 +88,7 @@ app.get('/logout', (req, res) => {
 app.use(router);
 
 const port = !process.env.PORT ? 8300 : process.env.PORT;
-app.listen(port, () => {
+const server = app.listen(port, () => {
     logger.info(`Server started on port ${port}`);
 });
 
@@ -106,7 +106,13 @@ mongoose.connect(process.env.DATABASE_URL, {
 process.on('SIGTERM', () => {
     logger.info('SIGTERM signal received: closing HTTP server');
 
-    server.close(() => logger.info('HTTP server closed'));
-    Bot.client.destroy();
-    mongoose.connection.close().then(() => logger.info('database connection closed'));
+    server.close(() => {
+        logger.info('Http server closed.');
+
+        Bot.client.destroy();
+        mongoose.connection.close(false, () => {
+            logger.info('MongoDb connection closed.');
+            process.exit(0);
+        });
+    });
 });
