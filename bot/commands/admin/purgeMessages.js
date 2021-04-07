@@ -19,7 +19,7 @@ function purgeCommand(message, args) {
         .then((messages) => {
             logger.warn(`deleted ${messages.size} from channel ${message.channel.name} in ${message.guild.name} by ${message.author.name}`);
             // TODO add an audir log here once auditing is added
-            sendMessage(message.channel, `:skull_crossbones: Poof ${messages.size} messages were successfully deleted`);
+            sendMessage(message.channel, `:skull_crossbones: Poof ${messages.size} messages were successfully deleted by ${message.author}`);
             return new Statistics()
                 .setGuild(message.guild.id)
                 .setEvent(EventTypes.MESSAGES_DELETED)
