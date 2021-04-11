@@ -1,10 +1,10 @@
-![Node.js CI testing](https://github.com/SoorajModi/Discord-Bot/workflows/testing/badge.svg)
-![Node.js CI linter](https://github.com/SoorajModi/Discord-Bot/workflows/linter/badge.svg)
-![David](https://img.shields.io/david/SoorajModi/Discord-Bot?style=plastic)
-![David](https://img.shields.io/david/dev/SoorajModi/Discord-Bot?style=plastic)
-![Lines of code](https://img.shields.io/tokei/lines/github/SoorajModi/Discord-Bot?style=plastic)
+![Node.js CI testing](https://github.com/SoorajModi/botomir/workflows/testing/badge.svg)
+![Node.js CI linter](https://github.com/SoorajModi/botomir/workflows/linter/badge.svg)
+![David](https://img.shields.io/david/SoorajModi/botomir?style=plastic)
+![David](https://img.shields.io/david/dev/SoorajModi/botomir?style=plastic)
+![Lines of code](https://img.shields.io/tokei/lines/github/SoorajModi/botomir?style=plastic)
 ![Docker Pulls](https://img.shields.io/docker/pulls/marshallasch/botomir?style=plastic)
-![GitHub](https://img.shields.io/github/license/SoorajModi/Discord-Bot?style=plastic)
+![GitHub](https://img.shields.io/github/license/SoorajModi/botomir?style=plastic)
 
 # Botomir
 
