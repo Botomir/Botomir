@@ -218,6 +218,28 @@ class Settings {
         return this._model.save().then(() => this);
     }
 
+    toAPI() {
+        return {
+            guild: this._model.guild,
+            roleWatchMessage: this._model.role_watch_message,
+            roleWatchChannel: this._model.welcome_channel,
+            musicWatchChannel: this._model.music_channel,
+            commandPrefix: this._model.command_prefix,
+            playlistName: this._model.playlist_name,
+            playlistDescription: this._model.playlist_description,
+            tempatureUnit: this._model.tempature_unit,
+            weatherLocation: this._model.weather_location,
+            memeSubs: this._model.meme_subreddits,
+            cuteSubs: this._model.cute_subreddits,
+            botAdminRole: this._model.bot_admin_role,
+            disabledCommands: this._model.disabled_commands,
+            mentalHealth: this._model.mental_health.map((m) => ({
+                name: m.name, url: m.url,
+            })),
+            unassignableRoles: this._model.unassignable_roles,
+        };
+    }
+
     static getServerSettings(serverID) {
         return SettingModels.findOne({
             guild: serverID,
