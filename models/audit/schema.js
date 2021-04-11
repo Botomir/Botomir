@@ -22,28 +22,31 @@ module.exports = new mongoose.Schema({
         maxLength: 20,
         validate: snowflakeValidator,
     },
-    messsage: {
+    user: {
         type: String,
         required: true,
         maxLength: 20,
         validate: snowflakeValidator,
     },
-    author: {
+    command: {
         type: String,
         required: true,
-        maxLength: 20,
-        validate: snowflakeValidator,
-    },
-    trackURI: {
-        type: String,
-        required: true,
-        maxLength: 36,
-        minLength: 36,
-        validate: (uri) => /^spotify:track:[0-9a-zA-Z]{22}$/.test(uri),
     },
     timestamp: {
         type: Date,
         default: Date.now,
     },
-
+    event: {
+        type: String,
+        required: true,
+    },
+    details: {
+        type: String,
+        required: false,
+    },
+    status: {
+        type: Number,
+        required: true,
+        default: 0,
+    },
 });
