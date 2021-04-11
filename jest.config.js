@@ -94,6 +94,8 @@ module.exports = {
 
     // A preset that is used as a base for Jest's configuration
     // preset: undefined,
+    "preset": "@shelf/jest-mongodb",
+
 
     // Run tests from one or more projects
     // projects: undefined,
