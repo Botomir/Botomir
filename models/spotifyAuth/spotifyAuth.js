@@ -19,6 +19,7 @@ class Spotify {
     }
 
     // this is the spotify user id not the discord user
+    // this actually is the discord user, not the spotify user, (I am 99% sure of this)
     get user() {
         return this._model.user;
     }
@@ -92,7 +93,7 @@ class Spotify {
 
         return auth.save().then((r) => {
             logger.info('Successfully written the spotify authentication tokens to database:', r);
-            return this;
+            return r;
         });
     }
 }
