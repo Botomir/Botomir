@@ -73,7 +73,7 @@ function purgeCommand(message, args) {
                 .setDetails(e.message)
                 .save()
                 .then(() => logger.info('saved audit event'))
-                .catch((e) => logger.error('failed to save audit event', e));
+                .catch((err) => logger.error('failed to save audit event', err));
 
             logger.error('failed to delete messages', e);
             sendMessage(message.channel, `Messages failed to delete - ${e.message}`);
