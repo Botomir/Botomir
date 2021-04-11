@@ -7,7 +7,8 @@ const DocsController = require('./controllers/docsController');
 const StatisticsController = require('./controllers/statisticsController');
 const SpotifyController = require('./controllers/spotifyController');
 const AboutController = require('./controllers/aboutController');
-const { SettingsController, ConfigController } = require('./controllers/settingsController');
+const { settingsMiddleware, SettingsController, ConfigController, ServerSettingsController } = require('./controllers/settingsController');
+const { WebhookController, WebhookNewController } = require('./controllers/webhookController');
 const {
     catchNotFound,
     logErrors,
@@ -37,9 +38,14 @@ router.get('/documentation', DocsController.get);
 router.get('/statistics', StatisticsController.get);
 router.get('/authorize', SpotifyController.get);
 router.get('/about', AboutController.get);
+
 router.get('/settings', checkAuth, SettingsController.get);
-router.get('/configure', checkAuth, ConfigController.get);
-router.post('/configure', checkAuth, notImplemented);
+router.get('/settings/:serverID', checkAuth, settingsMiddleware, ServerSettingsController.get);
+router.get('/settings/:serverID/configure', checkAuth, settingsMiddleware, ConfigController.get);
+router.post('/settings/:serverID/configure', checkAuth, settingsMiddleware, notImplemented);
+router.get('/settings/:serverID/webhooks', checkAuth, settingsMiddleware, WebhookController.get);
+router.get('/settings/:serverID/webhooks/new', checkAuth, settingsMiddleware, WebhookNewController.get);
+router.post('/settings/:serverID/webhooks/new', checkAuth, settingsMiddleware, WebhookNewController.post);
 
 router.get('/info', (req, res, next) => {
     next({

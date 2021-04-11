@@ -1,0 +1,49 @@
+<div class="container center-content" style="padding: 0">
+    <h1 class="statistics-header-padding">Create a Webhook</h1>
+
+
+    {{#if errorMessage}}
+        <div class="alert alert-danger" role="alert">
+          {{errorMessage}}
+        </div>
+    {{/if}}
+
+    <form method="POST">
+
+      <div class="form-group">
+        <label for="channelID">Select a Channel</label>
+        <div>
+          <select id="channelID" name="channelID" aria-describedby="channelIDHelpBlock" required="required" class="custom-select">
+              {{#each channels}}
+                  <option value="{{id}}" {{#if channelID}} selected {{/if}} >{{name}} </option>
+              {{/each}}
+          </select>
+          <span id="channelIDHelpBlock" class="form-text text-muted">Select a channel to send the webhook too</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="provider">Select webhook source</label>
+        <div>
+          <select id="provider" name="provider" aria-describedby="providerHelpBlock" required="required" class="custom-select">
+              <option value="github" {{#if provider}} selected {{/if}} >Github</option>
+          </select>
+          <span id="providerHelpBlock" class="form-text text-muted">Select where the webhook is going to be coming from</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="messageText">Text to send</label>
+        <div>
+          <input id="messageText" name="messageText" placeholder="An event has happened..." type="text" required="required" class="form-control" value="{{messageText}}">
+          <span id="messageTextHelpBlock" class="form-text text-muted">The message that will be sent when the webhook is triggered</span>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <div class="offset-4 col-8">
+          <button name="submit" type="submit" class="btn btn-primary">Submit</button>
+        </div>
+      </div>
+<br>
+</div>
