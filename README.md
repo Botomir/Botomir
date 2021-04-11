@@ -3,6 +3,7 @@
 ![David](https://img.shields.io/david/SoorajModi/Discord-Bot?style=plastic)
 ![David](https://img.shields.io/david/dev/SoorajModi/Discord-Bot?style=plastic)
 ![Lines of code](https://img.shields.io/tokei/lines/github/SoorajModi/Discord-Bot?style=plastic)
+![Docker Pulls](https://img.shields.io/docker/pulls/marshallasch/botomir?style=plastic)
 ![GitHub](https://img.shields.io/github/license/SoorajModi/Discord-Bot?style=plastic)
 
 # Botomir
@@ -11,7 +12,7 @@ Your friendly neighbourhood Discord Bot.
 
 ## How to add to your server
 
-Go to this [site](https://botomir.com) and click `Add to Server`. 
+Go to this [site](https://botomir.com) and click `Add to Server`.
 
 ## How to run
 
@@ -22,6 +23,40 @@ Copy the `template.env` file to `.env`, and set all of the values for those fiel
 Add husky for commit hooks `npm run prepare`
 
 Run locally using `node app.js`
+
+### Run using docker
+
+1. install docker on your system
+
+
+#### Docker Compose version 3 config file
+
+```yaml
+version: "3.9"
+services:
+  botomir:
+    image: marshallasch/botomir:latest
+    container_name: botomir
+    environment:
+      - DISCORD_TOKEN: development
+      - DATABASE_URL: 'mongodb://botomir:botomir@mongo/discordbot?authSource=admin'
+      - SPOTIFY_CLIENT_ID: '1234567890'
+      - SPOTIFY_CLIENT_SECRET: abcde234543
+      - BASE_URL: 'https://botomir.com'
+      - MODE: production
+    ports:
+      - "80:8300"
+  mongo:
+    image: mongo:latest
+    container_name: mongo
+    ports:
+      - "27017:27017"
+```
+
+and run `docker-compose up -d` to startup the application.
+
+Or run `docker run -p 80:8300 -e DISCORD_TOKEN=token .... --name botomir marshallasch/botomir`
+
 
 ### Required Permissions
 - manage server

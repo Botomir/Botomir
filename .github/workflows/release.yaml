@@ -78,6 +78,10 @@ jobs:
           ENVKEY_SPOTIFY_CLIENT_ID: ${{ secrets.SPOTIFY_CLIENT_ID }}
           ENVKEY_SPOTIFY_CLIENT_SECRET: ${{ secrets.SPOTIFY_CLIENT_SECRET }}
           ENVKEY_BASE_URL: ${{ secrets.BASE_URL }}
+          ENVKEY_BOT_MODS: ${{ secrets.BOT_MODS }}
+          ENVKEY_SESSION_SECRET: ${{ secrets.SESSION_SECRET }}
+          ENVKEY_DISCORD_CLIENT_ID: ${{ secrets.DISCORD_CLIENT_ID }}
+          ENVKEY_DISCORD_CLIENT_SECRET: ${{ secrets.DISCORD_CLIENT_SECRET }}
           ENVKEY_MODE: 'production'
 
       - uses: akhileshns/heroku-deploy@v3.7.8 # This is the action
@@ -87,3 +91,24 @@ jobs:
           heroku_email: ${{secrets.HEROKU_APP_EMAIL}}
           buildpack: "https://github.com/heroku/heroku-buildpack-nodejs"
           env_file: ".env"
+
+  docker:
+    runs-on: ubuntu-latest
+    environment: deployment
+    steps:
+      -
+        name: Checkout
+        uses: actions/checkout@v2
+      -
+        name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      -
+        name: Build and push
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          push: true
+          tags: marshallasch/botomir:latest
