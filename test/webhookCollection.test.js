@@ -329,6 +329,5 @@ describe('Webhook database', () => {
 
         expect(res[0]._mongoId).toStrictEqual(hook._mongoId);
         expect(res[1]._mongoId).toStrictEqual(hook2._mongoId);
-
     });
 });
