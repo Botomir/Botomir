@@ -7,14 +7,16 @@
 const mongoose = require('mongoose');
 
 const { v4: uuidv4 } = require('uuid');
-const { rand: Random } = require('true-random');
+const source = require('rfr');
 
-const generator = new Random();
+const { snowflakeValidator } = source('models/util');
 
 module.exports = new mongoose.Schema({
     guild: {
         type: String,
         required: true,
+        maxLength: 20,
+        validate: snowflakeValidator,
     },
     id: {
         type: String,
@@ -24,10 +26,14 @@ module.exports = new mongoose.Schema({
     channel: {
         type: String,
         required: true,
+        maxLength: 20,
+        validate: snowflakeValidator,
     },
     created_by: {
         type: String,
         required: true,
+        maxLength: 20,
+        validate: snowflakeValidator,
     },
     message_content: {
         type: String,
@@ -40,7 +46,7 @@ module.exports = new mongoose.Schema({
     secret: {
         type: String,
         required: true,
-        default: () => generator.integers(1, 16, 24).map((r) => Math.trunc(r).toString(16).toUpperCase()).join(''),
+        default: () => uuidv4().replaceAll('-', '').toUpperCase(),
     },
     timestamp: {
         type: Date,

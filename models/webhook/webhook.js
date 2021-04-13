@@ -42,6 +42,10 @@ class Webhook {
         return this._model.secret;
     }
 
+    get timestamp() {
+        return this._model.timestamp;
+    }
+
     setGuild(guild) {
         if (typeof guild === 'string') {
             this._model.guild = guild;
