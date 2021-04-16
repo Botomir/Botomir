@@ -12,7 +12,7 @@ function sendMessage(channel, message) {
             logger.info(`Successfully sent message: '${m.cleanContent}'`);
             return m;
         })
-        .catch((e) => logger.error(`could not send message:, ${e.message}` ));
+        .catch((e) => logger.error(`could not send message:, ${e.message}`));
 }
 
 function trimDiscordID(string) {
