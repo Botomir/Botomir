@@ -4,6 +4,8 @@ const source = require('rfr');
 
 const { Webhook } = source('models/webhook');
 
+const { createHmac, timingSafeEqual } = require('crypto');
+
 const WebhookController = {
     get(req, res) {
         return Webhook.getServerHooks(req.guild.id)
@@ -75,7 +77,31 @@ const WebhookNewController = {
     },
 };
 
+
+const HookHandlerController = {
+
+
+    post(req, res) {
+
+        const signature = Buffer.from(req.get('X-Hub-Signature-256'), 'utf8');
+        const jsonStr = JSON.strgify(req.body);
+
+        
+
+        if (signature.length !== validation.length || !timingSafeEqual(signature, validation)) {
+            return res.sendStatus(404);
+        }
+
+
+
+
+        console.log(req.body)
+        return res.sendStatus(200);
+    },
+};
+
 module.exports = {
     WebhookController,
     WebhookNewController,
+    HookHandlerController
 };

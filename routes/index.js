@@ -8,7 +8,7 @@ const StatisticsController = require('./controllers/statisticsController');
 const SpotifyController = require('./controllers/spotifyController');
 const AboutController = require('./controllers/aboutController');
 const { settingsMiddleware, SettingsController, ConfigController, ServerSettingsController } = require('./controllers/settingsController');
-const { WebhookController, WebhookNewController } = require('./controllers/webhookController');
+const { WebhookController, WebhookNewController, HookHandlerController } = require('./controllers/webhookController');
 const {
     catchNotFound,
     logErrors,
@@ -38,6 +38,9 @@ router.get('/documentation', DocsController.get);
 router.get('/statistics', StatisticsController.get);
 router.get('/authorize', SpotifyController.get);
 router.get('/about', AboutController.get);
+
+
+router.post('/hooks/:hookID', HookHandlerController.post);
 
 router.get('/settings', checkAuth, SettingsController.get);
 router.get('/settings/:serverID', checkAuth, settingsMiddleware, ServerSettingsController.get);
