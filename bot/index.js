@@ -19,9 +19,9 @@ client.once('ready', () => {
 });
 
 client.on('message', (message) => {
-    if (!message.author.bot && message.guild === null) {
+    if (message.guild === null) {
         logger.warn('message recieved in a DM');
-        sendMessage(message.channel, 'This bot can only be used in servers, not DM\'s');
+        if (!message.author.bot) sendMessage(message.channel, 'This bot can only be used in servers, not DM\'s');
         return;
     }
     logger.silly(`Message received in '${message.guild.name}': [${message.content}]`);
