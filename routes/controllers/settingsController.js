@@ -24,7 +24,6 @@ function settingsMiddleware(req, res, next) {
 // list options for specific server
 const ServerSettingsController = {
     get(req, res) {
-        console.log(req.guild);
         res.render('serverSettings', {
             serverID: req.guild.id,
         });

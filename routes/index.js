@@ -39,8 +39,7 @@ router.get('/statistics', StatisticsController.get);
 router.get('/authorize', SpotifyController.get);
 router.get('/about', AboutController.get);
 
-
-router.post('/hooks/:hookID', HookHandlerController.post);
+router.post('/hooks/github/:hookID', HookHandlerController.github);
 
 router.get('/settings', checkAuth, SettingsController.get);
 router.get('/settings/:serverID', checkAuth, settingsMiddleware, ServerSettingsController.get);
