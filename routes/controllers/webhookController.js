@@ -150,6 +150,43 @@ const HookHandlerController = {
                 });
             });
     },
+
+    gitlab(req, res) {
+        const signature = req.get('X-Gitlab-Token') || '';
+        const eventName = req.get('X-Gitlab-Event') || '';
+        const signatureBuff = Buffer.from(signature, 'utf8');
+
+        return Webhook.getHook(req.params.hookID)
+            .then((hook) => {
+                if (!hook) {
+                    return res.status(404).json({
+                        error: `hook not found with ID ${req.params.hookID}`,
+                    });
+                }
+
+                // check that the secrets match
+                const secretBuff = Buffer.from(hook.secret, 'utf8');
+                if (signatureBuff.length !== secretBuff.length
+                    || !timingSafeEqual(signatureBuff, secretBuff)) {
+                    return res.status(403).json({
+                        error: 'Hash is not correct, are you sure the correct secret was used',
+                    });
+                }
+
+                handleHook(eventName, req.body, hook);
+                return res.status(202).json({
+                    message: 'successfully got the request, now processing',
+                });
+            })
+            .catch((e) => {
+                logger.error(`failled to handle the webhook: ${e.message}`);
+                logger.error(e);
+
+                res.status(500).json({
+                    error: `Unknown error handing webhook: ${e.message}`,
+                });
+            });
+    },
 };
 
 module.exports = {
