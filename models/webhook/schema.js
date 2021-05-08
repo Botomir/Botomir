@@ -21,7 +21,7 @@ module.exports = new mongoose.Schema({
     id: {
         type: String,
         required: true,
-        default: () => uuidv4().replaceAll('-', ''),
+        default: () => uuidv4().replace(/-/g, ''),
     },
     channel: {
         type: String,
@@ -46,7 +46,7 @@ module.exports = new mongoose.Schema({
     secret: {
         type: String,
         required: true,
-        default: () => uuidv4().replaceAll('-', '').toUpperCase(),
+        default: () => uuidv4().replace(/-/g, '').toUpperCase(),
     },
     timestamp: {
         type: Date,
