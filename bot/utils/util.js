@@ -16,13 +16,11 @@ function sendMessage(channel, message) {
 }
 
 function sendEventMessage(client, message) {
-
     const notificationGuildID = process.env.BOTOMIR_NOTIFICATION_GUILD;
     const notificationChannelID = process.env.BOTOMIR_NOTIFICATION_CHANNEL;
 
     if (!notificationGuildID || !notificationChannelID) {
-        logger.info('Bot notification channel is not configured');
-        return;
+        return logger.info('Bot notification channel is not configured');
     }
 
     return client.guilds.fetch(notificationGuildID)
