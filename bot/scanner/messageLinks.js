@@ -4,7 +4,7 @@ const Discord = require('discord.js');
 const { sendMessage } = source('bot/utils/util');
 const logger = source('bot/utils/logger');
 
-const messageLinkRegex = /^https:\/\/discord.com\/channels\/([0-9]*)\/([0-9]*)\/([0-9]*)$/;
+const messageLinkRegex = /https:\/\/discord.com\/channels\/([0-9]*)\/([0-9]*)\/([0-9]*)/;
 
 function messageLink(message) {
     logger.info('log');
