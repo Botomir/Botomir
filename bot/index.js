@@ -2,7 +2,9 @@ const Discord = require('discord.js');
 const source = require('rfr');
 
 const { botInitializer } = source('bot/initializer/botInitializer');
-const { commandHandler, setupCommands } = source('bot/scanner/commandHandler');
+const { setupCommands } = source('bot/commands');
+const { commandHandler } = source('bot/scanner/commandHandler');
+
 const { scannerHandler } = source('bot/scanner/botScanner');
 const { databaseHandler } = source('bot/scanner/messageLogger');
 const { messageLink } = source('bot/scanner/messageLinks');
