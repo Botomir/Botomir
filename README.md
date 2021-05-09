@@ -5,6 +5,10 @@
 ![Lines of code](https://img.shields.io/tokei/lines/github/SoorajModi/botomir?style=plastic)
 ![Docker Pulls](https://img.shields.io/docker/pulls/marshallasch/botomir?style=plastic)
 ![GitHub](https://img.shields.io/github/license/SoorajModi/botomir?style=plastic)
+![Discord](https://img.shields.io/discord/788091112476770353?style=plastic)
+![Uptime Robot ratio (30 days)](https://img.shields.io/uptimerobot/ratio/m788089375-708361efbca4ea5bc2bac0bf?style=plastic)
+
+[![Join our Discord server!](https://invidget.switchblade.xyz/788091112476770353)](https://discord.gg/sdXnDWrruS)
 
 # Botomir
 
@@ -43,6 +47,8 @@ services:
       - SPOTIFY_CLIENT_ID: '1234567890'
       - SPOTIFY_CLIENT_SECRET: abcde234543
       - BASE_URL: 'https://botomir.com'
+      - BOTOMIR_NOTIFICATION_GUILD: '1029384756'
+      - BOTOMIR_NOTIFICATION_CHANNEL: '1234567890'
       - MODE: production
     ports:
       - "80:8300"
@@ -67,7 +73,7 @@ Or run `docker run -p 80:8300 -e DISCORD_TOKEN=token .... --name botomir marshal
 - embedded Links
 - read message history
 
-In order to use any of the bot configuration commands you must have the role `botmir-admin` assigned to you.
+In order to use any of the bot configuration commands you must have the role `botomir-admin` assigned to you.
 
 ## Features
 
