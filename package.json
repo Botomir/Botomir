@@ -45,6 +45,7 @@
     "express": "^4.17.1",
     "express-handlebars": "^5.2.0",
     "express-session": "^1.17.1",
+    "handlebars": "^4.7.7",
     "helmet": "^4.2.0",
     "lodash": "^4.17.20",
     "markdown-it": "^12.0.4",
@@ -58,6 +59,7 @@
     "rfr": "^1.2.3",
     "spotify-web-api-node": "^5.0.0",
     "true-random": "^1.1.1",
+    "uuid": "^8.3.2",
     "weather-promise": "^2.0.3",
     "winston": "^3.3.3"
   },
