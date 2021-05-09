@@ -1,6 +1,3 @@
-// showConfig.js
-// ===========
-
 const Discord = require('discord.js');
 const source = require('rfr');
 
