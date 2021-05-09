@@ -127,7 +127,7 @@ module.exports = {
     botAdmin: false,
     alwaysEnabled: true,
     description: 'lists all the commands, a category of commands or info about a specific command',
-    usage: "[\`<command>\`| \`<category>\` | \`categories\` | \`all\`]",
+    usage: '[`<command>`| `<category>` | `categories` | `all`]',
     aliases: ['commands'],
     execute: helpCommand,
     docs: `#### Help
