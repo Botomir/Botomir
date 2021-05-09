@@ -15,6 +15,22 @@ function sendMessage(channel, message) {
         .catch((e) => logger.error(`could not send message:, ${e.message}`));
 }
 
+function sendEventMessage(client, message) {
+
+    const notificationGuildID = process.env.BOTOMIR_NOTIFICATION_GUILD;
+    const notificationChannelID = process.env.BOTOMIR_NOTIFICATION_CHANNEL;
+
+    if (!notificationGuildID || !notificationChannelID) {
+        logger.info('Bot notification channel is not configured');
+        return;
+    }
+
+    return client.guilds.fetch(notificationGuildID)
+        .then((guild) => guild.channels.cache.get(notificationChannelID))
+        .then((channel) => sendMessage(channel, message))
+        .catch((e) => logger.error('Error: encountered error when fetching guilds:', e));
+}
+
 function trimDiscordID(string) {
     if (!string) return undefined;
 
@@ -45,4 +61,5 @@ module.exports = {
     getChannel,
     lookupRoleName,
     getMember,
+    sendEventMessage,
 };

@@ -43,6 +43,8 @@ services:
       - SPOTIFY_CLIENT_ID: '1234567890'
       - SPOTIFY_CLIENT_SECRET: abcde234543
       - BASE_URL: 'https://botomir.com'
+      - BOTOMIR_NOTIFICATION_GUILD: '1029384756'
+      - BOTOMIR_NOTIFICATION_CHANNEL: '1234567890'
       - MODE: production
     ports:
       - "80:8300"
@@ -67,7 +69,7 @@ Or run `docker run -p 80:8300 -e DISCORD_TOKEN=token .... --name botomir marshal
 - embedded Links
 - read message history
 
-In order to use any of the bot configuration commands you must have the role `botmir-admin` assigned to you.
+In order to use any of the bot configuration commands you must have the role `botomir-admin` assigned to you.
 
 ## Features
 
