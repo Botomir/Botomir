@@ -99,14 +99,15 @@ function helpSpecific(message, command, config) {
 function helpCommand(message, args, config) {
     const { commands, categories } = message.client;
 
-    if (args.length === 0) {
-        return helpGeneral(message, commands, config);
-    }
-    const name = args[0].toLowerCase();
+    const name = args.length !== 0 ? args[0].toLowerCase() : undefined;
 
-    if (name === 'categories') {
+    if (name === 'categories' || name === undefined) {
         const categoryNames = categories.map((c) => `\`${c}\``).join(', ');
-        return sendMessage(message.channel, `Valid categories to get help for are: ${categoryNames}`);
+        return sendMessage(message.channel, `Since there are a large number of messages please pick a specific category of commands to view, valid categories to get help for are: \`all\`, ${categoryNames}`);
+    }
+
+    if (name === 'all') {
+        return helpGeneral(message, commands, config);
     }
 
     const command = commands.get(name)
@@ -117,7 +118,7 @@ function helpCommand(message, args, config) {
     const categoryCommands = commands.filter((c) => c.category === name);
     if (categoryCommands.size !== 0) return helpGeneral(message, categoryCommands, config, name);
 
-    return sendMessage(message.channel, `${name} is not a valid command or cagtegory!`);
+    return sendMessage(message.channel, `${name} is not a valid command or category!`);
 }
 
 module.exports = {
@@ -126,7 +127,7 @@ module.exports = {
     botAdmin: false,
     alwaysEnabled: true,
     description: 'lists all the commands, a category of commands or info about a specific command',
-    usage: '[command or category name or ``]',
+    usage: "[command or category name or 'categories' or 'all']",
     aliases: ['commands'],
     execute: helpCommand,
     docs: `#### Help
