@@ -103,7 +103,7 @@ function helpCommand(message, args, config) {
 
     if (name === 'categories' || name === undefined) {
         const categoryNames = categories.map((c) => `\`${c}\``).join(', ');
-        return sendMessage(message.channel, `Since there are a large number of messages please pick a specific category of commands to view, valid categories to get help for are: \`all\`, ${categoryNames}`);
+        return sendMessage(message.channel, `Botomir has a lot of commands, to reduce the amount of spam please specify a category you would like some help with, valid categories to get help for are: \`all\`, ${categoryNames}`);
     }
 
     if (name === 'all') {
@@ -127,13 +127,13 @@ module.exports = {
     botAdmin: false,
     alwaysEnabled: true,
     description: 'lists all the commands, a category of commands or info about a specific command',
-    usage: "[command or category name or 'categories' or 'all']",
+    usage: "[\`<command>\`| \`<category>\` | \`categories\` | \`all\`]",
     aliases: ['commands'],
     execute: helpCommand,
     docs: `#### Help
 - Command: \`help\`
 - Args:
-    - optional, \`<command>\`| \`<category>\` | \`categories\`
+    - optional, \`<command>\`| \`<category>\` | \`categories\` | \`all\`
 - Returns:
     - list of commands available to Botomir\n'
     - specific information about the passed in command if command specified\n'
@@ -157,7 +157,7 @@ User
 > !help categories
 
 Botomir
-> Valid categories to get help for are: \`admin\`, \`information\`, \`music\`, \`reddit\`, \`roles\`, \`utility\`
+> Botomir has a lot of commands, to reduce the amount of spam please specify a category you would like some help with, valid categories to get help for are: \`all\`, \`admin\`, \`information\`, \`music\`, \`reddit\`, \`roles\`, \`utility\`
 \`\`\`
 \`\`\`
 User
