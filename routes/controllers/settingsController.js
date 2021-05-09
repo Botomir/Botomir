@@ -4,6 +4,33 @@ const Bot = source('bot');
 
 const { Settings } = source('models/settings');
 
+function settingsMiddleware(req, res, next) {
+    if (!req.params.serverID || !req.user.guilds.find((g) => g.id === req.params.serverID)) {
+        return res.redirect('/settings');
+    }
+
+    const guild = Bot.client.guilds.cache.get(req.params.serverID);
+    if (!guild) {
+        return next({
+            status: 500,
+            message: 'Failed to get lookup the discord server, the app is probably not ready yet',
+        });
+    }
+
+    req.guild = guild;
+    return next();
+}
+
+// list options for specific server
+const ServerSettingsController = {
+    get(req, res) {
+        res.render('serverSettings', {
+            serverID: req.guild.id,
+        });
+    },
+};
+
+// select a server to set the settings for
 const SettingsController = {
     get(req, res) {
         res.render('settings', {
@@ -12,20 +39,10 @@ const SettingsController = {
     },
 };
 
+// configure the settings for the specific server
 const ConfigController = {
     get(req, res, next) {
-        if (!req.query.serverID || !req.user.guilds.find((g) => g.id === req.query.serverID)) {
-            return res.redirect('/settings');
-        }
-
-        const guild = Bot.client.guilds.cache.get(req.query.serverID);
-        if (!guild) {
-            return next({
-                status: 500,
-                message: 'Failed to get lookup the discord server, the app is probably not ready yet',
-            });
-        }
-
+        const { guild } = req;
         let user;
         return guild.members.fetch({
             user: req.user.id, force: true,
@@ -68,6 +85,8 @@ const ConfigController = {
 };
 
 module.exports = {
+    settingsMiddleware,
     SettingsController,
     ConfigController,
+    ServerSettingsController,
 };
