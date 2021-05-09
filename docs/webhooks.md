@@ -43,6 +43,8 @@ This would send the following messages:
 
 #### Updating the webhook
 
+**NOT YET IMPLEMENTED**
+
 After the webhook is created you can update the channel that the message as well as the message contents, but nothing else. 
 You also will not be able to get a new secret without deleting it and making a new one. 
 
@@ -54,6 +56,9 @@ The process to update the webhook is really similar to the process of creating i
 5. Click save.
 
 #### Removing the webhook
+
+**NOT YET IMPLEMENTED**
+
 
 Deleting a webhook is the same as update, except you click delete instead of edit.
 1. Navigate to the webhooks page for the server
