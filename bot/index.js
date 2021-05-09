@@ -5,6 +5,7 @@ const { botInitializer } = source('bot/initializer/botInitializer');
 const { commandHandler, setupCommands } = source('bot/scanner/commandHandler');
 const { scannerHandler } = source('bot/scanner/botScanner');
 const { databaseHandler } = source('bot/scanner/messageLogger');
+const { messageLink } = source('bot/scanner/messageLinks');
 const { addReactionHandler, removeReactionHandler } = source('bot/reactions/botReactions');
 const logger = source('bot/utils/logger');
 const { sendMessage } = source('bot/utils/util');
@@ -29,6 +30,7 @@ client.on('message', (message) => {
     // Handle message if not from self
     if (!message.author.bot) {
         scannerHandler(message);
+        messageLink(message);
         commandHandler(message);
         databaseHandler(message);
     }
