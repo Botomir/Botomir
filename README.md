@@ -5,6 +5,10 @@
 ![Lines of code](https://img.shields.io/tokei/lines/github/SoorajModi/botomir?style=plastic)
 ![Docker Pulls](https://img.shields.io/docker/pulls/marshallasch/botomir?style=plastic)
 ![GitHub](https://img.shields.io/github/license/SoorajModi/botomir?style=plastic)
+![Discord](https://img.shields.io/discord/788091112476770353?style=plastic)
+
+
+[![Join our Discord server!](https://invidget.switchblade.xyz/788091112476770353)](https://discord.gg/sdXnDWrruS)
 
 # Botomir
 
