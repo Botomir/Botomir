@@ -10,9 +10,12 @@
 
 [![Join our Discord server!](https://invidget.switchblade.xyz/788091112476770353)](https://discord.gg/sdXnDWrruS)
 
+![Botomir Logo](static/images/botomir.png)
+
 # Botomir
 
 Your friendly neighbourhood Discord Bot.
+
 
 ## How to add to your server
 
