@@ -11,8 +11,8 @@ labels: command-proposal
 
 | Question | Answer |
 | --- | --- | 
-| arguments for the command: | `<args here>` | 
 | Name of the command: |  `command-name` |
+| arguments for the command: | `<args here>` | 
 | Aliases: | NA |
 | Will require the Botomir Admin role to execute: | `yes` |
 
