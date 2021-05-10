@@ -1,24 +1,25 @@
-Describe what the changes are meant to address. If the implementation is non trivial, please also include a short overview.
+<!-- Tags (fill and keep as many as applicable) -->
 
-
+Closes: # <!-- number of issue or pull request -->\
+Fixes: # <!-- number of issue (implies Closes tag) or commit SHA -->\
+Related: # <!-- number of issue/pull request, or link to external discussion -->
 
 ---
 
-<!-- Tags (fill and keep as many as applicable): -->
+**Describe the pull request:**
+<!-- This should include a description of the bug/feature and how you solved it -->
 
-Fixes: #number of issue (implies Closes tag) or commit SHA
-Closes: #number of issue or pull request
-Related: #number of issue/pull request, or link to external discussion
+[insert text here]
 
 ---
 
 Checklist:
 
-<!-- To check an item, fill the brackets with the letter x; the result should look like `[x]`.  Feel free to leave unchecked items that are not applicable or that you could not perform. -->
+<!-- To check an item, fill the brackets with the letter x; the result should look like `[x]`.-->
+<!-- Feel free to leave unchecked items that are not applicable or that you could not perform. -->
 
-- [ ] Add automated tests cases
-- [ ] Run `npm run lint-fix` and ensure linter is still passing
-- [ ] Verify that all automated tests pass
+- [ ] Run `npm run lint` and ensure linter passes
+- [ ] Run `npm run test` and ensure tests pass
 - [ ] Verify that the changes work as expected on Discord
-- [ ] Update the README and other applicable documentation pages
-- [ ] Update the changelog
+- [ ] Update documentation / not applicable
+- [ ] Update changelog / not applicable 
