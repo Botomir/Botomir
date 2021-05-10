@@ -1,15 +1,15 @@
+<!-- Tags (fill and keep as many as applicable) -->
+
+Closes: # <!-- number of issue or pull request -->\
+Fixes: # <!-- number of issue (implies Closes tag) or commit SHA -->\
+Related: # <!-- number of issue/pull request, or link to external discussion -->
+
+---
+
 **Describe the pull request:**
 <!-- This should include a description of the bug/feature and how you solved it -->
 
 [insert text here]
-
----
-
-<!-- Tags (fill and keep as many as applicable): -->
-
-Fixes: # <!-- number of issue (implies Closes tag) or commit SHA -->\
-Closes: # <!-- number of issue or pull request -->\
-Related: # <!-- number of issue/pull request, or link to external discussion -->
 
 ---
 
