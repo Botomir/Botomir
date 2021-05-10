@@ -1,0 +1,11 @@
+<div class="container center-content" style="padding: 0">
+    <h1 class="statistics-header-padding">Settings</h1>
+
+
+    {{#each servers}}
+        <div class="container col-md-offset-3 col-md-5">
+            <a class="btn btn-custom btn-block" href="/settings/{{id}}" role="button">{{name}}</a>
+        </div>
+    {{/each}}
+<br>
+</div>

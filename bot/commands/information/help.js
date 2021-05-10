@@ -10,11 +10,26 @@ const helpEmbeded = {
     },
     timestamp: new Date(),
     footer: {
-        text: 'For any questions contact @Colonel Pineapple#3164',
+        text: `For any questions contact ${process.env.BOT_MODS || '@Colonel Pineapple#3164'}`,
     },
 };
 
-function helpGeneral(message, commands, config) {
+function sendChunks(channel, fields, categoryName) {
+    let partNum = 0;
+    const numParts = Math.ceil(fields.length / 25);
+
+    const category = categoryName || 'All';
+
+    while (fields.length !== 0) {
+        helpEmbeded.title = `${category} Botomir Commands (${partNum += 1}/${numParts})`;
+        helpEmbeded.fields = fields.splice(0, 25);
+        sendMessage(channel, {
+            embed: helpEmbeded,
+        });
+    }
+}
+
+function helpGeneral(message, commands, config, category) {
     const isAdmin = findRole(message.member, config.botAdminRole);
 
     const fields = commands.filter((c) => !config.disabledCommands.includes(c.name))
@@ -24,15 +39,10 @@ function helpGeneral(message, commands, config) {
             value: command.description,
         }));
 
-    let partNum = 1;
-    const numParts = Math.ceil(fields.length / 25);
-
-    while (fields.length !== 0) {
-        helpEmbeded.title = `Botomir Commands (${partNum += 1}/${numParts})`;
-        helpEmbeded.fields = fields.splice(0, 25);
-        sendMessage(message.channel, {
-            embed: helpEmbeded,
-        });
+    if (fields.length === 0) {
+        sendMessage(message.channel, 'oh no! There are no commands here!!');
+    } else {
+        sendChunks(message.channel, fields, category);
     }
 }
 
@@ -52,6 +62,9 @@ function helpSpecific(message, command, config) {
         {
             name: 'Name',
             value: command.name,
+        }, {
+            name: 'Category',
+            value: command.category,
         }, {
             name: 'Bot Admin Only',
             value: command.botAdmin ? 'yes' : 'no',
@@ -84,18 +97,28 @@ function helpSpecific(message, command, config) {
 }
 
 function helpCommand(message, args, config) {
-    const { commands } = message.client;
+    const { commands, categories } = message.client;
 
-    if (args.length === 0) {
+    const name = args.length !== 0 ? args[0].toLowerCase() : undefined;
+
+    if (name === 'categories' || name === undefined) {
+        const categoryNames = categories.map((c) => `\`${c}\``).join(', ');
+        return sendMessage(message.channel, `Botomir has a lot of commands, to reduce the amount of spam please specify a category you would like some help with, valid categories to get help for are: \`all\`, ${categoryNames}`);
+    }
+
+    if (name === 'all') {
         return helpGeneral(message, commands, config);
     }
-    const name = args[0].toLowerCase();
+
     const command = commands.get(name)
         || commands.find((c) => c.aliases && c.aliases.includes(name));
 
-    if (!command) return sendMessage(message.channel, `${name} is not a valid command!`);
+    if (command) return helpSpecific(message, command, config);
 
-    return helpSpecific(message, command, config);
+    const categoryCommands = commands.filter((c) => c.category === name);
+    if (categoryCommands.size !== 0) return helpGeneral(message, categoryCommands, config, name);
+
+    return sendMessage(message.channel, `${name} is not a valid command or category!`);
 }
 
 module.exports = {
@@ -103,14 +126,14 @@ module.exports = {
     name: 'help',
     botAdmin: false,
     alwaysEnabled: true,
-    description: 'lists all the commands or info about a specific command',
-    usage: '[command name]',
+    description: 'lists all the commands, a category of commands or info about a specific command',
+    usage: '[`<command>`| `<category>` | `categories` | `all`]',
     aliases: ['commands'],
     execute: helpCommand,
     docs: `#### Help
 - Command: \`help\`
 - Args:
-    - optional, \`<command>\`
+    - optional, \`<command>\`| \`<category>\` | \`categories\` | \`all\`
 - Returns:
     - list of commands available to Botomir\n'
     - specific information about the passed in command if command specified\n'
@@ -128,5 +151,19 @@ User
 
 Botomir
 > <embedded message with information about ping command>
+\`\`\`
+\`\`\`
+User
+> !help categories
+
+Botomir
+> Botomir has a lot of commands, to reduce the amount of spam please specify a category you would like some help with, valid categories to get help for are: \`all\`, \`admin\`, \`information\`, \`music\`, \`reddit\`, \`roles\`, \`utility\`
+\`\`\`
+\`\`\`
+User
+> !help music
+
+Botomir
+> <embedded message with information about different music commands>
 \`\`\``,
 };

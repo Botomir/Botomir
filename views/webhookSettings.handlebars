@@ -1,0 +1,38 @@
+<div class="container center-content" style="padding: 0">
+    <h1 class="statistics-header-padding">Settings</h1>
+
+
+
+    <div class="container col-md-offset-3 col-md-5">
+        <a class="btn btn-custom btn-block" href="/settings/{{ serverID }}/webhooks/new" role="button">New Webhook</a>
+    </div>
+
+
+<br>
+<br>
+    <table class="table table-dark">
+      <thead>
+        <tr>
+          <th scope="col">Provider</th>
+          <th scope="col">Channel</th>
+          <th scope="col">Created By</th>
+          <th scope="col">Options</th>
+        </tr>
+      </thead>
+      <tbody>
+
+          {{#each hook}}
+              <tr>
+                <th scope="row">{{provider}}</th>
+                <td>{{channelName}}</td>
+                <td>{{createdBy}}</td>
+                <td>
+                  edit
+                  delete
+                </td>
+              </tr>
+          {{/each}}
+      </tbody>
+    </table>
+
+</div>

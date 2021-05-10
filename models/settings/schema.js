@@ -5,6 +5,9 @@
  */
 
 const mongoose = require('mongoose');
+const source = require('rfr');
+
+const { snowflakeValidator } = source('models/util');
 
 // move this later
 const memeSubreddits = [
@@ -85,10 +88,25 @@ module.exports = new mongoose.Schema({
         type: String,
         index: true,
         unique: true,
+        required: true,
+        maxLength: 20,
+        validate: snowflakeValidator,
     },
-    role_watch_message: String,
-    welcome_channel: String,
-    music_channel: String,
+    role_watch_message: {
+        type: String,
+        maxLength: 20,
+        validate: snowflakeValidator,
+    },
+    welcome_channel: {
+        type: String,
+        maxLength: 20,
+        validate: snowflakeValidator,
+    },
+    music_channel: {
+        type: String,
+        maxLength: 20,
+        validate: snowflakeValidator,
+    },
     command_prefix: {
         type: String,
         minLength: 1,
@@ -110,6 +128,7 @@ module.exports = new mongoose.Schema({
         uppercase: true,
         maxLength: 1,
         required: true,
+        enum: ['C', 'F'],
         default: 'C',
     },
     weather_location: {
@@ -120,7 +139,7 @@ module.exports = new mongoose.Schema({
     bot_admin_role: {
         type: String,
         required: true,
-        default: 'botmir-admin',
+        default: 'botomir-admin',
     },
     meme_subreddits: {
         type: [String],
