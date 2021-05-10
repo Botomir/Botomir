@@ -5,9 +5,12 @@
 ![Lines of code](https://img.shields.io/tokei/lines/github/SoorajModi/Discord-Bot?style=plastic)
 ![GitHub](https://img.shields.io/github/license/SoorajModi/Discord-Bot?style=plastic)
 
+![Botomir Logo](static/images/botomir.png)
+
 # Botomir
 
 Your friendly neighbourhood Discord Bot.
+
 
 ## How to add to your server
 
