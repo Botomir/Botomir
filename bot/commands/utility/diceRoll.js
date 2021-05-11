@@ -26,7 +26,7 @@ function diceRoleCommand(message, args) {
         return sendMessage(message.channel, "That is too many dice to roll at once, please don't do more than 100 at a time");
     }
 
-    const nums = generator.integers(1, sides+1, num);
+    const nums = generator.integers(1, sides + 1, num);
     if (nums instanceof Array === false) {
         return sendMessage(message.channel, "Oh no something went wrong!!! I can't seem to find my dice");
     }
