@@ -14,12 +14,16 @@ function botMessage(message) {
 
     if (!badBotRegex.test(message.content)) return;
 
-    return Responses.findForMode(message.guild.id, 'badbot')
+    Responses.findForMode(message.guild.id, 'badbot')
         .then((res) => {
             const response = res.length !== 0 ? _.sample(res).message : ':\'[';
             return sendMessage(message.channel, response);
         })
-        .then(() => new Statistics().setGuild(message.guild.id).setEvent(EventTypes.BAD_BOT).save())
+
+        .then(() => new Statistics()
+            .setGuild(message.guild.id)
+            .setEvent(EventTypes.BAD_BOT)
+            .save())
         .then(() => logger.info('statistics saved'))
         .catch((err) => logger.error('Error getting message:', err));
 }

@@ -26,7 +26,10 @@ function renderMarkdown(command) {
 
 const DocsController = {
     get(req, res) {
-        const commands = Bot.client.commands.map((command) => renderMarkdown(command)).filter(Boolean);
+        const commands = Bot.client.commands
+            .map((command) => renderMarkdown(command))
+            .filter(Boolean);
+
         res.render('docs', {
             gettingStarted,
             configurations,

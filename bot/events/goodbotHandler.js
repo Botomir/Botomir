@@ -13,12 +13,15 @@ function botMessage(message) {
     if (message.guild === null || message.author.bot) return;
     if (!goodBotRegex.test(message.content)) return;
 
-    return Responses.findForMode(message.guild.id, 'goodbot')
+    Responses.findForMode(message.guild.id, 'goodbot')
         .then((res) => {
             const response = res.length !== 0 ? _.sample(res).message : ':]';
             return sendMessage(message.channel, response);
         })
-        .then(() => new Statistics().setGuild(message.guild.id).setEvent(EventTypes.GOOD_BOT).save())
+        .then(() => new Statistics()
+            .setGuild(message.guild.id)
+            .setEvent(EventTypes.GOOD_BOT)
+            .save())
         .then(() => logger.info('statistics saved'))
         .catch((err) => logger.error('Error getting message:', err));
 }

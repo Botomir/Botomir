@@ -14,7 +14,7 @@ const client = new Discord.Client({
 // setup event handlers
 const eventFiles = fs.readdirSync('./bot/events').filter((file) => file.endsWith('.js'));
 
-for (const file of eventFiles) {
+eventFiles.forEach((file) => {
     const event = source(`bot/events/${file}`);
     if (event.once) {
         client.once(event.name, (...args) => {
@@ -27,7 +27,7 @@ for (const file of eventFiles) {
             event.execute(...args, client);
         });
     }
-}
+});
 
 // joined a server
 client.on('guildCreate', (guild) => {

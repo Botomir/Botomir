@@ -1,7 +1,5 @@
 const source = require('rfr');
 
-const { getMember } = source('bot/utils/util');
-
 const { Settings } = source('models/settings');
 const { Role } = source('models/role');
 
@@ -30,8 +28,6 @@ function checkForReactionPartial(reaction) {
         }
     }
 }
-
-
 
 module.exports = {
     getRoleForReaction,

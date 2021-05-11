@@ -13,7 +13,7 @@ function databaseHandler(message) {
         .setAuthor(message.author.id)
         .setContent(message.content);
 
-    return MessagePost.save()
+    MessagePost.save()
         .then(() => logger.info('Successfully written message to database'))
         .catch((e) => logger.error('failed to save the message to the database', e));
 }

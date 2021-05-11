@@ -1,12 +1,10 @@
 const rewire = require('rewire');
-const source = require('rfr');
 const safe = require('safe-regex');
 
 const util = rewire('../bot/utils/util');
-
-const { spotifyHandler } = source('./bot/events/spotify');
-const { goodbotHandler } = source('./bot/events/goodbotHandler');
-const { badbotHandler } = source('./bot/events/badbotHandler');
+const goodbotHandler = rewire('../bot/events/goodbotHandler');
+const spotifyHandler = rewire('../bot/events/spotifyHandler');
+const badbotHandler = rewire('../bot/events/badbotHandler');
 
 test('Check regex', () => {
     const discordIDRegex = util.__get__('discordIDRegex'); // eslint-disable-line no-underscore-dangle

@@ -2,7 +2,7 @@ const source = require('rfr');
 
 const { changeRole, findRole, Mode } = source('bot/roles/roles');
 const { getMember } = source('bot/utils/util');
-const {checkForReactionPartial, getRoleForReaction} = source('bot/reactions/botReactions');
+const { checkForReactionPartial, getRoleForReaction } = source('bot/reactions/botReactions');
 
 function removeRoleReactionHandler(member, roleName) {
     const role = findRole(member, roleName);
@@ -10,7 +10,6 @@ function removeRoleReactionHandler(member, roleName) {
 }
 
 function removeReactionHandler(reaction, user) {
-
     if (reaction.message.guild === null || user.bot) return;
 
     checkForReactionPartial(reaction);
