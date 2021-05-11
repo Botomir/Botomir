@@ -1,6 +1,5 @@
 const source = require('rfr');
 
-const { addRoleReactionHandler, removeRoleReactionHandler } = source('bot/reactions/roleReaction');
 const { getMember } = source('bot/utils/util');
 
 const { Settings } = source('models/settings');
@@ -32,25 +31,9 @@ function checkForReactionPartial(reaction) {
     }
 }
 
-function addReactionHandler(reaction, user) {
-    checkForReactionPartial(reaction);
-    getRoleForReaction(reaction)
-        .then((mapping) => {
-            if (mapping === null) return;
-            addRoleReactionHandler(getMember(reaction.message.guild, user), mapping.roleName);
-        });
-}
 
-function removeReactionHandler(reaction, user) {
-    checkForReactionPartial(reaction);
-    getRoleForReaction(reaction)
-        .then((mapping) => {
-            if (mapping === null) return;
-            removeRoleReactionHandler(getMember(reaction.message.guild, user), mapping.roleName);
-        });
-}
 
 module.exports = {
-    addReactionHandler,
-    removeReactionHandler,
+    getRoleForReaction,
+    checkForReactionPartial,
 };

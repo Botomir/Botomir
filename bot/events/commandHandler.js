@@ -8,6 +8,8 @@ const { Statistics, EventTypes } = source('models/statistics');
 const logger = source('bot/utils/logger');
 
 function commandHandler(message) {
+    if (message.guild === null || message.author.bot) return;
+
     const { commands } = message.client;
     Settings.getServerSettings(message.guild.id)
         .then((config) => {
@@ -60,5 +62,7 @@ function commandHandler(message) {
 }
 
 module.exports = {
-    commandHandler,
+    name: 'message',
+    once: false,
+    execute: commandHandler,
 };

@@ -23,5 +23,7 @@ function setupCommands(client) {
 }
 
 module.exports = {
-    setupCommands,
+    name: 'ready',
+    once: true,
+    execute: setupCommands,
 };
