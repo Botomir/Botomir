@@ -21,12 +21,17 @@ function diceRoleCommand(message, args) {
         sides = Number.parseInt(parts[2], 10) || 6;
         modifier = Number.parseInt(parts[3], 10) || 0;
     }
-    const results = [];
 
-    for (let i = 0; i <= num; i += 1) {
-        results.push(Math.trunc(generator.integer(0, sides)) + 1);
+    if (num > 100) {
+        return sendMessage(message.channel, "That is too many dice to roll at once, please don't do more than 100 at a time");
     }
 
+    const nums = generator.integers(1, sides+1, num);
+    if (nums instanceof Array === false) {
+        return sendMessage(message.channel, "Oh no something went wrong!!! I can't seem to find my dice");
+    }
+
+    const results = nums.map((n) => Math.trunc(n));
     const total = results.reduce((a, v) => a + v, modifier);
 
     return sendMessage(message.channel, `:game_die: (${results.join(', ')}) + ${modifier} = ${total}`);
