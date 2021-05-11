@@ -1,6 +1,6 @@
 ## Getting Help
 
-DM `Colonel Pineapple#3164` or `wickedscubadog#6957` on Discord if you have any questions not covered by the documentation.
+Join the `Botomir Support` Discord Server [here](https://discord.com/invite/sdXnDWrruS) on Discord if you have any questions not covered by the documentation.
 
 ## Reporting Issues/Bugs/Feature Requests
 
