@@ -74,7 +74,7 @@ module.exports = {
     botAdmin: false,
     description: 'Gives information about mechanical keyboards',
     usage: '',
-    aliases: [],
+    aliases: ['keebs'],
     execute: keebCommand,
     docs: `#### Mechanical Keyboard
 - Command: \`keeb\`
