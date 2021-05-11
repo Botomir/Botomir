@@ -36,25 +36,31 @@ module.exports = {
     args: false,
     name: 'roll',
     botAdmin: false,
-    description: 'roles a 6 sided die, optionally can specify the number of sides',
-    usage: '[<numSides>]',
+    description: 'roles a 6 sided die, optionally can specify a number of sided dice for DND with a modifier',
+    usage: '[<numDice>d<numSides> +- <optional modifier>]',
     aliases: [],
     execute: diceRoleCommand,
     docs: `#### Roll dice
 - Command: \`roll\`
-- Returns: randomly generated number from 1 to 6, or 1 to N
+- Returns: Rolls some dice and adds an optional modifier to the result
 - Example usage:
 \`\`\`
 User
 > !roll
 
 Botomir
-> 🎲 1
+> 🎲 (1) + 0 = 1
 
 User
-> !roll 100
+> !roll 1d20
 
 Botomir
-> 🎲 48
+> 🎲 (11) + 0 = 11
+
+User
+> !roll 3d10 + 4
+
+Botomir
+> 🎲 (3, 5, 4) + 4 = 16
 \`\`\``,
 };
