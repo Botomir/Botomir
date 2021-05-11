@@ -5,13 +5,31 @@ const { sendMessage } = source('bot/utils/util');
 
 const generator = new Random();
 
+const diceRegex = /^([0-9]*)d([0-9]{0,3})([+-][0-9]+)?$/;
+
 function diceRoleCommand(message, args) {
-    const sides = Number.parseInt(args[0], 10) || 6;
+    const dice = args.join('');
 
-    if (sides <= 1) return sendMessage(message.channel, `Sorry I can't figure out how to role a ${sides} die.`);
+    const parts = diceRegex.exec(dice);
 
-    const number = Math.trunc(generator.integer(0, sides)) + 1;
-    return sendMessage(message.channel, `:game_die: ${number}`);
+    let num = 1;
+    let sides = 6;
+    let modifier = 0;
+
+    if (parts !== null) {
+        num = Number.parseInt(parts[1], 10) || 1;
+        sides = Number.parseInt(parts[2], 10) || 6;
+        modifier = Number.parseInt(parts[3], 10) || 0;
+    }
+    const results = [];
+
+    for (let i = 0; i <= num; i += 1) {
+        results.push(Math.trunc(generator.integer(0, sides)) + 1);
+    }
+
+    const total = results.reduce((a, v) => a + v, modifier);
+
+    return sendMessage(message.channel, `:game_die: (${results.join(', ')}) + ${modifier} = ${total}`);
 }
 
 module.exports = {
