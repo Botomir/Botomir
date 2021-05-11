@@ -1,8 +1,8 @@
 ---
 name: Feature Request
 about: Request a new feature for Botomir
-title: Command Proposal - <name of new command>
-labels: command-proposal
+title: Feature Proposal - <name of new feature>
+labels: 'enhancement'
 ---
 
 Include the following information in your issue:

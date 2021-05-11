@@ -2,7 +2,7 @@
 name: Command Proposal
 about: Propose a new command to be added to Botomir
 title: Command Proposal - <name of new command>
-labels: command-proposal
+labels: ['bot command', 'enhancement']
 ---
 
 ### Whats the use case? / why do you want it?
