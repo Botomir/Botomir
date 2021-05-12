@@ -3,12 +3,12 @@ const source = require('rfr');
 const { sendMessage, lookupRoleName } = source('bot/utils/util');
 
 function setBotomirAdminRole(message, args, config) {
-    if (!lookupRoleName(message.guild, args.join())) {
+    if (!lookupRoleName(message.guild, args.join(' '))) {
         return sendMessage(message.channel, 'Error: that role does not exist!');
     }
-    return config.setAdminRole(args.join())
+    return config.setAdminRole(args.join(' '))
         .save()
-        .then(() => sendMessage(message.channel, `The admin role has been updated to ${args.join()}`))
+        .then(() => sendMessage(message.channel, `The admin role has been updated to ${args.join(' ')}`))
         .catch((err) => sendMessage(message.channel, 'Error Something went wrong:', err));
 }
 
