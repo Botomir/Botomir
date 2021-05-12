@@ -1,7 +1,7 @@
 ## Webhooks
 
 Webhooks are a really cool way of registering for callbacks from a service. 
-They let you tell some service, say [Github] for example, that you want to be told every time there is a new push to the `main` branch on [SoorajModi/Botomir](https://github.com/SoorajModi/Botomir). 
+They let you tell some service, say [Github] for example, that you want to be told every time there is a new push to the `main` branch on [Botomir/Botomir](https://github.com/Botomir/Botomir). 
 You can register a callback URL and Github will send a payload whenever the event happens. 
 This is super useful if you want to recieve a new notification for a project your working on or something like that. 
 

@@ -19,7 +19,7 @@ In return, we will reciprocate that respect by addressing your issue, assessing 
 ## Code of Conduct
 
 We take our open source community seriously and hold ourselves and other contributors to high standards of communication. 
-By participating and contributing to this project, you agree to uphold our [Code of Conduct](https://github.com/SoorajModi/Botomir/blob/main/CODE_OF_CONDUCT.md).
+By participating and contributing to this project, you agree to uphold our [Code of Conduct](https://github.com/Botomir/Botomir/blob/main/CODE_OF_CONDUCT.md).
 
 ## Getting Started
 
