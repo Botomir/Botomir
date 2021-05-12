@@ -1,7 +1,6 @@
 const source = require('rfr');
 
 const { sendMessage } = source('bot/utils/util');
-const { findRole } = source('bot/roles/roles');
 
 const helpEmbeded = {
     color: 0x0099ff,
@@ -30,7 +29,7 @@ function sendChunks(channel, fields, categoryName) {
 }
 
 function helpGeneral(message, commands, config, category) {
-    const isAdmin = findRole(message.member, config.botAdminRole);
+    const isAdmin = message.member.roles.cache.map((r) => r.name).includes(config.botAdminRole);
 
     const fields = commands.filter((c) => !config.disabledCommands.includes(c.name))
         .filter((c) => !(c.botAdmin && !isAdmin))
@@ -53,8 +52,10 @@ function helpSpecific(message, command, config) {
             + 'contact one of the server admins if you think this is a mistake!');
     }
 
-    // dont provide help if the user is not authorized for that command
-    if (command.botAdmin && !findRole(message.member, config.botAdminRole)) {
+    const isAdmin = message.member.roles.cache.map((r) => r.name).includes(config.botAdminRole);
+
+    // don't provide help if the user is not authorized for that command
+    if (command.botAdmin && !isAdmin) {
         return sendMessage(message.channel, `You are not authorized to use the ${command.name} command`);
     }
 
