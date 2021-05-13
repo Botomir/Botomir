@@ -1,6 +1,4 @@
 const source = require('rfr');
-const fs = require('fs');
-const Discord = require('discord.js');
 
 const { Settings } = source('models/settings');
 const { sendMessage } = source('bot/utils/util');
@@ -8,31 +6,12 @@ const { Statistics, EventTypes } = source('models/statistics');
 
 const logger = source('bot/utils/logger');
 
-function setupCommands(client) {
-    client.commands = new Discord.Collection();
-
-    const commandFolders = fs.readdirSync('./bot/commands');
-
-    const categories = [];
-    commandFolders.forEach((folder) => {
-        const commandFiles = fs.readdirSync(`./bot/commands/${folder}`).filter((file) => file.endsWith('.js'));
-        categories.push(folder);
-
-        commandFiles.forEach((file) => {
-            const command = source(`bot/commands/${folder}/${file}`);
-            command.category = folder;
-            client.commands.set(command.name, command);
-        });
-    });
-
-    client.categories = categories;
-}
-
 function commandHandler(message) {
+    if (message.guild === null || message.author.bot) return;
+
     const { commands } = message.client;
     Settings.getServerSettings(message.guild.id)
         .then((config) => {
-            // logger.verbose(config);
             const prefix = config.commandPrefix;
             if (!message.content.startsWith(prefix)) return null;
 
@@ -84,6 +63,7 @@ function commandHandler(message) {
 }
 
 module.exports = {
-    setupCommands,
-    commandHandler,
+    name: 'message',
+    once: false,
+    execute: commandHandler,
 };

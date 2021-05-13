@@ -2,7 +2,8 @@ const source = require('rfr');
 const MarkdownIt = require('markdown-it');
 const fs = require('fs');
 
-const { setupCommands } = source('bot/scanner/commandHandler');
+const Bot = source('bot');
+
 const md = new MarkdownIt();
 
 const gettingStartedMD = fs.readFileSync('docs/GettingStarted.md', 'utf-8');
@@ -25,10 +26,10 @@ function renderMarkdown(command) {
 
 const DocsController = {
     get(req, res) {
-        const client = {
-        };
-        setupCommands(client);
-        const commands = client.commands.map((command) => renderMarkdown(command)).filter(Boolean);
+        const commands = Bot.client.commands
+            .map((command) => renderMarkdown(command))
+            .filter(Boolean);
+
         res.render('docs', {
             gettingStarted,
             configurations,

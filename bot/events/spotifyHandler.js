@@ -17,13 +17,18 @@ function spotifyTrackHandler(message, trackURI) {
         .setMessage(message.id)
         .setAuthor(message.author.id)
         .setTrack(trackURI);
+
     return track.save()
         .then((r) => logger.info('Successfully written spotify song to database:', r))
         .catch((e) => logger.error('failed to record spotify track', e));
 }
 
 function spotifyTrackMessage(message) {
-    const trackID = spotifyTrackRegex.exec(message.content)[1];
+    if (message.guild === null || message.author.bot) return;
+    const parts = spotifyTrackRegex.exec(message.content);
+
+    if (!parts) return;
+    const trackID = parts[1];
 
     Settings.getServerSettings(message.guild.id)
         .then((config) => {
@@ -35,6 +40,7 @@ function spotifyTrackMessage(message) {
 }
 
 module.exports = {
-    spotifyTrackRegex,
-    spotifyTrackMessage,
+    name: 'message',
+    once: false,
+    execute: spotifyTrackMessage,
 };
