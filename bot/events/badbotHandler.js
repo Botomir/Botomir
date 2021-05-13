@@ -9,14 +9,14 @@ const { Statistics, EventTypes } = source('models/statistics');
 
 const badBotRegex = /[Bb][Aa][Dd]\s+[Bb][Oo][Tt]/;
 
-function botMessage(message) {
-    if (message.guild === null || message.author.bot) return;
+const defaultMessage = ':\'[';
 
-    if (!badBotRegex.test(message.content)) return;
+function botMessage(message) {
+    if (message.guild === null || message.author.bot || !badBotRegex.test(message.content)) return;
 
     Responses.findForMode(message.guild.id, 'badbot')
         .then((res) => {
-            const response = res.length !== 0 ? _.sample(res).message : ':\'[';
+            const response = res.length !== 0 ? _.sample(res).message : defaultMessage;
             return sendMessage(message.channel, response);
         })
 
