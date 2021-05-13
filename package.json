@@ -14,7 +14,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/SoorajModi/Botomir.git"
+    "url": "git+https://github.com/Botomir/Botomir.git"
   },
   "author": [
     {
@@ -30,9 +30,9 @@
   ],
   "license": "GPL-2.0-only",
   "bugs": {
-    "url": "https://github.com/SoorajModi/Botomir/issues"
+    "url": "https://github.com/Botomir/Botomir/issues"
   },
-  "homepage": "https://github.com/SoorajModi/Botomir#readme",
+  "homepage": "https://github.com/Botomir/Botomir#readme",
   "engines": {
     "node": "15.2.1"
   },

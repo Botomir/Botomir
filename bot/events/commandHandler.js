@@ -2,7 +2,6 @@ const source = require('rfr');
 
 const { Settings } = source('models/settings');
 const { sendMessage } = source('bot/utils/util');
-const { findRole } = source('bot/roles/roles');
 const { Statistics, EventTypes } = source('models/statistics');
 
 const logger = source('bot/utils/logger');
@@ -42,7 +41,9 @@ function commandHandler(message) {
                 return sendMessage(message.channel, reply);
             }
 
-            if (command.botAdmin && !findRole(message.member, config.botAdminRole)) {
+            const roleNames = message.member.roles.cache.map((r) => r.name);
+
+            if (command.botAdmin && !roleNames.includes(config.botAdminRole)) {
                 const reply = `You must have the ${config.botAdminRole} to use this command!`;
                 return sendMessage(message.channel, reply);
             }

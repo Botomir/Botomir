@@ -23,18 +23,30 @@ Go to this [site](https://botomir.com) and click `Add to Server`.
 
 ## How to run
 
-Install node modules `npm install`
-
-Copy the `template.env` file to `.env`, and set all of the values for those fields.
-
-Add husky for commit hooks `npm run prepare`
-
-Run locally using `node app.js`
-
-### Run using docker
-
-1. install docker on your system
-
+1. Install [nodejs], Botomir will not run using v10.24.0 or lower.
+2. install docker on your system
+3. Start up a [mongodb] database
+    ```bash
+    $ docker run -p 27017:27017 -it -d --name mongo -e MONGO_INITDB_ROOT_USERNAME=admin -e MONGO_INITDB_ROOT_PASSWORD=pass mongo
+    ```
+4. Create the botomir user and grant them permissions on the database
+  ```bash
+  $ docker exec -it mongo bash
+    >  mongo -u admin -p
+    > use admin
+    >  db.createUser({
+        user: "bot_account",
+        pwd: "bot_test_pass",
+        roles: [ { role: "readWrite", db: "discordbot" } ]
+      })
+  ```
+5. Create a discord bot application on https://discord.com/developers/applications
+  - collect the client ID, client secret, and application token
+6. Create a spotify application on https://developer.spotify.com/dashboard/applications
+  - collect the client ID, and client secret
+7. Copy the `template.env` file to `.env`, and set all of the values for those fields.
+8. Install all of the node modules `npm ci`
+9. Start the application for development `npm start`
 
 #### Docker Compose version 3 config file
 
