@@ -1,9 +1,9 @@
-name: Create Release and Deploy
+name: Just deploy to heroku - test
 
 on:
   push:
-    tags:
-      - 'v*'
+    branches:
+      - 187-deploy-docker
 
 jobs:
   lint:
@@ -36,38 +36,10 @@ jobs:
     - run: npm run build --if-present
     - run: npm test
 
-  release:
-    runs-on: ubuntu-latest
-    needs: [test, lint]
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-      - name: Extract release notes
-        id: extract-release-notes
-        uses: ffurrer2/extract-release-notes@v1
-        with:
-          changelog_file: CHANGELOG.md
-          release_notes_file: RELEASE_NOTES.md
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          body_path: RELEASE_NOTES.md
-          body: |
-            Changes in this Release
-            - First Change
-            - Second Change
-          draft: false
-          prerelease: false
-
   deploy:
     runs-on: ubuntu-latest
-    needs: release
-    environment: deployment
+    needs: test
+    environment: Configure testing
     steps:
       - uses: actions/checkout@v2
       - name: Make envfile
@@ -94,23 +66,23 @@ jobs:
           buildpack: "https://github.com/heroku/heroku-buildpack-nodejs"
           env_file: ".env"
 
-  docker:
-    runs-on: ubuntu-latest
-    environment: deployment
-    steps:
-      -
-        name: Checkout
-        uses: actions/checkout@v2
-      -
-        name: Login to DockerHub
-        uses: docker/login-action@v1
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-      -
-        name: Build and push
-        uses: docker/build-push-action@v2
-        with:
-          context: .
-          push: true
-          tags: marshallasch/botomir:latest
+  #docker:
+  #  runs-on: ubuntu-latest
+  #  environment: Configure testing
+  #  steps:
+  #    -
+  #      name: Checkout
+  #      uses: actions/checkout@v2
+  #    -
+  #      name: Login to DockerHub
+  #      uses: docker/login-action@v1
+  #      with:
+  #        username: ${{ secrets.DOCKERHUB_USERNAME }}
+  #        password: ${{ secrets.DOCKERHUB_TOKEN }}
+  #    -
+  #      name: Build and push
+  #      uses: docker/build-push-action@v2
+  #      with:
+  #        context: .
+  #        push: true
+  #        tags: marshallasch/botomir:latest
