@@ -39,7 +39,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     needs: test
-    environment: Configure testing
+    environment: testing
     steps:
       - uses: actions/checkout@v2
       - name: Make envfile
@@ -56,7 +56,7 @@ jobs:
           ENVKEY_SESSION_SECRET: ${{ secrets.SESSION_SECRET }}
           ENVKEY_BOTOMIR_NOTIFICATION_GUILD: ${{ secrets.BOTOMIR_NOTIFICATION_GUILD }}
           ENVKEY_BOTOMIR_NOTIFICATION_CHANNEL: ${{ secrets.BOTOMIR_NOTIFICATION_CHANNEL }}
-          ENVKEY_MODE: 'production'
+          ENVKEY_NODE_ENV: 'production'
 
       - uses: akhileshns/heroku-deploy@v3.7.8 # This is the action
         with:
@@ -68,7 +68,7 @@ jobs:
 
   #docker:
   #  runs-on: ubuntu-latest
-  #  environment: Configure testing
+  #  environment: testing
   #  steps:
   #    -
   #      name: Checkout
