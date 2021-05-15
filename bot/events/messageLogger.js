@@ -11,6 +11,7 @@ function databaseHandler(message) {
         .setChannel(message.channel.id)
         .setMessage(message.id)
         .setAuthor(message.author.id)
+        .setCreatedAt(message.createdTimestamp)
         .setContent(message.content);
 
     MessagePost.save()

@@ -38,6 +38,12 @@ class Message {
         return this._model.timestamp;
     }
 
+    get edits() {
+        return this._model.updates.map((edit) => ({
+            content: edit.content, editedAt: edit.editedAt,
+        }));
+    }
+
     setGuild(guild) {
         if (typeof guild === 'string') {
             this._model.guild = guild;
@@ -73,6 +79,22 @@ class Message {
         return this;
     }
 
+    setCreatedAt(timestamp) {
+        if (typeof timestamp === 'number') {
+            this._model.timestamp = timestamp;
+        }
+        return this;
+    }
+
+    updateContent(content, timestamp) {
+        if (typeof content === 'string') {
+            this._model.updates.push({
+                content, editedAt: timestamp,
+            });
+        }
+        return this;
+    }
+
     save() {
         return this._model.save().then(() => this);
     }
@@ -84,6 +106,18 @@ class Message {
                 database: Message.name,
                 count,
             }));
+    }
+
+    static find(guildID, channelID, messageID) {
+        return MessageModel
+            .findOne({
+                guild: guildID, channel: channelID, id: messageID,
+            })
+            .then((r) => {
+                const message = new Message();
+                message._model = r;
+                return message;
+            });
     }
 }
 
