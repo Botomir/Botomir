@@ -46,7 +46,7 @@ Go to this [site](https://botomir.com) and click `Add to Server`.
   - collect the client ID, and client secret
 7. Copy the `template.env` file to `.env`, and set all of the values for those fields.
 8. Install all of the node modules `npm ci`
-9. Start the application for development `npm start`
+9. Start the application for development `npm run dev`
 
 #### Docker Compose version 3 config file
 
