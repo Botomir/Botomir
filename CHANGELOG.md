@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - can automatically assign roles based on reactions to a message
 - can generate Spotify playlists
 - can keep track of message updates
+- can keep track of message deletion
 
 
 ### Changed
