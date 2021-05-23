@@ -58,6 +58,9 @@ describe('messages database', () => {
         expect(savedMessage.authorID).toBe(fields.user);
         expect(savedMessage.content).toBe(fields.content);
         expect(savedMessage.edits).toHaveLength(0);
+
+        expect(savedMessage.deleted).toBe(false);
+        expect(savedMessage.deletedAt).not.toBeDefined();
     });
 
     test('update message', async () => {
@@ -80,6 +83,50 @@ describe('messages database', () => {
         expect(savedMessage.edits[0].editedAt).toEqual(new Date('2021-05-15T20:31:54.333Z'));
         expect(savedMessage.edits[0]._mongoId).not.toBeDefined();
         expect(savedMessage.edits[0].content).toBe('updated text here');
+    });
+
+    test('multiple update message', async () => {
+        const message = new Message()
+            .setGuild(fields.guild)
+            .setChannel(fields.channel)
+            .setMessage(fields.message)
+            .setAuthor(fields.user)
+            .setCreatedAt(fields.createdTimestamp)
+            .setContent(fields.content);
+
+        message.updateContent('updated text here', fields2.createdTimestamp);
+        message.updateContent('another update', '1621781592137');
+
+        expect(message._mongoId).toBeDefined();
+        const savedMessage = await message.save();
+
+        expect(savedMessage.timestamp).toEqual(new Date('2021-05-15T20:31:54.250Z'));
+        expect(savedMessage.edits).toHaveLength(2);
+
+        expect(savedMessage.edits[0].editedAt).toEqual(new Date('2021-05-15T20:31:54.333Z'));
+        expect(savedMessage.edits[0]._mongoId).not.toBeDefined();
+        expect(savedMessage.edits[0].content).toBe('updated text here');
+
+        expect(savedMessage.edits[1].editedAt).toEqual(new Date('2021-05-23T14:53:12.137Z'));
+        expect(savedMessage.edits[1]._mongoId).not.toBeDefined();
+        expect(savedMessage.edits[1].content).toBe('another update');
+    });
+
+    test('delete message', async () => {
+        const message = new Message()
+            .setGuild(fields.guild)
+            .setChannel(fields.channel)
+            .setMessage(fields.message)
+            .setAuthor(fields.user)
+            .setCreatedAt(fields.createdTimestamp)
+            .setContent(fields.content);
+        message.delete();
+
+        expect(message._mongoId).toBeDefined();
+        const savedMessage = await message.save();
+
+        expect(savedMessage.deleted).toBe(true);
+        expect(savedMessage.deletedAt).toBeDefined();
     });
 
     test('missing guildID', () => {

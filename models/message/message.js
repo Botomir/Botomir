@@ -44,6 +44,14 @@ class Message {
         }));
     }
 
+    get deletedAt() {
+        return this._model.deletedAt;
+    }
+
+    get deleted() {
+        return this._model.deletedAt !== undefined;
+    }
+
     setGuild(guild) {
         if (typeof guild === 'string') {
             this._model.guild = guild;
@@ -58,9 +66,9 @@ class Message {
         return this;
     }
 
-    setMessage(messsage) {
-        if (typeof messsage === 'string') {
-            this._model.id = messsage;
+    setMessage(message) {
+        if (typeof message === 'string') {
+            this._model.id = message;
         }
         return this;
     }
@@ -92,6 +100,12 @@ class Message {
                 content, editedAt: timestamp,
             });
         }
+        return this;
+    }
+
+    delete() {
+        this._model.deletedAt = Date.now();
+
         return this;
     }
 

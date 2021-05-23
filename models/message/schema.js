@@ -56,4 +56,8 @@ module.exports = new mongoose.Schema({
         required: true,
         default: Date.now,
     },
+    deletedAt: {
+        type: Date,
+        required: false,
+    },
 });
