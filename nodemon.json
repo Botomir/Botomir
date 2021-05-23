@@ -11,5 +11,5 @@
         "TODO"
     ],
     "verbose": true,
-    "exec": "npm run start-ts"
+    "exec": "npm run start"
 }
