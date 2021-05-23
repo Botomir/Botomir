@@ -1,34 +1,17 @@
 const source = require('rfr');
-const fs = require('fs');
-const Discord = require('discord.js');
 
 const { Settings } = source('models/settings');
 const { sendMessage } = source('bot/utils/util');
-const { findRole } = source('bot/roles/roles');
 const { Statistics, EventTypes } = source('models/statistics');
 
 const logger = source('bot/utils/logger');
 
-function setupCommands(client) {
-    client.commands = new Discord.Collection();
-
-    const commandFolders = fs.readdirSync('./bot/commands');
-
-    commandFolders.forEach((folder) => {
-        const commandFiles = fs.readdirSync(`./bot/commands/${folder}`).filter((file) => file.endsWith('.js'));
-
-        commandFiles.forEach((file) => {
-            const command = source(`bot/commands/${folder}/${file}`);
-            client.commands.set(command.name, command);
-        });
-    });
-}
-
 function commandHandler(message) {
+    if (message.guild === null || message.author.bot) return;
+
     const { commands } = message.client;
     Settings.getServerSettings(message.guild.id)
         .then((config) => {
-            // logger.verbose(config);
             const prefix = config.commandPrefix;
             if (!message.content.startsWith(prefix)) return null;
 
@@ -58,7 +41,9 @@ function commandHandler(message) {
                 return sendMessage(message.channel, reply);
             }
 
-            if (command.botAdmin && !findRole(message.member, config.botAdminRole)) {
+            const roleNames = message.member.roles.cache.map((r) => r.name);
+
+            if (command.botAdmin && !roleNames.includes(config.botAdminRole)) {
                 const reply = `You must have the ${config.botAdminRole} to use this command!`;
                 return sendMessage(message.channel, reply);
             }
@@ -78,6 +63,7 @@ function commandHandler(message) {
 }
 
 module.exports = {
-    setupCommands,
-    commandHandler,
+    name: 'message',
+    once: false,
+    execute: commandHandler,
 };

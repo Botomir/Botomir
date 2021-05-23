@@ -1,16 +1,17 @@
 const rewire = require('rewire');
-const source = require('rfr');
 const safe = require('safe-regex');
 
 const util = rewire('../bot/utils/util');
-// const roleParsing = rewire('../bot/utils/roleParsing');
-
-const { badBotRegex, goodBotRegex } = source('./bot/scanner/botResponse');
-const { spotifyTrackRegex } = source('./bot/scanner/spotify');
+const goodbotHandler = rewire('../bot/events/goodbotHandler');
+const spotifyHandler = rewire('../bot/events/spotifyHandler');
+const badbotHandler = rewire('../bot/events/badbotHandler');
 
 test('Check regex', () => {
     const discordIDRegex = util.__get__('discordIDRegex'); // eslint-disable-line no-underscore-dangle
-    // const roleRegex = roleParsing.__get__('roleRegex');
+    const badBotRegex = badbotHandler.__get__('badBotRegex'); // eslint-disable-line no-underscore-dangle
+    const goodBotRegex = goodbotHandler.__get__('goodBotRegex'); // eslint-disable-line no-underscore-dangle
+
+    const spotifyTrackRegex = spotifyHandler.__get__('spotifyTrackRegex'); // eslint-disable-line no-underscore-dangle
 
     // expect(safe(roleRegex)).toBe(true);
     expect(safe(discordIDRegex)).toBe(true);

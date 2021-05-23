@@ -67,7 +67,9 @@ class Settings {
     }
 
     get mentalHealth() {
-        return this._model.mental_health;
+        return this._model.mental_health.map((l) => ({
+            name: l.name, url: l.url,
+        }));
     }
 
     get unassignableRoles() {
@@ -145,21 +147,37 @@ class Settings {
     }
 
     addMemeSub(sub) {
-        if (typeof sub === 'string') {
+        if (typeof sub === 'string' && !this._model.meme_subreddits.includes(sub)) {
             this._model.meme_subreddits.push(sub);
         }
         return this;
     }
 
-    addCuteSub(sub) {
+    removeMemeSub(sub) {
         if (typeof sub === 'string') {
+            const index = this._model.meme_subreddits.indexOf(sub);
+            if (index > -1) this._model.meme_subreddits.splice(index, 1);
+        }
+        return this;
+    }
+
+    addCuteSub(sub) {
+        if (typeof sub === 'string' && !this._model.cute_subreddits.includes(sub)) {
             this._model.cute_subreddits.push(sub);
         }
         return this;
     }
 
+    removeCuteSub(sub) {
+        if (typeof sub === 'string') {
+            const index = this._model.cute_subreddits.indexOf(sub);
+            if (index > -1) this._model.cute_subreddits.splice(index, 1);
+        }
+        return this;
+    }
+
     addUnassignable(roleName) {
-        if (typeof roleName === 'string') {
+        if (typeof roleName === 'string' && !this._model.unassignable_roles.includes(roleName)) {
             this._model.unassignable_roles.push(roleName);
         }
         return this;
@@ -174,7 +192,7 @@ class Settings {
     }
 
     disableCommand(command) {
-        if (typeof command === 'string') {
+        if (typeof command === 'string' && !this._model.disabled_commands.includes(command)) {
             this._model.disabled_commands.push(command);
         }
         return this;
@@ -198,6 +216,28 @@ class Settings {
 
     save() {
         return this._model.save().then(() => this);
+    }
+
+    toAPI() {
+        return {
+            guild: this._model.guild,
+            roleWatchMessage: this._model.role_watch_message,
+            roleWatchChannel: this._model.welcome_channel,
+            musicWatchChannel: this._model.music_channel,
+            commandPrefix: this._model.command_prefix,
+            playlistName: this._model.playlist_name,
+            playlistDescription: this._model.playlist_description,
+            tempatureUnit: this._model.tempature_unit,
+            weatherLocation: this._model.weather_location,
+            memeSubs: this._model.meme_subreddits,
+            cuteSubs: this._model.cute_subreddits,
+            botAdminRole: this._model.bot_admin_role,
+            disabledCommands: this._model.disabled_commands,
+            mentalHealth: this._model.mental_health.map((m) => ({
+                name: m.name, url: m.url,
+            })),
+            unassignableRoles: this._model.unassignable_roles,
+        };
     }
 
     static getServerSettings(serverID) {

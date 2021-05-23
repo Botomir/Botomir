@@ -9,10 +9,24 @@ const discordIDRegex = /<[@#][&!]?([0-9]+)>/;
 function sendMessage(channel, message) {
     return channel.send(message)
         .then((m) => {
-            logger.info(`Successfully sent message: ${m.cleanContent}`);
+            logger.info(`Successfully sent message: '${m.cleanContent}'`);
             return m;
         })
-        .catch((e) => logger.error('could not send message:', e));
+        .catch((e) => logger.error(`could not send message:, ${e.message}`));
+}
+
+function sendEventMessage(client, message) {
+    const notificationGuildID = process.env.BOTOMIR_NOTIFICATION_GUILD;
+    const notificationChannelID = process.env.BOTOMIR_NOTIFICATION_CHANNEL;
+
+    if (!notificationGuildID || !notificationChannelID) {
+        return logger.info('Bot notification channel is not configured');
+    }
+
+    return client.guilds.fetch(notificationGuildID)
+        .then((guild) => guild.channels.cache.get(notificationChannelID))
+        .then((channel) => sendMessage(channel, message))
+        .catch((e) => logger.error('Error: encountered error when fetching guilds:', e));
 }
 
 function trimDiscordID(string) {
@@ -45,4 +59,5 @@ module.exports = {
     getChannel,
     lookupRoleName,
     getMember,
+    sendEventMessage,
 };

@@ -8,26 +8,26 @@ const { Responses } = source('models/responses');
 const { Statistics, EventTypes } = source('models/statistics');
 
 const goodBotRegex = /[Gg][Oo][Oo][Dd]\s+[Bb][Oo][Tt]/;
-const badBotRegex = /[Bb][Aa][Dd]\s+[Bb][Oo][Tt]/;
+const defaultMessage = ':]';
 
-function botMessage(message, botMode) {
-    const defaultMessage = botMode === 'goodbot' ? ':]' : ':\'[';
+function botMessage(message) {
+    if (message.guild === null || message.author.bot || !goodBotRegex.test(message.content)) return;
 
-    return Responses.findForMode(message.guild.id, botMode)
+    Responses.findForMode(message.guild.id, 'goodbot')
         .then((res) => {
             const response = res.length !== 0 ? _.sample(res).message : defaultMessage;
             return sendMessage(message.channel, response);
         })
-        .then(() => {
-            const eventName = botMode === 'goodbot' ? EventTypes.GOOD_BOT : EventTypes.BAD_BOT;
-            return new Statistics().setGuild(message.guild.id).setEvent(eventName).save();
-        })
+        .then(() => new Statistics()
+            .setGuild(message.guild.id)
+            .setEvent(EventTypes.GOOD_BOT)
+            .save())
         .then(() => logger.info('statistics saved'))
         .catch((err) => logger.error('Error getting message:', err));
 }
 
 module.exports = {
-    goodBotRegex,
-    badBotRegex,
-    botMessage,
+    name: 'message',
+    once: false,
+    execute: botMessage,
 };

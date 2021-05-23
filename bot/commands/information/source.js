@@ -4,7 +4,7 @@ const { sendMessage } = source('bot/utils/util');
 
 const sourceEmbed = {
     title: 'Botomir Source Code',
-    url: 'https://github.com/SoorajModi/Botomir',
+    url: 'https://github.com/Botomir/Botomir',
 };
 
 function sourceCommand(message) {

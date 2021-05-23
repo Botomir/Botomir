@@ -1,27 +1,83 @@
-![Node.js CI testing](https://github.com/SoorajModi/Discord-Bot/workflows/testing/badge.svg)
-![Node.js CI linter](https://github.com/SoorajModi/Discord-Bot/workflows/linter/badge.svg)
-![David](https://img.shields.io/david/SoorajModi/Discord-Bot?style=plastic)
-![David](https://img.shields.io/david/dev/SoorajModi/Discord-Bot?style=plastic)
-![Lines of code](https://img.shields.io/tokei/lines/github/SoorajModi/Discord-Bot?style=plastic)
-![GitHub](https://img.shields.io/github/license/SoorajModi/Discord-Bot?style=plastic)
+![Node.js CI testing](https://github.com/Botomir/botomir/workflows/testing/badge.svg)
+![Node.js CI linter](https://github.com/Botomir/botomir/workflows/linter/badge.svg)
+![David](https://img.shields.io/david/Botomir/botomir?style=plastic)
+![David](https://img.shields.io/david/dev/Botomir/botomir?style=plastic)
+![Lines of code](https://img.shields.io/tokei/lines/github/Botomir/botomir?style=plastic)
+![Docker Pulls](https://img.shields.io/docker/pulls/marshallasch/botomir?style=plastic)
+![GitHub](https://img.shields.io/github/license/Botomir/botomir?style=plastic)
+![Discord](https://img.shields.io/discord/788091112476770353?style=plastic)
+![Uptime Robot ratio (30 days)](https://img.shields.io/uptimerobot/ratio/m788089375-708361efbca4ea5bc2bac0bf?style=plastic)
+
+[![Join our Discord server!](https://invidget.switchblade.xyz/788091112476770353)](https://discord.gg/sdXnDWrruS)
+
+![Botomir Logo](static/images/botomir.png)
 
 # Botomir
 
 Your friendly neighbourhood Discord Bot.
 
+
 ## How to add to your server
 
-Go to this [site](https://botomir.com) and click `Add to Server`. 
+Go to this [site](https://botomir.com) and click `Add to Server`.
 
 ## How to run
 
-Install node modules `npm install`
+1. Install [nodejs], Botomir will not run using v10.24.0 or lower.
+2. install docker on your system
+3. Start up a [mongodb] database
+    ```bash
+    $ docker run -p 27017:27017 -it -d --name mongo -e MONGO_INITDB_ROOT_USERNAME=admin -e MONGO_INITDB_ROOT_PASSWORD=pass mongo
+    ```
+4. Create the botomir user and grant them permissions on the database
+  ```bash
+  $ docker exec -it mongo bash
+    >  mongo -u admin -p
+    > use admin
+    >  db.createUser({
+        user: "bot_account",
+        pwd: "bot_test_pass",
+        roles: [ { role: "readWrite", db: "discordbot" } ]
+      })
+  ```
+5. Create a discord bot application on https://discord.com/developers/applications
+  - collect the client ID, client secret, and application token
+6. Create a spotify application on https://developer.spotify.com/dashboard/applications
+  - collect the client ID, and client secret
+7. Copy the `template.env` file to `.env`, and set all of the values for those fields.
+8. Install all of the node modules `npm ci`
+9. Start the application for development `npm start`
 
-Copy the `template.env` file to `.env`, and set all of the values for those fields.
+#### Docker Compose version 3 config file
 
-Add husky for commit hooks `npm run prepare`
+```yaml
+version: "3.9"
+services:
+  botomir:
+    image: marshallasch/botomir:latest
+    container_name: botomir
+    environment:
+      - DISCORD_TOKEN: development
+      - DATABASE_URL: 'mongodb://botomir:botomir@mongo/discordbot?authSource=admin'
+      - SPOTIFY_CLIENT_ID: '1234567890'
+      - SPOTIFY_CLIENT_SECRET: abcde234543
+      - BASE_URL: 'https://botomir.com'
+      - BOTOMIR_NOTIFICATION_GUILD: '1029384756'
+      - BOTOMIR_NOTIFICATION_CHANNEL: '1234567890'
+      - MODE: production
+    ports:
+      - "80:8300"
+  mongo:
+    image: mongo:latest
+    container_name: mongo
+    ports:
+      - "27017:27017"
+```
 
-Run locally using `node app.js`
+and run `docker-compose up -d` to startup the application.
+
+Or run `docker run -p 80:8300 -e DISCORD_TOKEN=token .... --name botomir marshallasch/botomir`
+
 
 ### Required Permissions
 - manage server
@@ -32,7 +88,7 @@ Run locally using `node app.js`
 - embedded Links
 - read message history
 
-In order to use any of the bot configuration commands you must have the role `botmir-admin` assigned to you.
+In order to use any of the bot configuration commands you must have the role `botomir-admin` assigned to you.
 
 ## Features
 

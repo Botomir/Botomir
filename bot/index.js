@@ -1,65 +1,51 @@
 const Discord = require('discord.js');
+const fs = require('fs');
+
 const source = require('rfr');
 
-const { botInitializer } = source('bot/initializer/botInitializer');
-const { commandHandler, setupCommands } = source('bot/scanner/commandHandler');
-const { scannerHandler } = source('bot/scanner/botScanner');
-const { databaseHandler } = source('bot/scanner/messageLogger');
-const { addReactionHandler, removeReactionHandler } = source('bot/reactions/botReactions');
+const { sendEventMessage } = source('bot/utils/util');
+
 const logger = source('bot/utils/logger');
-const { sendMessage } = source('bot/utils/util');
 
 const client = new Discord.Client({
     partials: ['MESSAGE', 'CHANNEL', 'REACTION'],
 });
 
-client.once('ready', () => {
-    botInitializer(client);
-    setupCommands(client);
-});
+// setup event handlers
+const eventFiles = fs.readdirSync('./bot/events').filter((file) => file.endsWith('.js'));
 
-client.on('message', (message) => {
-    if (!message.author.bot && message.guild === null) {
-        logger.warn('message recieved in a DM');
-        sendMessage(message.channel, 'This bot can only be used in servers, not DM\'s');
-        return;
-    }
-    logger.silly(`Message received in '${message.guild.name}': [${message.content}]`);
-
-    // Handle message if not from self
-    if (!message.author.bot) {
-        scannerHandler(message);
-        commandHandler(message);
-        databaseHandler(message);
+eventFiles.forEach((file) => {
+    const event = source(`bot/events/${file}`);
+    if (event.once) {
+        client.once(event.name, (...args) => {
+            logger.silly(`event ${event.name} is being handled`, ...args);
+            event.execute(...args, client);
+        });
+    } else {
+        client.on(event.name, (...args) => {
+            logger.silly(`event ${event.name} is being handled by ${file}`, ...args);
+            event.execute(...args, client);
+        });
     }
 });
 
 // joined a server
 client.on('guildCreate', (guild) => {
     logger.info(`Joined a new guild: ${guild.name}`);
+    sendEventMessage(client, `Botomir has joined the \`${guild.name}\` guild!! We are now in ${client.guilds.cache.size} guilds`);
 });
 
-client.on('messageReactionAdd', (reaction, user) => {
-    if (reaction.message.guild === null) {
-        logger.warn('reaction recieved in a DM');
-        return;
-    }
-
-    if (!user.bot) addReactionHandler(reaction, user);
-});
-
-client.on('messageReactionRemove', (reaction, user) => {
-    if (reaction.message.guild === null) {
-        logger.warn('reaction recieved in a DM');
-        return;
-    }
-
-    if (!user.bot) removeReactionHandler(reaction, user);
+// removed from a server
+client.on('guildDelete', (guild) => {
+    logger.info(`removed from a guild: ${guild.name}`);
+    sendEventMessage(client, `Botomir has left \`${guild.name}\` :cry:  We are now in ${client.guilds.cache.size} guilds`);
 });
 
 client.on('error', (err) => {
     logger.error(`bot encountered error {${err}}`);
     logger.error(err);
+    sendEventMessage(client, `Oh no something went wrong!!! {${err}}`);
+
     logger.warn('attempting to login to discord again');
     client.login(process.env.DISCORD_TOKEN).then(() => logger.info('Login successful'));
 });
