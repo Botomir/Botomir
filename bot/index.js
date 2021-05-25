@@ -23,7 +23,7 @@ eventFiles.forEach((file) => {
         });
     } else {
         client.on(event.name, (...args) => {
-            logger.silly(`event ${event.name} is being handled`, ...args);
+            logger.silly(`event ${event.name} is being handled by ${file}`, ...args);
             event.execute(...args, client);
         });
     }
