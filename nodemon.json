@@ -10,5 +10,6 @@
         "template.env",
         "TODO"
     ],
-    "verbose": true
+    "verbose": true,
+    "exec": "npm run start"
 }

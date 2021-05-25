@@ -3,5 +3,6 @@ coverage/
 .env
 .idea
 .DS_Store
+dist/
 
 globalConfig.json
