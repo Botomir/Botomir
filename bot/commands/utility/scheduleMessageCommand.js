@@ -5,15 +5,7 @@ const logger = source('bot/utils/logger');
 const { sendMessage } = source('bot/utils/util');
 const agenda = source('scheduler');
 
-const days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday',
-    'mondays', 'tuesdays', 'wednesdays', 'thursdays', 'fridays', 'saturdays', 'sundays'];
-// TODO make this checker better
-function checkTimePeriod(timePeriod) {
-    const parts = timePeriod.toLowerCase().split(' ');
-
-    return days.includes(parts[0]) && parts[1] === 'at';
-}
-
+// takes a crontab formatted string 6+ arguments, first
 function scheduleMessage(message, args) {
     const guildID = message.guild.id;
     const channelID = message.channel.id;
@@ -26,44 +18,49 @@ function scheduleMessage(message, args) {
     const timePeriod = parts.shift();
     const scheduledText = parts.join('\n');
 
-    if (!checkTimePeriod(timePeriod)) {
-        logger.warn(`tied to schedule a message with invalid time string '${timePeriod}'`);
-        return sendMessage(message.channel, 'hmmm... Something does not look right with that format, make sure the date formatted as `<day of the week> at <time of the date>...`');
-    }
-
     const job = agenda.create('schedule message', {
         serverID: guildID, channelID, message: scheduledText,
     });
-    job.repeatAt(timePeriod);
+    const res = job.repeatEvery(timePeriod, {
+        skipImmediate: true,
+    });
     job.computeNextRunAt();
     const nextRun = job.attrs.nextRunAt;
+
+    if (!res.attrs.nextRunAt) {
+        logger.error(`Can not schedule message: ${res.attrs.failReason}`);
+        return sendMessage(message.channel, 'Can not schedule message: Invalid repeat format');
+    }
+
     job.save();
 
-    return sendMessage(message.channel, `Your message is scheduled to be sent ${moment(nextRun).fromNow()}`);
+    return sendMessage(message.channel, `Your message is scheduled to be sent ${moment(nextRun).calendar()}`);
 }
 
 module.exports = {
-    args: 4,
+    args: 6,
     name: 'schedule',
     botAdmin: false,
-    description: 'Schedule a recuring message to be sent to the channel that this is called from',
-    usage: '<day of the week> at <time>\n<some message to be sent>',
+    description: 'Schedule a recurring message to be sent to the channel that this is called from, uses [cron](https://crontab.guru/) formatted times.',
+    usage: '<crontab string>\n<some message to be sent>',
     aliases: [],
     execute: scheduleMessage,
     docs: `#### Schedule Message
 - Command: \`schedule\`
-- Returns: Schedules a message to be sent periodicly in the channel that the command is called from.
+- Returns: Schedules a message to be sent periodicity in the channel that the command is called from.
+- This uses [Crontab](https://crontab.guru/) formatted time strings, they are a little bit more
+  confusing to write but they are very powerful and can be very specific.
 - Example usage:
 \`\`\`
 User
-> !scheduler thursdays at 6:00pm
+> !scheduler 0 6 * * THU
 Hey everyeryone, remember we have DND soon!
 
 Botomir
-> Message has been scheduled to be sent on Thurdsay March 25th at 6:00pm.
+> Message has been scheduled to be sent on Thursday March 25th at 6:00pm.
 
 ......
-Thursdat at 6:
+Thursday at 6:
 Botomir
 > Hey everyeryone, remember we have DND soon!
 \`\`\``,

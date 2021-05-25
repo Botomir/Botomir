@@ -6,6 +6,7 @@ const Agenda = require('agenda');
 const agenda = new Agenda({
     db: {
         address: process.env.DATABASE_URL,
+        collection: 'scheduledJobs',
     },
 });
 agenda.name(`${os.hostname}-${process.pid}`);
