@@ -97,6 +97,7 @@ User
 > !purge 5
 
 Botomir
-> Poof there go the messages.
+> :skull_crossbones: Poof 1 messages were successfully deleted by @username
+
 \`\`\``,
 };
