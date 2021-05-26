@@ -7,7 +7,7 @@ const Bot = source('bot');
 const { Settings } = source('models/settings');
 const { Statistics, EventTypes } = source('models/statistics');
 
-function handleRunCommand(job) {
+function handleScheduleCommand(job) {
     const { serverID, channelID, commandName, args } = job.attrs.data;
     const { guilds, commands, user } = Bot.client;
 
@@ -62,5 +62,5 @@ function handleRunCommand(job) {
 }
 
 module.exports = function (agenda) {
-    agenda.define('schedule command', handleRunCommand);
+    agenda.define('schedule command', handleScheduleCommand);
 };

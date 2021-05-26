@@ -4,7 +4,7 @@ const logger = source('bot/utils/logger');
 const { sendMessage } = source('bot/utils/util');
 const Bot = source('bot');
 
-function handleSendMessage(job) {
+function handleScheduleMessage(job) {
     const { serverID, channelID, message } = job.attrs.data;
 
     const guild = Bot.client.guilds.cache.get(serverID);
@@ -24,5 +24,5 @@ function handleSendMessage(job) {
 }
 
 module.exports = function (agenda) {
-    agenda.define('schedule message', handleSendMessage);
+    agenda.define('schedule message', handleScheduleMessage);
 };

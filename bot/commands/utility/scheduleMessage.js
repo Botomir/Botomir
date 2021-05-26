@@ -5,7 +5,8 @@ const logger = source('bot/utils/logger');
 const { sendMessage } = source('bot/utils/util');
 const agenda = source('scheduler');
 
-// takes a crontab formatted string 6+ arguments, first
+// takes a crontab formatted string 6+ arguments
+// minute, hour, day of month, month, day of week
 function scheduleMessage(message, args) {
     const guildID = message.guild.id;
     const channelID = message.channel.id;
