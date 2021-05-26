@@ -52,7 +52,7 @@ module.exports = {
 - Example usage:
 \`\`\`
 User
-> !scheduler 0 6 * * THU
+> !schedule 0 6 * * THU
 Hey everyeryone, remember we have DND soon!
 
 Botomir
