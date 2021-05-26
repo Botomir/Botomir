@@ -30,6 +30,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - server weather command location can be configured
 - DMs no longer cause the app to crash
 - docker image now uses TypeScript compiled application and minimum set of files
+- delete now mentions the user that deleted the messages
+- message link rendering is now also shown for bot users
 
 ## [2.0.1] - 2020-12-20
 ### Changed

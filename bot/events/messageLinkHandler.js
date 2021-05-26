@@ -7,7 +7,7 @@ const logger = source('bot/utils/logger');
 const messageLinkRegex = /https:\/\/discord.com\/channels\/([0-9]*)\/([0-9]*)\/([0-9]*)/;
 
 function messageLink(message) {
-    if (message.guild === null || message.author.bot) return;
+    if (message.guild === null) return;
     const parts = messageLinkRegex.exec(message.content);
     if (parts === null || parts.length !== 4) return;
 
