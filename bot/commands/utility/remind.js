@@ -6,7 +6,7 @@ const { sendMessage } = source('bot/utils/util');
 const agenda = source('scheduler');
 
 // takes a crontab formatted string 6+ arguments, first
-function reminderHandler(message, args) {
+function remindHandler(message, args) {
     const guildID = message.guild.id;
     const channelID = message.channel.id;
 
@@ -43,7 +43,7 @@ module.exports = {
     description: 'Send a reminder message at a scheduled time.',
     usage: '<time for the reminder>\n<some message to be sent>',
     aliases: [],
-    execute: reminderHandler,
+    execute: remindHandler,
     docs: `#### Remind Message
 - Command: \`remind\`
 - Returns: Schedules a message to be sent later to remind you about this one.
