@@ -53,7 +53,7 @@ function purgeCommand(message, args) {
                 .then(() => logger.info('saved audit event'))
                 .catch((e) => logger.error('failed to save audit event', e));
 
-            sendMessage(message.channel, `:skull_crossbones: Poof ${messages.size} messages were successfully deleted by ${message.author}`);
+            sendMessage(message.channel, `:skull_crossbones: Poof ${messages.size} messages were successfully deleted by <@${message.author}>`);
             return new Statistics()
                 .setGuild(message.guild.id)
                 .setEvent(EventTypes.MESSAGES_DELETED)
