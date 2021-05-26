@@ -17,13 +17,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - can automatically render message links 
 - can automatically assign roles based on reactions to a message
 - can generate Spotify playlists
-<<<<<<< HEAD
 - added TypeScript compilation to the project
-=======
 - can keep track of message updates
 - can keep track of message deletion
 
->>>>>>> 95c59b5a118604b8be56110abc7786c3092a92d5
 
 ### Changed
 - now uses a database for the bot configuration and not config file
@@ -32,6 +29,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - server weather command location can be configured
 - DMs no longer cause the app to crash
 - docker image now uses TypeScript compiled application and minimum set of files
+- message link rendering is now also shown for bot users
 
 ## [2.0.1] - 2020-12-20
 ### Changed
