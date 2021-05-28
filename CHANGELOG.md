@@ -22,6 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - added TypeScript compilation to the project
 - can keep track of message updates
 - can keep track of message deletion
+- can configure the server timezone
 
 
 ### Changed
