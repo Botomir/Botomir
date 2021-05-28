@@ -7,7 +7,7 @@ const agenda = source('scheduler');
 
 // takes a crontab formatted string 6+ arguments
 // minute, hour, day of month, month, day of week
-function scheduleMessage(message, args) {
+function scheduleMessage(message, args, config) {
     const guildID = message.guild.id;
     const channelID = message.channel.id;
 
@@ -24,6 +24,7 @@ function scheduleMessage(message, args) {
     });
     const res = job.repeatEvery(timePeriod, {
         skipImmediate: true,
+        timezone: config.timezone,
     });
     const nextRun = job.attrs.nextRunAt;
 
