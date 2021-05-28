@@ -40,7 +40,7 @@ describe('settings database', () => {
         expect(saved.guildID).toBe(fields.guild);
     });
 
-    test('case insentive tempature unit', async () => {
+    test('case insensitive temperature unit', async () => {
         const settings = new Settings()
             .setGuild(fields.guild)
             .setTempUnit('c');
@@ -49,7 +49,7 @@ describe('settings database', () => {
         expect(saved.tempUnit).toBe('C');
     });
 
-    test('invalid tempature unit', () => {
+    test('invalid temperature unit', () => {
         const settings = new Settings()
             .setGuild(fields.guild)
             .setTempUnit('L');
@@ -57,10 +57,10 @@ describe('settings database', () => {
         return expect(settings.save()).rejects.toThrow('validation failed');
     });
 
-    test('full tempature unit name', () => {
+    test('full temperature unit name', () => {
         const settings = new Settings()
             .setGuild(fields.guild)
-            .setTempUnit('Celcius');
+            .setTempUnit('Celsius');
 
         return expect(settings.save()).rejects.toThrow('validation failed');
     });
@@ -191,6 +191,22 @@ describe('settings database', () => {
         const saved = await settings.save();
         expect(saved.roleMessage).toBeUndefined();
     });
+
+    test('invalid timezone - America/Guelph', () => {
+        const settings = new Settings()
+            .setGuild(fields.guild)
+            .setTimezone('America/Guelph');
+
+        return expect(settings.save()).rejects.toThrow('validation failed');
+    });
+
+    test('invalid timezone - Toronto', () => {
+        const settings = new Settings()
+            .setGuild(fields.guild)
+            .setTimezone('Toronto');
+
+        return expect(settings.save()).rejects.toThrow('validation failed');
+    });
 });
 
 describe('settings default values', () => {
@@ -228,6 +244,14 @@ describe('settings default values', () => {
 
         const saved = await settings.save();
         expect(saved.tempUnit).toBe('C');
+    });
+
+    test('default timezone', async () => {
+        const settings = new Settings()
+            .setGuild(fields.guild);
+
+        const saved = await settings.save();
+        expect(saved.timezone).toBe('America/Toronto');
     });
 
     test('default playlist description', async () => {
@@ -494,6 +518,33 @@ describe('settings inital values', () => {
                 url: 'https://google.ca',
             },
         ]);
+    });
+
+    test('custom timezone - America/Vancouver', async () => {
+        const settings = new Settings()
+            .setGuild(fields.guild)
+            .setTimezone('America/Vancouver');
+
+        const saved = await settings.save();
+        expect(saved.timezone).toBe('America/Vancouver');
+    });
+
+    test('custom timezone - lowercase', async () => {
+        const settings = new Settings()
+            .setGuild(fields.guild)
+            .setTimezone('america/vancouver');
+
+        const saved = await settings.save();
+        expect(saved.timezone).toBe('america/vancouver');
+    });
+
+    test('custom timezone - EST', async () => {
+        const settings = new Settings()
+            .setGuild(fields.guild)
+            .setTimezone('EST');
+
+        const saved = await settings.save();
+        expect(saved.timezone).toBe('EST');
     });
 });
 

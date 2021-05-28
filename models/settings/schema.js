@@ -7,6 +7,8 @@
 const mongoose = require('mongoose');
 const source = require('rfr');
 
+const moment = require('moment-timezone');
+
 const { snowflakeValidator } = source('models/util');
 
 // move this later
@@ -135,6 +137,12 @@ module.exports = new mongoose.Schema({
         type: String,
         required: true,
         default: 'Toronto, ON',
+    },
+    timezone: {
+        type: String,
+        required: true,
+        default: 'America/Toronto',
+        validate: (val) => moment.tz.zone(val) !== null,
     },
     bot_admin_role: {
         type: String,
