@@ -76,6 +76,10 @@ class Settings {
         return this._model.unassignable_roles;
     }
 
+    get timezone() {
+        return this._model.timezone;
+    }
+
     setGuild(guild) {
         if (typeof guild === 'string') {
             this._model.guild = guild;
@@ -210,6 +214,13 @@ class Settings {
     setMentalHealthLinks(links) {
         if (Array.isArray(links)) {
             this._model.mental_health = links;
+        }
+        return this;
+    }
+
+    setTimezone(zone) {
+        if (typeof zone === 'string') {
+            this._model.timezone = zone;
         }
         return this;
     }

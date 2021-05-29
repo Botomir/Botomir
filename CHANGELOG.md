@@ -16,12 +16,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - added coin flips
 - added scheduling recurring messages using crontab formatted strings
 - added scheduling reminder messages to be sent
+- added listing the scheduled recurring messages
 - can automatically render message links 
 - can automatically assign roles based on reactions to a message
 - can generate Spotify playlists
 - added TypeScript compilation to the project
 - can keep track of message updates
 - can keep track of message deletion
+- can configure the server timezone
 
 
 ### Changed

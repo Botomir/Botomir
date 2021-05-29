@@ -5,8 +5,10 @@ const logger = source('bot/utils/logger');
 const { sendMessage } = source('bot/utils/util');
 const agenda = source('scheduler');
 
-// takes a crontab formatted string 6+ arguments, first
-function scheduleMessage(message, args) {
+
+// takes a crontab formatted string 6+ arguments
+// minute, hour, day of month, month, day of week
+function scheduleMessage(message, args, config) {
     const guildID = message.guild.id;
     const channelID = message.channel.id;
 
@@ -23,6 +25,7 @@ function scheduleMessage(message, args) {
     });
     const res = job.repeatEvery(timePeriod, {
         skipImmediate: true,
+        timezone: config.timezone,
     });
     const nextRun = job.attrs.nextRunAt;
 
@@ -52,7 +55,7 @@ module.exports = {
 - Example usage:
 \`\`\`
 User
-> !scheduler 0 6 * * THU
+> !schedule 0 6 * * THU
 Hey everyeryone, remember we have DND soon!
 
 Botomir
