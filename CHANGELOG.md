@@ -8,18 +8,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - added support for the bot to be on multiple discord servers
 - added support for bot admin commands to configure the bot settings
-- added the ability to automatically parse the role reaction emojs
+- added the ability to automatically parse the role reaction emojis
 - added a bunch of new commands
 - added moderation tools to keep message logs
 - added the ability to handle webhooks from github and gitlab
 - added the ability to roll dice
 - added coin flips
+- added scheduling recurring messages using crontab formatted strings
+- added listing the scheduled recurring messages
 - can automatically render message links 
 - can automatically assign roles based on reactions to a message
 - can generate Spotify playlists
 - added TypeScript compilation to the project
 - can keep track of message updates
 - can keep track of message deletion
+- can configure the server timezone
 
 
 ### Changed

@@ -39,8 +39,10 @@
     "node": "15.2.1"
   },
   "dependencies": {
+    "agenda": "^4.1.0",
     "connect-mongo": "^4.4.0",
     "cookie-parser": "^1.4.5",
+    "cronstrue": "^1.113.0",
     "discord.js": "^12.5.1",
     "dotenv": "^8.2.0",
     "emoji-regex": "^9.2.0",
@@ -52,6 +54,8 @@
     "lodash": "^4.17.20",
     "markdown-it": "^12.0.4",
     "memejs": "^1.2.3",
+    "moment": "^2.29.1",
+    "moment-timezone": "^0.5.33",
     "mongoose": "^5.10.16",
     "node-fetch": "^2.6.1",
     "parse-duration": "^0.4.4",

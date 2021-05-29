@@ -24,6 +24,7 @@ function setRoleChannelCommand(message, args, config) {
         .addField('playlistDescription', config.playlistDescription)
         .addField('tempUnit', config.tempUnit, true)
         .addField('weatherLocation', config.weatherLocation, true)
+        .addField('timezone', config.timezone, true)
         .addField('\u200b', '\u200b')
         .addField('memeSubs', config.memeSubs, true)
         .addField('cuteSubs', config.cuteSubs, true)
