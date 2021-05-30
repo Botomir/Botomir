@@ -13,7 +13,7 @@ const { Role } = source('models/role');
 const { parseRoleMessage } = source('bot/utils/roleParsing');
 const logger = source('bot/utils/logger');
 
-function createRoleReaction(message, args, config) {
+function createRoleWatch(message, args, config) {
     const channelMention = args.shift().trim();
     const parts = parseRoleMessage(args.join(' '));
 
@@ -58,7 +58,7 @@ module.exports = {
     description: 'create a message that can be use to automatically assign roles based on reactions',
     usage: '<#channel>\n<message>\n---\nemoji : role mapping',
     aliases: [],
-    execute: createRoleReaction,
+    execute: createRoleWatch,
     docs: `#### Set role mappings for reaction assignment
 - Command: \`!create-role-reaction #channel\nintro\n---\n<mapping>\`
 - Returns: Botomir will autogenerate a role assignment message to the specified channel

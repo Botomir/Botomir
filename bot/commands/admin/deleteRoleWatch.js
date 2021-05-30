@@ -5,7 +5,7 @@ const { Role } = source('models/role');
 
 const logger = source('bot/utils/logger');
 
-function removeReactionMessage(message, args) {
+function removeRoleWatch(message, args) {
     const messageLink = args[0].trim();
 
     const { serverID, channelID, messageID } = extractMessageLink(messageLink);
@@ -53,7 +53,7 @@ module.exports = {
     description: 'stop watching for role reactions on a message and delete it',
     usage: '<messageLink>',
     aliases: [],
-    execute: removeReactionMessage,
+    execute: removeRoleWatch,
     docs: `#### Delete role mappings message
 - Command: \`!remove-role-reaction <messageLink>\`
 - Returns: stop watching the message for reactions and remove the message

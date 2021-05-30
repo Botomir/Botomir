@@ -13,7 +13,7 @@ const { Role } = source('models/role');
 const { parseRoleMessage } = source('bot/utils/roleParsing');
 const logger = source('bot/utils/logger');
 
-function updateReactionMessage(message, args, config) {
+function updateRoleWatch(message, args, config) {
     const messageLink = args.shift().trim();
     const parts = parseRoleMessage(args.join(' '));
 
@@ -77,7 +77,7 @@ module.exports = {
     description: 'updates an existing a message that can be use to automatically assign roles based on reactions',
     usage: '<messageLink>\n<message>\n---\nemoji : role mapping',
     aliases: [],
-    execute: updateReactionMessage,
+    execute: updateRoleWatch,
     docs: `#### Update role mappings for reaction assignment
 - Command: \`!update-role-reaction <messageLink>\nintro\n---\n<mapping>\`
 - Returns: Botomir will autogenerate a role assignment message to the specified channel
