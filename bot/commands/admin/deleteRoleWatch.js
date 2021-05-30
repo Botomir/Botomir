@@ -1,23 +1,18 @@
 const source = require('rfr');
 
-const { sendMessage } = source('bot/utils/util');
+const { sendMessage, extractMessageLink } = source('bot/utils/util');
 const { Role } = source('models/role');
 
 const logger = source('bot/utils/logger');
 
-const messageLinkRegex = /https:\/\/discord.com\/channels\/([0-9]*)\/([0-9]*)\/([0-9]*)/;
-
 function removeReactionMessage(message, args) {
     const messageLink = args[0].trim();
 
-    const linkParts = messageLinkRegex.exec(messageLink);
-    if (linkParts === null || linkParts.length !== 4) {
+    const { serverID, channelID, messageID } = extractMessageLink(messageLink);
+
+    if (!serverID) {
         return sendMessage(message.channel, 'Must specify a link to one of the reaction messages to be able to update it.');
     }
-
-    const serverID = linkParts[1];
-    const channelID = linkParts[2];
-    const messageID = linkParts[3];
 
     if (serverID !== message.guild.id) {
         return sendMessage(message.channel, 'Can not update a reaction message from a different server');

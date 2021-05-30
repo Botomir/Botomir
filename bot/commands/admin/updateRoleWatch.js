@@ -1,33 +1,27 @@
 const source = require('rfr');
 
-const { sendMessage, lookupRoleName } = source('bot/utils/util');
+const { sendMessage, extractMessageLink } = source('bot/utils/util');
+
+const {
+    generateMessageContent,
+    reactToMessage,
+    checkRoles,
+} = source('bot/utils/reactionMessage');
+
 const { Role } = source('models/role');
 
 const { parseRoleMessage } = source('bot/utils/roleParsing');
 const logger = source('bot/utils/logger');
 
-const messageLinkRegex = /https:\/\/discord.com\/channels\/([0-9]*)\/([0-9]*)\/([0-9]*)/;
-
-function generateMessageContent(header, mappings) {
-    return mappings.reduce((acc, m) => `${acc}${m.emoji} : \`${m.label}\`\n`, `${header}\n\n`);
-}
-
-function reactToMessage(message, mappings) {
-    return Promise.all(mappings.map((m) => message.react(m.emoji)));
-}
-
 function updateReactionMessage(message, args, config) {
     const messageLink = args.shift().trim();
     const parts = parseRoleMessage(args.join(' '));
 
-    const linkParts = messageLinkRegex.exec(messageLink);
-    if (linkParts === null || linkParts.length !== 4) {
+    const { serverID, channelID, messageID } = extractMessageLink(messageLink);
+
+    if (!serverID) {
         return sendMessage(message.channel, 'Must specify a link to one of the reaction messages to be able to update it.');
     }
-
-    const serverID = linkParts[1];
-    const channelID = linkParts[2];
-    const messageID = linkParts[3];
 
     if (serverID !== message.guild.id) {
         return sendMessage(message.channel, 'Can not update a reaction message from a different server');
@@ -39,12 +33,7 @@ function updateReactionMessage(message, args, config) {
     }
 
     // check that the roles actually exist
-    const mappings = parts.mappings
-        .map((m) => ({
-            role: lookupRoleName(message.guild, m.roleName),
-            ...m,
-        }))
-        .filter((m) => m.role && !config.unassignableRoles.includes(m.role.name));
+    const mappings = checkRoles(parts.mappings, message.guild, config.unassignableRoles);
 
     let watchMessage;
     return channel.messages.fetch(messageID)

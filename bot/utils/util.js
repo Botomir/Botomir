@@ -60,6 +60,26 @@ function lookupRoleName(guild, string) {
     return guild.roles.cache.find((role) => role.name === string);
 }
 
+const messageLinkRegex = /https:\/\/discord.com\/channels\/([0-9]+)\/([0-9]+)\/([0-9]+)/;
+
+function extractMessageLink(messageLink) {
+    const linkParts = messageLinkRegex.exec(messageLink);
+
+    if (linkParts === null || linkParts.length !== 4) {
+        return {
+            serverID: null,
+            channelID: null,
+            messageID: null,
+        };
+    }
+
+    return {
+        serverID: linkParts[1],
+        channelID: linkParts[2],
+        messageID: linkParts[3],
+    };
+}
+
 module.exports = {
     sendMessage,
     getChannel,
@@ -67,4 +87,5 @@ module.exports = {
     getMember,
     getRole,
     sendEventMessage,
+    extractMessageLink,
 };

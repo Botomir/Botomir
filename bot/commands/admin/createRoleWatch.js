@@ -1,18 +1,17 @@
 const source = require('rfr');
 
-const { sendMessage, getChannel, lookupRoleName } = source('bot/utils/util');
+const { sendMessage, getChannel } = source('bot/utils/util');
+
+const {
+    generateMessageContent,
+    reactToMessage,
+    checkRoles,
+} = source('bot/utils/reactionMessage');
+
 const { Role } = source('models/role');
 
 const { parseRoleMessage } = source('bot/utils/roleParsing');
 const logger = source('bot/utils/logger');
-
-function generateMessageContent(header, mappings) {
-    return mappings.reduce((acc, m) => `${acc}${m.emoji} : \`${m.label}\`\n`, `${header}\n\n`);
-}
-
-function reactToMessage(message, mappings) {
-    return Promise.all(mappings.map((m) => message.react(m.emoji)));
-}
 
 function createRoleReaction(message, args, config) {
     const channelMention = args.shift().trim();
@@ -25,15 +24,9 @@ function createRoleReaction(message, args, config) {
     }
 
     // check that the roles actually exist
-    const mappings = parts.mappings
-        .map((m) => ({
-            role: lookupRoleName(message.guild, m.roleName),
-            ...m,
-        }))
-        .filter((m) => m.role && !config.unassignableRoles.includes(m.role.name));
+    const mappings = checkRoles(parts.mappings, message.guild, config.unassignableRoles);
 
     let watchMessage;
-
     return sendMessage(channel, generateMessageContent(parts.header, mappings))
         .then((mes) => {
             watchMessage = mes;
