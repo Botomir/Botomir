@@ -35,6 +35,10 @@ function updateReactionMessage(message, args, config) {
     // check that the roles actually exist
     const mappings = checkRoles(parts.mappings, message.guild, config.unassignableRoles);
 
+    if (mappings.length > 20) {
+        return sendMessage(message.channel, 'Ahh!!!! That is too many roles, I can only watch 20 per message, try splitting it up into multiple messages so it is easier for me to keep track of.');
+    }
+
     let watchMessage;
     return channel.messages.fetch(messageID)
         .then((m) => {

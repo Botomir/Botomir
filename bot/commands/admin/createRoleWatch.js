@@ -26,6 +26,10 @@ function createRoleReaction(message, args, config) {
     // check that the roles actually exist
     const mappings = checkRoles(parts.mappings, message.guild, config.unassignableRoles);
 
+    if (mappings.length > 20) {
+        return sendMessage(message.channel, 'Ahh!!!! That is too many roles, I can only watch 20 per message, try splitting it up into multiple messages so it is easier for me to keep track of.');
+    }
+
     let watchMessage;
     return sendMessage(channel, generateMessageContent(parts.header, mappings))
         .then((mes) => {
@@ -40,7 +44,6 @@ function createRoleReaction(message, args, config) {
                 .save());
             return Promise.all(promises);
         })
-        .then(() => sendMessage(message.channel, 'Role reactions updated'))
         .then(() => reactToMessage(watchMessage, mappings))
         .catch((e) => {
             sendMessage(message.channel, `Failed to update the reaction roles: ${e.message}`);
