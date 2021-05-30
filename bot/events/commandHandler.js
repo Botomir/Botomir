@@ -32,7 +32,7 @@ function commandHandler(message) {
             }
 
             if (command.args && args.length < command.args) {
-                let reply = `You didn't provide enough arguments, ${message.author}!`;
+                let reply = `You didn't provide enough arguments, ${message.author.toString()}!`;
 
                 if (command.usage) {
                     reply += `\nThe proper usage would be: \`${prefix}${command.name} ${command.usage}\``;
