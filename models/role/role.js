@@ -19,11 +19,11 @@ class Role {
     }
 
     get channelID() {
-        return this._model.guild;
+        return this._model.channel;
     }
 
     get messageID() {
-        return this._model.guild;
+        return this._model.message;
     }
 
     get emoji() {

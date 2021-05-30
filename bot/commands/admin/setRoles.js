@@ -1,7 +1,7 @@
 const source = require('rfr');
 const emojiRegex = require('emoji-regex/RGI_Emoji.js');
 
-const { sendMessage, lookupRoleName } = source('bot/utils/util');
+const { sendMessage } = source('bot/utils/util');
 const { Role } = source('models/role');
 
 const { parseRoleMessage } = source('bot/utils/roleParsing');
