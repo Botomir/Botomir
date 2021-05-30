@@ -22,6 +22,7 @@ function remindHandler(message, args) {
         serverID: guildID,
         channelID,
         message: scheduledText,
+        owner: message.author.id,
     });
     const res = job.schedule(timePeriod);
     const nextRun = job.attrs.nextRunAt;
