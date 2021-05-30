@@ -18,14 +18,6 @@ class Settings {
         return this._model.guild;
     }
 
-    get roleMessage() {
-        return this._model.role_watch_message;
-    }
-
-    get welcomeChannel() {
-        return this._model.welcome_channel;
-    }
-
     get musicChannelID() {
         return this._model.music_channel;
     }
@@ -83,20 +75,6 @@ class Settings {
     setGuild(guild) {
         if (typeof guild === 'string') {
             this._model.guild = guild;
-        }
-        return this;
-    }
-
-    setRoleMessage(messageID) {
-        if (typeof messageID === 'string') {
-            this._model.role_watch_message = messageID;
-        }
-        return this;
-    }
-
-    setWelcomeChannel(channel) {
-        if (typeof channel === 'string') {
-            this._model.welcome_channel = channel;
         }
         return this;
     }
@@ -232,8 +210,6 @@ class Settings {
     toAPI() {
         return {
             guild: this._model.guild,
-            roleWatchMessage: this._model.role_watch_message,
-            roleWatchChannel: this._model.welcome_channel,
             musicWatchChannel: this._model.music_channel,
             commandPrefix: this._model.command_prefix,
             playlistName: this._model.playlist_name,

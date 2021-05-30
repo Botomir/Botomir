@@ -19,18 +19,6 @@
                 </div>
 
             </div>
-            <div class="col">
-                <label for="roleWatchChannel">Select a Role watch channel</label>
-                <div>
-                    <select id="roleWatchChannel" name="roleWatchChannel" aria-describedby="roleWatchChannelHelpBlock" required="required" class="custom-select">
-                        <option value="-1">unset</option>
-                        {{#each channels}}
-                            <option value="{{id}}" {{#if isRoleWatch}} selected {{/if}}>{{name}} </option>
-                        {{/each}}
-                    </select>
-                    <span id="roleWatchHelpBlock" class="form-text text-muted">Select a channel to post the role reaction message to</span>
-                </div>
-            </div>
 
             <div class="col">
                 <label for="musicWatchChannel">Select a Music watch channel</label>
