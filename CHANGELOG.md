@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - added the ability to automatically parse the role reaction emojis
 - added the ability to watch multiple role reaction messages
 - added the ability to update a role reaction message
+- added the ability to remove a role reaction message without just updating it
 - added a bunch of new commands
 - added moderation tools to keep message logs
 - added the ability to handle webhooks from github and gitlab
