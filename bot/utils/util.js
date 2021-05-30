@@ -50,6 +50,12 @@ function getChannel(guild, channel) {
     return guild.channels.cache.get(str1Id);
 }
 
+function getRole(guild, roleID) {
+    if (!guild || !roleID) return undefined;
+
+    return guild.roles.cache.get(roleID);
+}
+
 function lookupRoleName(guild, string) {
     return guild.roles.cache.find((role) => role.name === string);
 }
@@ -59,5 +65,6 @@ module.exports = {
     getChannel,
     lookupRoleName,
     getMember,
+    getRole,
     sendEventMessage,
 };

@@ -30,12 +30,7 @@ function changeRole(member, role, mode, unassignable = []) {
         .then(() => recordRoleStats(member.guild.id, mode));
 }
 
-function findRole(member, roleName) {
-    return member.guild.roles.cache.find((r) => r.name === roleName);
-}
-
 module.exports = {
-    findRole,
     changeRole,
     Mode,
 };

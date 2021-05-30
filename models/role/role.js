@@ -18,8 +18,20 @@ class Role {
         return this._model.guild;
     }
 
+    get channelID() {
+        return this._model.guild;
+    }
+
+    get messageID() {
+        return this._model.guild;
+    }
+
     get emoji() {
         return this._model.emoji_name;
+    }
+
+    get roleID() {
+        return this._model.role;
     }
 
     get roleName() {
@@ -33,9 +45,30 @@ class Role {
         return this;
     }
 
+    setChannel(channel) {
+        if (typeof channel === 'string') {
+            this._model.channel = channel;
+        }
+        return this;
+    }
+
+    setMessage(message) {
+        if (typeof message === 'string') {
+            this._model.message = message;
+        }
+        return this;
+    }
+
     setEmoji(emoji) {
         if (typeof emoji === 'string') {
             this._model.emoji_name = emoji;
+        }
+        return this;
+    }
+
+    setRoleID(role) {
+        if (typeof role === 'string') {
+            this._model.role = role;
         }
         return this;
     }
@@ -51,9 +84,12 @@ class Role {
         return this._model.save().then(() => this);
     }
 
-    static findRole(serverID, emoji) {
+    static findRole(serverID, channelID, messageID, emoji) {
         return RoleModel.findOne({
-            guild: serverID, emoji_name: emoji,
+            guild: serverID,
+            channel: channelID,
+            message: messageID,
+            emoji_name: emoji,
         })
             .then((res) => {
                 if (res === null) return null;

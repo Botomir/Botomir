@@ -1,7 +1,7 @@
 const source = require('rfr');
 const emojiRegex = require('emoji-regex/RGI_Emoji.js');
 
-const { sendMessage } = source('bot/utils/util');
+const { sendMessage, lookupRoleName } = source('bot/utils/util');
 const { Role } = source('models/role');
 
 const { parseRoleMessage } = source('bot/utils/roleParsing');
@@ -27,11 +27,11 @@ function reactToMessage(message, mappings) {
 }
 
 function setRoleMessageCommand(message, args, config) {
-    const parts = parseRoleMessage(args.join(' '));
+    const parts = parseRoleMessage(message.guild, args.join(' '));
 
     // lookup the actual emoji to use react with
     const mappings = parts.mappings
-        .filter((m) => !config.unassignableRoles.includes(m.roleName))
+        .filter((m) => m.role && !config.unassignableRoles.includes(m.role.name))
         .map((m) => {
             let reactionEmoji = m.emoji;
 
@@ -82,8 +82,11 @@ function setRoleMessageCommand(message, args, config) {
         .then(() => {
             const promises = mappings.map((m) => new Role()
                 .setEmoji(m.mapping.emoji)
-                .setRole(m.mapping.roleName)
-                .setGuild(message.guild.id)
+                .setRole(m.mapping.role.name)
+                .setRoleID(m.mapping.role.id)
+                .setGuild(watchMessage.guild.id)
+                .setChannel(watchMessage.channel.id)
+                .setMessage(watchMessage.id)
                 .save());
             return Promise.all(promises);
         })
