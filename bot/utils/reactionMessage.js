@@ -3,7 +3,7 @@ const source = require('rfr');
 const { lookupRoleName } = source('bot/utils/util');
 
 function generateMessageContent(header, mappings) {
-    return mappings.reduce((acc, m) => `${acc}${m.emoji} : \`${m.label}\`\n`, `${header}\n\n`);
+    return mappings.reduce((acc, m) => `${acc}\n${m.emoji} : \`${m.label}\``, `${header}\n`);
 }
 
 function reactToMessage(message, mappings) {

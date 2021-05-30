@@ -116,6 +116,32 @@ class Role {
         });
     }
 
+    static findWatchMessages(serverID) {
+        return RoleModel.aggregate([
+            {
+                $match: {
+                    guild: serverID,
+                },
+            },
+            {
+                $group: {
+                    _id: {
+                        guild: '$guild',
+                        channel: '$channel',
+                        message: '$message',
+                    },
+                },
+            }, {
+                $project: {
+                    _id: 0,
+                    guild: '$_id.guild',
+                    channel: '$_id.channel',
+                    message: '$_id.message',
+                },
+            },
+        ]);
+    }
+
     static count() {
         return RoleModel
             .count()
