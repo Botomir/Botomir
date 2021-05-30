@@ -417,4 +417,129 @@ describe('roles database', () => {
         expect(res).toHaveProperty('count', 2);
         expect(res).toHaveProperty('database', 'Role');
     });
+
+    test('find no messages being watched', async () => {
+        const res = await Role.findWatchMessages(fields1.guild);
+        expect(res).toHaveLength(0);
+    });
+
+    test('find one message with multiple reactions', async () => {
+        const role1 = new Role()
+            .setGuild(fields1.guild)
+            .setChannel(fields1.channel)
+            .setMessage(fields1.message)
+            .setRoleID(fields1.roleID)
+            .setEmoji(fields1.emoji)
+            .setRole(fields1.roleName);
+
+        const role2 = new Role()
+            .setGuild(fields1.guild)
+            .setChannel(fields1.channel)
+            .setMessage(fields1.message)
+            .setRoleID(fields2.roleID)
+            .setEmoji(fields2.emoji)
+            .setRole(fields2.roleName);
+
+        await role1.save();
+        await role2.save();
+
+        const res = await Role.findWatchMessages(fields1.guild);
+        expect(res).toHaveLength(1);
+
+        expect(res[0]).toHaveProperty('guild', fields1.guild);
+        expect(res[0]).toHaveProperty('channel', fields1.channel);
+        expect(res[0]).toHaveProperty('message', fields1.message);
+    });
+
+    test('find multiple channels one guild', async () => {
+        const role1 = new Role()
+            .setGuild(fields1.guild)
+            .setChannel(fields1.channel)
+            .setMessage(fields1.message)
+            .setRoleID(fields1.roleID)
+            .setEmoji(fields1.emoji)
+            .setRole(fields1.roleName);
+
+        const role2 = new Role()
+            .setGuild(fields1.guild)
+            .setChannel(fields2.channel)
+            .setMessage(fields2.message)
+            .setRoleID(fields2.roleID)
+            .setEmoji(fields2.emoji)
+            .setRole(fields2.roleName);
+
+        await role1.save();
+        await role2.save();
+
+        const res = await Role.findWatchMessages(fields1.guild);
+        expect(res).toHaveLength(2);
+
+        expect(res[0]).toHaveProperty('guild', fields1.guild);
+        expect(res[0]).toHaveProperty('channel');
+        expect(res[0]).toHaveProperty('message');
+
+        expect(res[1]).toHaveProperty('guild', fields1.guild);
+        expect(res[1]).toHaveProperty('channel');
+        expect(res[1]).toHaveProperty('message');
+    });
+
+    test('find multiple guilds', async () => {
+        const role1 = new Role()
+            .setGuild(fields1.guild)
+            .setChannel(fields1.channel)
+            .setMessage(fields1.message)
+            .setRoleID(fields1.roleID)
+            .setEmoji(fields1.emoji)
+            .setRole(fields1.roleName);
+
+        const role2 = new Role()
+            .setGuild(fields2.guild)
+            .setChannel(fields2.channel)
+            .setMessage(fields2.message)
+            .setRoleID(fields2.roleID)
+            .setEmoji(fields2.emoji)
+            .setRole(fields2.roleName);
+
+        await role1.save();
+        await role2.save();
+
+        const res = await Role.findWatchMessages(fields1.guild);
+        expect(res).toHaveLength(1);
+
+        expect(res[0]).toHaveProperty('guild', fields1.guild);
+        expect(res[0]).toHaveProperty('channel', fields1.channel);
+        expect(res[0]).toHaveProperty('message', fields1.message);
+    });
+
+    test('find multiple messages in the same channel', async () => {
+        const role1 = new Role()
+            .setGuild(fields1.guild)
+            .setChannel(fields1.channel)
+            .setMessage(fields1.message)
+            .setRoleID(fields1.roleID)
+            .setEmoji(fields1.emoji)
+            .setRole(fields1.roleName);
+
+        const role2 = new Role()
+            .setGuild(fields1.guild)
+            .setChannel(fields1.channel)
+            .setMessage(fields2.message)
+            .setRoleID(fields2.roleID)
+            .setEmoji(fields2.emoji)
+            .setRole(fields2.roleName);
+
+        await role1.save();
+        await role2.save();
+
+        const res = await Role.findWatchMessages(fields1.guild);
+        expect(res).toHaveLength(2);
+
+        expect(res[0]).toHaveProperty('guild', fields1.guild);
+        expect(res[0]).toHaveProperty('channel', fields1.channel);
+        expect(res[0]).toHaveProperty('message');
+
+        expect(res[1]).toHaveProperty('guild', fields1.guild);
+        expect(res[1]).toHaveProperty('channel', fields1.channel);
+        expect(res[1]).toHaveProperty('message');
+    });
 });
