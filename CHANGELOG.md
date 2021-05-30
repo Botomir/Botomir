@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - added the ability to roll dice
 - added coin flips
 - added scheduling recurring messages using crontab formatted strings
+- added scheduling reminder messages to be sent
 - added listing the scheduled recurring messages
 - can automatically render message links 
 - can automatically assign roles based on reactions to a message
