@@ -255,7 +255,7 @@ describe('roles database', () => {
         expect(res.roleName).toBe(fields2.roleName);
     });
 
-    test('delete none', () => expect(Role.removeServerRoles(fields1.guild)).resolves.not.toBeNull());
+    test('delete none', () => expect(Role.removeWatchedMessage(fields1.guild, fields1.channel, fields1.message)).resolves.not.toBeNull());
 
     test('delete one', async () => {
         const role = new Role()
@@ -274,7 +274,7 @@ describe('roles database', () => {
         expect(res).toBeInstanceOf(Role);
         expect(res._mongoId).toStrictEqual(role._mongoId);
 
-        await Role.removeServerRoles(fields1.guild);
+        await Role.removeWatchedMessage(fields1.guild, fields1.channel, fields1.message);
         const res2 = await Role.findRole(fields1.guild,
             fields1.channel, fields1.message, fields1.emoji);
         expect(res2).toBeNull();
@@ -300,12 +300,8 @@ describe('roles database', () => {
         await role1.save();
         await role2.save();
 
-        const res = await Role.findRole(fields1.guild,
-            fields1.channel, fields1.message, fields1.emoji);
-        expect(res).toBeInstanceOf(Role);
-        expect(res._mongoId).toStrictEqual(role1._mongoId);
+        await Role.removeWatchedMessage(fields1.guild, fields1.channel, fields1.message);
 
-        await Role.removeServerRoles(fields1.guild);
         const res2 = await Role.findRole(fields1.guild,
             fields1.channel, fields1.message, fields1.emoji);
         expect(res2).toBeNull();
@@ -336,24 +332,55 @@ describe('roles database', () => {
         await role1.save();
         await role2.save();
 
-        const res = await Role.findRole(fields2.guild,
-            fields2.channel, fields2.message, fields2.emoji);
-        expect(res).toBeInstanceOf(Role);
-        expect(res._mongoId).toStrictEqual(role2._mongoId);
+        await Role.removeWatchedMessage(fields2.guild, fields2.channel, fields2.message);
 
-        const res1 = await Role.findRole(fields3.guild,
-            fields3.channel, fields3.message, fields3.emoji);
-        expect(res1).toBeInstanceOf(Role);
-        expect(res1._mongoId).toStrictEqual(role1._mongoId);
-
-        await Role.removeServerRoles(fields2.guild);
         const res2 = await Role.findRole(fields2.guild,
             fields2.channel, fields2.message, fields2.emoji);
         expect(res2).toBeNull();
 
         const res3 = await Role.findRole(fields3.guild,
             fields3.channel, fields3.message, fields3.emoji);
-        expect(res3).toBeNull();
+        expect(res3).not.toBeNull();
+    });
+
+    test('delete only one watch message', async () => {
+        const role1 = new Role()
+            .setGuild(fields3.guild)
+            .setChannel(fields3.channel)
+            .setMessage(fields3.message)
+            .setRoleID(fields3.roleID)
+            .setEmoji(fields3.emoji)
+            .setRole(fields3.roleName);
+
+        const role2 = new Role()
+            .setGuild(fields2.guild)
+            .setChannel(fields2.channel)
+            .setMessage(fields2.message)
+            .setRoleID(fields2.roleID)
+            .setEmoji(fields2.emoji)
+            .setRole(fields2.roleName);
+
+        const role3 = new Role()
+            .setGuild(fields2.guild)
+            .setChannel(fields2.channel)
+            .setMessage(fields3.message)
+            .setRoleID(fields2.roleID)
+            .setEmoji(fields2.emoji)
+            .setRole(fields2.roleName);
+
+        await role1.save();
+        await role2.save();
+        await role3.save();
+
+        await Role.removeWatchedMessage(fields2.guild, fields2.channel, fields2.message);
+
+        const res2 = await Role.findRole(fields2.guild,
+            fields2.channel, fields2.message, fields2.emoji);
+        expect(res2).toBeNull();
+
+        const res3 = await Role.findRole(fields2.guild,
+            fields2.channel, fields3.message, fields2.emoji);
+        expect(res3).not.toBeNull();
     });
 
     test('count none', async () => {

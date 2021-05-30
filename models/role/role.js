@@ -99,9 +99,20 @@ class Role {
             });
     }
 
-    static removeServerRoles(serverID) {
+    static isWatchMessage(serverID, channelID, messageID) {
+        return RoleModel.findOne({
+            guild: serverID,
+            channel: channelID,
+            message: messageID,
+        })
+            .then((res) => res !== null);
+    }
+
+    static removeWatchedMessage(serverID, channelID, messageID) {
         return RoleModel.deleteMany({
             guild: serverID,
+            channel: channelID,
+            message: messageID,
         });
     }
 

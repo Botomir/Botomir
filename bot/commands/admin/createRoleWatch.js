@@ -64,7 +64,7 @@ module.exports = {
     aliases: [],
     execute: createRoleReaction,
     docs: `#### Set role mappings for reaction assignment
-- Command: \`!set-roles #channel\nintro\n---\n<mapping>\`
+- Command: \`!create-role-reaction #channel\nintro\n---\n<mapping>\`
 - Returns: Botomir will autogenerate a role assignment message to the specified channel
 - Specifications
   - The role assignment can start with a message and be followed by \`---\` to specify role reactions

@@ -4,8 +4,8 @@ const logger = source('bot/utils/logger');
 
 const discordIDRegex = /<[@#][&!]?([0-9]+)>/;
 
-// this is asyncronous but will handle its own errors.
-// it channel can be anything that implemnts .send(message).
+// this is asynchronous but will handle its own errors.
+// it channel can be anything that implements .send(message).
 function sendMessage(channel, message) {
     return channel.send(message)
         .then((m) => {
