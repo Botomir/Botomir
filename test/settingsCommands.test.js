@@ -22,52 +22,25 @@ test('roleParsing.parseEmoji', () => {
 test('roleParsing.parseRoleMessage', () => {
     const parseRoleMessage = roleParsing.__get__('parseRoleMessage'); // eslint-disable-line no-underscore-dangle
 
-    const roleA = {
-        name: 'Code Monkey',
-        id: '790682160368844822',
-    };
-    const roleB = {
-        name: 'Keeb',
-        id: '840805078331293696',
-    };
-    const roleC = {
-        name: 'key',
-        id: '840947692461096990',
-    };
-    const guild = {
-        roles: {
-            cache: {
-                find: (f) => {
-                    if (f(roleA)) return roleA;
-                    if (f(roleB)) return roleB;
-                    if (f(roleC)) return roleC;
-                    return undefined;
-                },
-                get: (id) => {
-                    if (id === roleA.id) return roleA;
-                    if (id === roleB.id) return roleB;
-                    if (id === roleC.id) return roleC;
-                    return undefined;
-                },
-            },
-        },
-    };
-    const res = parseRoleMessage(guild, roleMessage);
+    const res = parseRoleMessage(roleMessage);
     expect(res).toHaveProperty('header', 'Hello Welcome to the Scarborough Support Squad. This is the list of available channels, you gain access to the channels by receiving the role associated with it\nReact to give yourself a role.');
     expect(res).toHaveProperty('mappings');
 
     expect(res.mappings).toHaveLength(3);
 
-    expect(res.mappings[0]).toHaveProperty('emoji', 'code_monkey');
-    expect(res.mappings[0]).toHaveProperty('role.name', 'Code Monkey');
+    expect(res.mappings[0]).toHaveProperty('clean_emoji', 'code_monkey');
+    expect(res.mappings[0]).toHaveProperty('emoji', '<:code_monkey:790612474290110505>');
+    expect(res.mappings[0]).toHaveProperty('roleName', 'Code Monkey');
     expect(res.mappings[0]).toHaveProperty('label', 'crazy keyboard person');
 
+    expect(res.mappings[1]).toHaveProperty('clean_emoji', '🔥');
     expect(res.mappings[1]).toHaveProperty('emoji', '🔥');
-    expect(res.mappings[1]).toHaveProperty('role.name', 'Keeb');
+    expect(res.mappings[1]).toHaveProperty('roleName', 'Keeb');
     expect(res.mappings[1]).toHaveProperty('label', 'Keeb');
 
+    expect(res.mappings[2]).toHaveProperty('clean_emoji', '🔥');
     expect(res.mappings[2]).toHaveProperty('emoji', '🔥');
-    expect(res.mappings[2]).toHaveProperty('role.name', 'key');
+    expect(res.mappings[2]).toHaveProperty('roleName', 'key');
     expect(res.mappings[2]).toHaveProperty('label', 'description');
 });
 
