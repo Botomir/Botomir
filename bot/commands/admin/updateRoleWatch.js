@@ -85,7 +85,7 @@ module.exports = {
     usage: '<messageLink>\n<message>\n---\nemoji : role mapping',
     aliases: [],
     execute: updateReactionMessage,
-    docs: `#### Set role mappings for reaction assignment
+    docs: `#### Update role mappings for reaction assignment
 - Command: \`!update-role-reaction <messageLink>\nintro\n---\n<mapping>\`
 - Returns: Botomir will autogenerate a role assignment message to the specified channel
 - Specifications
