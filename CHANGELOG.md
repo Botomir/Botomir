@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - added support for the bot to be on multiple discord servers
 - added support for bot admin commands to configure the bot settings
 - added the ability to automatically parse the role reaction emojis
+- added the ability to watch multiple role reaction messages
+- added the ability to update a role reaction message
 - added a bunch of new commands
 - added moderation tools to keep message logs
 - added the ability to handle webhooks from github and gitlab
