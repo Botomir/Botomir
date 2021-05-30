@@ -26,6 +26,10 @@ class Settings {
         return this._model.welcome_channel;
     }
 
+    get auditChannel() {
+        return this._model.audit_channel;
+    }
+
     get musicChannelID() {
         return this._model.music_channel;
     }
@@ -97,6 +101,13 @@ class Settings {
     setWelcomeChannel(channel) {
         if (typeof channel === 'string') {
             this._model.welcome_channel = channel;
+        }
+        return this;
+    }
+
+    setAuditChannel(channel) {
+        if (typeof channel === 'string') {
+            this._model.audit_channel = channel;
         }
         return this;
     }
@@ -235,6 +246,7 @@ class Settings {
             roleWatchMessage: this._model.role_watch_message,
             roleWatchChannel: this._model.welcome_channel,
             musicWatchChannel: this._model.music_channel,
+            auditChannel: this._model.audit_channel,
             commandPrefix: this._model.command_prefix,
             playlistName: this._model.playlist_name,
             playlistDescription: this._model.playlist_description,
