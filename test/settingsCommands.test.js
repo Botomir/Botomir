@@ -28,14 +28,17 @@ test('roleParsing.parseRoleMessage', () => {
 
     expect(res.mappings).toHaveLength(3);
 
-    expect(res.mappings[0]).toHaveProperty('emoji', 'code_monkey');
+    expect(res.mappings[0]).toHaveProperty('clean_emoji', 'code_monkey');
+    expect(res.mappings[0]).toHaveProperty('emoji', '<:code_monkey:790612474290110505>');
     expect(res.mappings[0]).toHaveProperty('roleName', 'Code Monkey');
     expect(res.mappings[0]).toHaveProperty('label', 'crazy keyboard person');
 
+    expect(res.mappings[1]).toHaveProperty('clean_emoji', '🔥');
     expect(res.mappings[1]).toHaveProperty('emoji', '🔥');
     expect(res.mappings[1]).toHaveProperty('roleName', 'Keeb');
     expect(res.mappings[1]).toHaveProperty('label', 'Keeb');
 
+    expect(res.mappings[2]).toHaveProperty('clean_emoji', '🔥');
     expect(res.mappings[2]).toHaveProperty('emoji', '🔥');
     expect(res.mappings[2]).toHaveProperty('roleName', 'key');
     expect(res.mappings[2]).toHaveProperty('label', 'description');

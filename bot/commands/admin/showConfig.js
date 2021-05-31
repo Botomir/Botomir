@@ -7,7 +7,6 @@ function setRoleChannelCommand(message, args, config) {
     const disabled = config.disabledCommands.length !== 0 ? config.disabledCommands : 'No commands are disabled';
     const unassignableRoles = config.unassignableRoles.length !== 0 ? config.unassignableRoles : 'All roles are assignable';
 
-    const welcome = config.welcomeChannel !== '' ? `<#${config.welcomeChannel}>` : 'unset';
     const music = config.musicChannelID !== '' ? `<#${config.musicChannelID}>` : 'unset';
 
     const configsEmbed = new Discord.MessageEmbed()
@@ -17,7 +16,6 @@ function setRoleChannelCommand(message, args, config) {
         .addField('commandPrefix', config.commandPrefix, true)
         .addField('botAdminRole', config.botAdminRole, true)
         .addField('\u200b', '\u200b', true)
-        .addField('welcomeChannel', welcome, true)
         .addField('musicChannelID', music, true)
         .addField('\u200b', '\u200b', true)
         .addField('playlistName', config.playlistName)

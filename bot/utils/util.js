@@ -4,8 +4,8 @@ const logger = source('bot/utils/logger');
 
 const discordIDRegex = /<[@#][&!]?([0-9]+)>/;
 
-// this is asyncronous but will handle its own errors.
-// it channel can be anything that implemnts .send(message).
+// this is asynchronous but will handle its own errors.
+// it channel can be anything that implements .send(message).
 function sendMessage(channel, message) {
     return channel.send(message)
         .then((m) => {
@@ -50,8 +50,34 @@ function getChannel(guild, channel) {
     return guild.channels.cache.get(str1Id);
 }
 
+function getRole(guild, roleID) {
+    if (!guild || !roleID) return undefined;
+
+    return guild.roles.cache.get(roleID);
+}
+
 function lookupRoleName(guild, string) {
     return guild.roles.cache.find((role) => role.name === string);
+}
+
+const messageLinkRegex = /https:\/\/discord.com\/channels\/([0-9]+)\/([0-9]+)\/([0-9]+)/;
+
+function extractMessageLink(messageLink) {
+    const linkParts = messageLinkRegex.exec(messageLink);
+
+    if (linkParts === null || linkParts.length !== 4) {
+        return {
+            serverID: null,
+            channelID: null,
+            messageID: null,
+        };
+    }
+
+    return {
+        serverID: linkParts[1],
+        channelID: linkParts[2],
+        messageID: linkParts[3],
+    };
 }
 
 module.exports = {
@@ -59,5 +85,7 @@ module.exports = {
     getChannel,
     lookupRoleName,
     getMember,
+    getRole,
     sendEventMessage,
+    extractMessageLink,
 };

@@ -138,60 +138,6 @@ describe('settings database', () => {
         expect(saved.musicChannelID).toBeUndefined();
     });
 
-    test('invalid welcome channel - channel name', () => {
-        const settings = new Settings()
-            .setGuild(fields.guild)
-            .setWelcomeChannel('bot-channel');
-
-        return expect(settings.save()).rejects.toThrow('validation failed');
-    });
-
-    test('invalid welcome channel - id too long', () => {
-        const settings = new Settings()
-            .setGuild(fields.guild)
-            .setWelcomeChannel('793573047550345237793573047550345237');
-
-        return expect(settings.save()).rejects.toThrow('validation failed');
-    });
-
-    test('invalid welcome channel - object', async () => {
-        const settings = new Settings()
-            .setGuild(fields.guild)
-            .setWelcomeChannel({
-                id: '1234',
-            });
-
-        const saved = await settings.save();
-        expect(saved.welcomeChannel).toBeUndefined();
-    });
-
-    test('invalid role message - message text', () => {
-        const settings = new Settings()
-            .setGuild(fields.guild)
-            .setRoleMessage('this is the best role mapping mesage');
-
-        return expect(settings.save()).rejects.toThrow('validation failed');
-    });
-
-    test('invalid role message - id too long', () => {
-        const settings = new Settings()
-            .setGuild(fields.guild)
-            .setRoleMessage('827754923844042802827754923844042802');
-
-        return expect(settings.save()).rejects.toThrow('validation failed');
-    });
-
-    test('invalid role message - object', async () => {
-        const settings = new Settings()
-            .setGuild(fields.guild)
-            .setRoleMessage({
-                id: '1234',
-            });
-
-        const saved = await settings.save();
-        expect(saved.roleMessage).toBeUndefined();
-    });
-
     test('invalid timezone - America/Guelph', () => {
         const settings = new Settings()
             .setGuild(fields.guild)
@@ -285,22 +231,6 @@ describe('settings default values', () => {
 
         const saved = await settings.save();
         expect(saved.musicChannelID).toBeUndefined();
-    });
-
-    test('default welcome channel', async () => {
-        const settings = new Settings()
-            .setGuild(fields.guild);
-
-        const saved = await settings.save();
-        expect(saved.welcomeChannel).toBeUndefined();
-    });
-
-    test('default role message', async () => {
-        const settings = new Settings()
-            .setGuild(fields.guild);
-
-        const saved = await settings.save();
-        expect(saved.roleMessage).toBeUndefined();
     });
 
     test('default disabled commands', async () => {
@@ -473,24 +403,6 @@ describe('settings inital values', () => {
 
         const saved = await settings.save();
         expect(saved.musicChannelID).toBe(fields.channel);
-    });
-
-    test('custom welcome channel', async () => {
-        const settings = new Settings()
-            .setGuild(fields.guild)
-            .setWelcomeChannel(fields.channel);
-
-        const saved = await settings.save();
-        expect(saved.welcomeChannel).toBe(fields.channel);
-    });
-
-    test('custom role message', async () => {
-        const settings = new Settings()
-            .setGuild(fields.guild)
-            .setRoleMessage(fields.message);
-
-        const saved = await settings.save();
-        expect(saved.roleMessage).toBe(fields.message);
     });
 
     test('custom mental health links ', async () => {
