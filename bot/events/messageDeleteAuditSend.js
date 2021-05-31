@@ -7,12 +7,15 @@ const { Settings } = source('models/settings');
 const { Message } = source('models/message');
 
 function auditHandler(message, client) {
-    const guild = client.guilds.cache.get(message.guild.id);
+    if (message.guild === null || message.author.bot) return;
+
     let channel;
     let username = 'unknown';
     let content = 'unknown';
 
-    return Message.find(message.guild.id, message.channel.id, message.id)
+    const guild = client.guilds.cache.get(message.guild.id);
+
+    Message.find(message.guild.id, message.channel.id, message.id)
         .then((m) => {
             if (!m) return null;
 

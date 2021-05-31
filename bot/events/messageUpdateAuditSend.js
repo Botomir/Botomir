@@ -8,8 +8,9 @@ const { Message } = source('models/message');
 
 function auditHandler(oldM, newM) {
     let message;
-
     let oldContent = 'unknown';
+
+    if (newM.guild === null || newM.author.bot) return;
 
     Promise.all([newM.partial ? newM.fetch() : newM])
         .then((res) => {
