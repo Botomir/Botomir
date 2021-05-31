@@ -32,7 +32,8 @@ function parseRoleMessage(text) {
         .map((l) => roleRegex.exec(l))
         .filter((p) => p !== null && p.length === 4)
         .map((r) => ({
-            emoji: parseEmoji(r[1].trim()),
+            emoji: r[1].trim(),
+            clean_emoji: parseEmoji(r[1].trim()),
             roleName: r[2].trim(),
             label: r[3] ? r[3].trim() : r[2].trim(),
         }));

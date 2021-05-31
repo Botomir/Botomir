@@ -1,19 +1,15 @@
 const source = require('rfr');
 const Discord = require('discord.js');
 
-const { sendMessage } = source('bot/utils/util');
+const { sendMessage, extractMessageLink } = source('bot/utils/util');
 const logger = source('bot/utils/logger');
-
-const messageLinkRegex = /https:\/\/discord.com\/channels\/([0-9]*)\/([0-9]*)\/([0-9]*)/;
 
 function messageLink(message) {
     if (message.guild === null) return;
-    const parts = messageLinkRegex.exec(message.content);
-    if (parts === null || parts.length !== 4) return;
 
-    const serverID = parts[1];
-    const channelID = parts[2];
-    const messageID = parts[3];
+    const { serverID, channelID, messageID } = extractMessageLink(message.content);
+
+    if (!serverID) return;
 
     if (serverID !== message.guild.id) {
         logger.info('Will not render a message link for a different guild');
