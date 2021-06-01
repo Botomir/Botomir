@@ -80,13 +80,6 @@ class Message {
         return this;
     }
 
-    setContent(content) {
-        if (typeof content === 'string') {
-            this._model.content = content;
-        }
-        return this;
-    }
-
     setCreatedAt(timestamp) {
         if (typeof timestamp === 'number') {
             this._model.timestamp = timestamp;
@@ -94,8 +87,9 @@ class Message {
         return this;
     }
 
-    updateContent(content, timestamp) {
+    setContent(content, timestamp) {
         if (typeof content === 'string') {
+            this._model.content = content;
             this._model.updates.push({
                 content, editedAt: timestamp,
             });

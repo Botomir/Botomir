@@ -16,7 +16,7 @@ function databaseHandler(oldM, newM) {
         })
         .then((messageLog) => {
             if (messageLog) {
-                messageLog.updateContent(newMessage.content, newMessage.editedTimestamp).save();
+                messageLog.setContent(newMessage.content, newMessage.editedTimestamp).save();
             }
         })
         .catch((e) => logger.error('failed to save the message update to the database', e));
