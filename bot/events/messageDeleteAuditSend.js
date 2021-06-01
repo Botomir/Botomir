@@ -7,7 +7,7 @@ const { Settings } = source('models/settings');
 const { Message } = source('models/message');
 
 function auditHandler(message, client) {
-    if (message.guild === null || message.author.bot) return;
+    if (message.guild === null) return;
 
     let channel;
     let username = 'unknown';
@@ -28,7 +28,8 @@ function auditHandler(message, client) {
         })
         .then((config) => {
             if (!config || !config.auditChannel) {
-                throw new Error('No audit channel is specified for the guild');
+                logger.info(`audit channel for guild ${message.guild.id} has not been configured`);
+                return;
             }
 
             channel = guild.channels.cache.get(config.auditChannel);

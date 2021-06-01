@@ -7,7 +7,7 @@ function databaseHandler(oldM, newM) {
     let oldMessage;
     let newMessage;
 
-    if (newM.guild === null || newM.author.bot) return;
+    if (newM.guild === null) return;
 
     Promise.all([oldM.partial ? oldM.fetch() : oldM, newM.partial ? newM.fetch() : newM])
         .then((res) => {

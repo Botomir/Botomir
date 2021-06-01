@@ -10,7 +10,7 @@ function auditHandler(oldM, newM) {
     let message;
     let oldContent = 'unknown';
 
-    if (newM.guild === null || newM.author.bot) return;
+    if (newM.guild === null) return;
 
     Promise.all([newM.partial ? newM.fetch() : newM])
         .then((res) => {
@@ -28,7 +28,8 @@ function auditHandler(oldM, newM) {
         })
         .then((config) => {
             if (!config || !config.auditChannel) {
-                throw new Error('No audit channel is specified for the guild');
+                logger.info(`audit channel for guild ${message.guild.id} has not been configured`);
+                return;
             }
 
             const channel = message.guild.channels.cache.get(config.auditChannel);
