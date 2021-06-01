@@ -12,7 +12,7 @@ function databaseHandler(message) {
         .setMessage(message.id)
         .setAuthor(message.author.id)
         .setCreatedAt(message.createdTimestamp)
-        .setContent(message.content);
+        .setContent(message.content, message.createdTimestamp);
 
     MessagePost.save()
         .then(() => logger.info('Successfully written message to database'))

@@ -66,7 +66,6 @@ const ConfigController = {
                         name: c.name,
                         id: c.id,
                         isMusic: config.musicChannelID === c.id,
-                        isRoleWatch: config.welcomeChannel === c.id,
                     })),
                     roles: guild.roles.cache.filter((r) => r.name !== '@everyone').map((c) => ({
                         name: c.name,

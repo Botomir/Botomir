@@ -20,7 +20,7 @@ function scheduleMessage(message, args, config) {
     const scheduledText = parts.join('\n');
 
     const job = agenda.create('schedule message', {
-        serverID: guildID, channelID, message: scheduledText,
+        serverID: guildID, channelID, message: scheduledText, owner: message.author.id,
     });
     const res = job.repeatEvery(timePeriod, {
         skipImmediate: true,

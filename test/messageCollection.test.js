@@ -45,7 +45,7 @@ describe('messages database', () => {
             .setMessage(fields.message)
             .setAuthor(fields.user)
             .setCreatedAt(fields.createdTimestamp)
-            .setContent(fields.content);
+            .setContent(fields.content, fields.createdTimestamp);
 
         expect(message._mongoId).toBeDefined();
         const savedMessage = await message.save();
@@ -57,7 +57,7 @@ describe('messages database', () => {
         expect(savedMessage.messageID).toBe(fields.message);
         expect(savedMessage.authorID).toBe(fields.user);
         expect(savedMessage.content).toBe(fields.content);
-        expect(savedMessage.edits).toHaveLength(0);
+        expect(savedMessage.edits).toHaveLength(1);
 
         expect(savedMessage.deleted).toBe(false);
         expect(savedMessage.deletedAt).not.toBeDefined();
@@ -70,19 +70,24 @@ describe('messages database', () => {
             .setMessage(fields.message)
             .setAuthor(fields.user)
             .setCreatedAt(fields.createdTimestamp)
-            .setContent(fields.content);
+            .setContent(fields.content, fields.createdTimestamp);
 
-        message.updateContent('updated text here', fields2.createdTimestamp);
+        message.setContent('updated text here', fields2.createdTimestamp);
 
         expect(message._mongoId).toBeDefined();
         const savedMessage = await message.save();
 
         expect(savedMessage.timestamp).toEqual(new Date('2021-05-15T20:31:54.250Z'));
-        expect(savedMessage.edits).toHaveLength(1);
+        expect(savedMessage.edits).toHaveLength(2);
+        expect(savedMessage.content).toBe('updated text here');
 
-        expect(savedMessage.edits[0].editedAt).toEqual(new Date('2021-05-15T20:31:54.333Z'));
+        expect(savedMessage.edits[0].editedAt).toEqual(new Date('2021-05-15T20:31:54.250Z'));
         expect(savedMessage.edits[0]._mongoId).not.toBeDefined();
-        expect(savedMessage.edits[0].content).toBe('updated text here');
+        expect(savedMessage.edits[0].content).toBe(fields.content);
+
+        expect(savedMessage.edits[1].editedAt).toEqual(new Date('2021-05-15T20:31:54.333Z'));
+        expect(savedMessage.edits[1]._mongoId).not.toBeDefined();
+        expect(savedMessage.edits[1].content).toBe('updated text here');
     });
 
     test('multiple update message', async () => {
@@ -92,24 +97,29 @@ describe('messages database', () => {
             .setMessage(fields.message)
             .setAuthor(fields.user)
             .setCreatedAt(fields.createdTimestamp)
-            .setContent(fields.content);
+            .setContent(fields.content, fields.createdTimestamp);
 
-        message.updateContent('updated text here', fields2.createdTimestamp);
-        message.updateContent('another update', '1621781592137');
+        message.setContent('updated text here', fields2.createdTimestamp);
+        message.setContent('another update', '1621781592137');
 
         expect(message._mongoId).toBeDefined();
         const savedMessage = await message.save();
 
         expect(savedMessage.timestamp).toEqual(new Date('2021-05-15T20:31:54.250Z'));
-        expect(savedMessage.edits).toHaveLength(2);
+        expect(savedMessage.edits).toHaveLength(3);
+        expect(savedMessage.content).toBe('another update');
 
-        expect(savedMessage.edits[0].editedAt).toEqual(new Date('2021-05-15T20:31:54.333Z'));
+        expect(savedMessage.edits[0].editedAt).toEqual(new Date('2021-05-15T20:31:54.250Z'));
         expect(savedMessage.edits[0]._mongoId).not.toBeDefined();
-        expect(savedMessage.edits[0].content).toBe('updated text here');
+        expect(savedMessage.edits[0].content).toBe(fields.content);
 
-        expect(savedMessage.edits[1].editedAt).toEqual(new Date('2021-05-23T14:53:12.137Z'));
+        expect(savedMessage.edits[1].editedAt).toEqual(new Date('2021-05-15T20:31:54.333Z'));
         expect(savedMessage.edits[1]._mongoId).not.toBeDefined();
-        expect(savedMessage.edits[1].content).toBe('another update');
+        expect(savedMessage.edits[1].content).toBe('updated text here');
+
+        expect(savedMessage.edits[2].editedAt).toEqual(new Date('2021-05-23T14:53:12.137Z'));
+        expect(savedMessage.edits[2]._mongoId).not.toBeDefined();
+        expect(savedMessage.edits[2].content).toBe('another update');
     });
 
     test('delete message', async () => {
@@ -119,7 +129,7 @@ describe('messages database', () => {
             .setMessage(fields.message)
             .setAuthor(fields.user)
             .setCreatedAt(fields.createdTimestamp)
-            .setContent(fields.content);
+            .setContent(fields.content, fields.createdTimestamp);
         message.delete();
 
         expect(message._mongoId).toBeDefined();
@@ -135,7 +145,7 @@ describe('messages database', () => {
             .setChannel(fields.channel)
             .setMessage(fields.message)
             .setAuthor(fields.user)
-            .setContent(fields.content);
+            .setContent(fields.content, fields.createdTimestamp);
 
         expect(message._mongoId).toBeDefined();
 
@@ -148,7 +158,7 @@ describe('messages database', () => {
             .setGuild(fields.guild)
             .setMessage(fields.message)
             .setAuthor(fields.user)
-            .setContent(fields.content);
+            .setContent(fields.content, fields.createdTimestamp);
 
         expect(message._mongoId).toBeDefined();
 
@@ -161,7 +171,7 @@ describe('messages database', () => {
             .setGuild(fields.guild)
             .setChannel(fields.channel)
             .setAuthor(fields.user)
-            .setContent(fields.content);
+            .setContent(fields.content, fields.createdTimestamp);
 
         expect(message._mongoId).toBeDefined();
 
@@ -174,7 +184,7 @@ describe('messages database', () => {
             .setGuild(fields.guild)
             .setChannel(fields.channel)
             .setMessage(fields.message)
-            .setContent(fields.content);
+            .setContent(fields.content, fields.createdTimestamp);
 
         expect(message._mongoId).toBeDefined();
 
@@ -187,7 +197,7 @@ describe('messages database', () => {
             .setChannel(fields.channel)
             .setMessage(fields.message)
             .setAuthor(fields.user)
-            .setContent(fields.content);
+            .setContent(fields.content, fields.createdTimestamp);
 
         expect(message._mongoId).toBeDefined();
 
@@ -211,7 +221,7 @@ describe('messages database', () => {
             .setChannel(fields.channel)
             .setMessage(fields.message)
             .setAuthor(fields.user)
-            .setContent(fields.content);
+            .setContent(fields.content, fields.createdTimestamp);
 
         expect(message._mongoId).toBeDefined();
 
@@ -225,7 +235,7 @@ describe('messages database', () => {
             .setChannel(fields.channel)
             .setMessage(fields.message)
             .setAuthor(fields.user)
-            .setContent(fields.content);
+            .setContent(fields.content, fields.createdTimestamp);
 
         expect(message._mongoId).toBeDefined();
 
@@ -241,7 +251,7 @@ describe('messages database', () => {
             .setChannel(fields.channel)
             .setMessage(fields.message)
             .setAuthor(fields.user)
-            .setContent(fields.content);
+            .setContent(fields.content, fields.createdTimestamp);
 
         expect(message._mongoId).toBeDefined();
 
@@ -255,7 +265,7 @@ describe('messages database', () => {
             .setChannel('test-bot')
             .setMessage(fields.message)
             .setAuthor(fields.user)
-            .setContent(fields.content);
+            .setContent(fields.content, fields.createdTimestamp);
 
         expect(message._mongoId).toBeDefined();
 
@@ -269,7 +279,7 @@ describe('messages database', () => {
             .setChannel('793573047550345237793573047550345237')
             .setMessage(fields.message)
             .setAuthor(fields.user)
-            .setContent(fields.content);
+            .setContent(fields.content, fields.createdTimestamp);
 
         expect(message._mongoId).toBeDefined();
 
@@ -285,7 +295,7 @@ describe('messages database', () => {
             })
             .setMessage(fields.message)
             .setAuthor(fields.user)
-            .setContent(fields.content);
+            .setContent(fields.content, fields.createdTimestamp);
 
         expect(message._mongoId).toBeDefined();
         return expect(message.save()).rejects.toThrow('validation failed');
@@ -298,7 +308,7 @@ describe('messages database', () => {
             .setChannel(fields.channel)
             .setMessage('a super cool message about bots')
             .setAuthor(fields.user)
-            .setContent(fields.content);
+            .setContent(fields.content, fields.createdTimestamp);
 
         expect(message._mongoId).toBeDefined();
         return expect(message.save()).rejects.toThrow('validation failed');
@@ -311,7 +321,7 @@ describe('messages database', () => {
             .setChannel(fields.channel)
             .setMessage('827754923844042802827754923844042802')
             .setAuthor(fields.user)
-            .setContent(fields.content);
+            .setContent(fields.content, fields.createdTimestamp);
 
         expect(message._mongoId).toBeDefined();
         return expect(message.save()).rejects.toThrow('validation failed');
@@ -326,7 +336,7 @@ describe('messages database', () => {
                 id: '12345',
             })
             .setAuthor(fields.user)
-            .setContent(fields.content);
+            .setContent(fields.content, fields.createdTimestamp);
 
         expect(message._mongoId).toBeDefined();
         return expect(message.save()).rejects.toThrow('validation failed');
@@ -339,7 +349,7 @@ describe('messages database', () => {
             .setChannel(fields.channel)
             .setMessage(fields.message)
             .setAuthor('botomir')
-            .setContent(fields.content);
+            .setContent(fields.content, fields.createdTimestamp);
 
         expect(message._mongoId).toBeDefined();
         return expect(message.save()).rejects.toThrow('validation failed');
@@ -352,7 +362,7 @@ describe('messages database', () => {
             .setChannel(fields.channel)
             .setMessage(fields.message)
             .setAuthor('356984848574971914356984848574971914')
-            .setContent(fields.content);
+            .setContent(fields.content, fields.createdTimestamp);
 
         expect(message._mongoId).toBeDefined();
         return expect(message.save()).rejects.toThrow('validation failed');
@@ -367,7 +377,7 @@ describe('messages database', () => {
             .setAuthor({
                 id: '12345',
             })
-            .setContent(fields.content);
+            .setContent(fields.content, fields.createdTimestamp);
 
         expect(message._mongoId).toBeDefined();
         return expect(message.save()).rejects.toThrow('validation failed');
@@ -408,7 +418,7 @@ describe('messages database', () => {
             .setChannel(fields.channel)
             .setMessage(fields.message)
             .setAuthor(fields.user)
-            .setContent(fields.content);
+            .setContent(fields.content, fields.createdTimestamp);
 
         await message.save();
         const res = await Message.count();
@@ -425,7 +435,7 @@ describe('messages database', () => {
             .setChannel(fields.channel)
             .setMessage(fields.message)
             .setAuthor(fields.user)
-            .setContent(fields.content);
+            .setContent(fields.content, fields.createdTimestamp);
 
         const message2 = new Message()
             .setCreatedAt(fields2.createdTimestamp)
