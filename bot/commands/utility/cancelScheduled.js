@@ -16,9 +16,6 @@ function cancelJob(message, args, config) {
 
     return agenda.jobs({
         'data.serverID': message.guild.id,
-        repeatInterval: {
-            $exists: true,
-        },
         _id: id,
     })
         .then((jobs) => {
