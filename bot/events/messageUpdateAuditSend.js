@@ -40,7 +40,6 @@ function auditHandler(oldM, newM) {
             }
 
             const time = moment(newM.editedAt).format('MMMM Do YYYY, HH:mm:ssZ');
-            console.log(time);
             sendMessage(channel, `**UPDATED**\nauthor: ${message.author.username}\nChannel: <#${message.channel.id}>\nAt: ${time}\nOld Content: ${oldContent}\nNew Content: ${message.content}`);
         })
         .catch((e) => {
