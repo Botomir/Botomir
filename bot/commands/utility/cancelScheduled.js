@@ -40,12 +40,13 @@ module.exports = {
     args: 1,
     name: 'cancel-job',
     botAdmin: false,
-    description: 'Cancels one of the scheduled jobs',
+    description: 'Cancels one of the scheduled jobs or reminders',
     usage: '<job ID>',
-    aliases: [],
+    aliases: ['cancel-reminder'],
     execute: cancelJob,
     docs: `#### Cancel scheduled jobs
 - Command: \`cancel-job\`
+- Alias: \`cancel-reminder\`
 - Returns: Cancels any future runs of a job
 - Example usage:
 \`\`\`
