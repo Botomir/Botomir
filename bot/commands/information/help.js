@@ -48,7 +48,7 @@ function helpGeneral(message, commands, config, category) {
 function helpAdmin(message, commands, config) {
     const isAdmin = message.member.roles.cache.map((r) => r.name).includes(config.botAdminRole);
 
-    const fields = commands .filter((c) => c.botAdmin && isAdmin)
+    const fields = commands.filter((c) => c.botAdmin && isAdmin)
         .map((command) => ({
             name: `${config.commandPrefix}${command.name} - bot admin only`,
             value: command.description,
