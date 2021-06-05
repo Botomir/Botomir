@@ -18,6 +18,10 @@ class Settings {
         return this._model.guild;
     }
 
+    get auditChannel() {
+        return this._model.audit_channel;
+    }
+
     get musicChannelID() {
         return this._model.music_channel;
     }
@@ -75,6 +79,13 @@ class Settings {
     setGuild(guild) {
         if (typeof guild === 'string') {
             this._model.guild = guild;
+        }
+        return this;
+    }
+
+    setAuditChannel(channel) {
+        if (typeof channel === 'string') {
+            this._model.audit_channel = channel;
         }
         return this;
     }
@@ -211,6 +222,7 @@ class Settings {
         return {
             guild: this._model.guild,
             musicWatchChannel: this._model.music_channel,
+            auditChannel: this._model.audit_channel,
             commandPrefix: this._model.command_prefix,
             playlistName: this._model.playlist_name,
             playlistDescription: this._model.playlist_description,

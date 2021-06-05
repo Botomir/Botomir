@@ -28,6 +28,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - added TypeScript compilation to the project
 - can keep track of message updates
 - can keep track of message deletion
+- can send message edits and deletions to a configurable audit channel
 - can configure the server timezone
 
 
@@ -40,6 +41,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - docker image now uses TypeScript compiled application and minimum set of files
 - delete now mentions the user that deleted the messages
 - message link rendering is now also shown for bot users
+- message logging happens for bot users as well
 
 ## [2.0.1] - 2020-12-20
 ### Changed

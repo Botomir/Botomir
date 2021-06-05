@@ -7,11 +7,11 @@ function databaseHandler(oldM, newM) {
     let oldMessage;
     let newMessage;
 
+    if (newM.guild === null) return;
+
     Promise.all([oldM.partial ? oldM.fetch() : oldM, newM.partial ? newM.fetch() : newM])
         .then((res) => {
             [oldMessage, newMessage] = res;
-
-            if (newM.guild === null || newM.author.bot) return null;
             return Message.Message.find(oldMessage.guild.id, oldMessage.channel.id, oldMessage.id);
         })
         .then((messageLog) => {

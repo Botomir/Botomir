@@ -94,6 +94,11 @@ module.exports = new mongoose.Schema({
         maxLength: 20,
         validate: snowflakeValidator,
     },
+    audit_channel: {
+        type: String,
+        maxLength: 20,
+        validate: snowflakeValidator,
+    },
     music_channel: {
         type: String,
         maxLength: 20,

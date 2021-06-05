@@ -138,6 +138,33 @@ describe('settings database', () => {
         expect(saved.musicChannelID).toBeUndefined();
     });
 
+    test('invalid audit channel - channel name', () => {
+        const settings = new Settings()
+            .setGuild(fields.guild)
+            .setAuditChannel('bot-channel');
+
+        return expect(settings.save()).rejects.toThrow('validation failed');
+    });
+
+    test('invalid audit channel - id too long', () => {
+        const settings = new Settings()
+            .setGuild(fields.guild)
+            .setAuditChannel('793573047550345237793573047550345237');
+
+        return expect(settings.save()).rejects.toThrow('validation failed');
+    });
+
+    test('invalid audit channel - object', async () => {
+        const settings = new Settings()
+            .setGuild(fields.guild)
+            .setAuditChannel({
+                id: '1234',
+            });
+
+        const saved = await settings.save();
+        expect(saved.auditChannel).toBeUndefined();
+    });
+
     test('invalid timezone - America/Guelph', () => {
         const settings = new Settings()
             .setGuild(fields.guild)
@@ -231,6 +258,14 @@ describe('settings default values', () => {
 
         const saved = await settings.save();
         expect(saved.musicChannelID).toBeUndefined();
+    });
+
+    test('default audit channel', async () => {
+        const settings = new Settings()
+            .setGuild(fields.guild);
+
+        const saved = await settings.save();
+        expect(saved.auditChannel).toBeUndefined();
     });
 
     test('default disabled commands', async () => {
@@ -403,6 +438,15 @@ describe('settings inital values', () => {
 
         const saved = await settings.save();
         expect(saved.musicChannelID).toBe(fields.channel);
+    });
+
+    test('custom audit channel', async () => {
+        const settings = new Settings()
+            .setGuild(fields.guild)
+            .setAuditChannel(fields.channel);
+
+        const saved = await settings.save();
+        expect(saved.auditChannel).toBe(fields.channel);
     });
 
     test('custom mental health links ', async () => {
