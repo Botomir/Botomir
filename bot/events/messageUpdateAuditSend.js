@@ -1,4 +1,5 @@
 const source = require('rfr');
+const moment = require('moment');
 
 const { sendMessage } = source('bot/utils/util');
 
@@ -38,7 +39,9 @@ function auditHandler(oldM, newM) {
                 return;
             }
 
-            sendMessage(channel, `**UPDATED MESSAGE**\nauthor: ${message.author.username}\nChannel: <#${message.channel.id}>\nOld Content: ${oldContent}\nNew Content: ${message.content}`);
+            const time = moment(newM.editedAt).format('MMMM Do YYYY, HH:mm:ssZ');
+            console.log(time);
+            sendMessage(channel, `**UPDATED**\nauthor: ${message.author.username}\nChannel: <#${message.channel.id}>\nAt: ${time}\nOld Content: ${oldContent}\nNew Content: ${message.content}`);
         })
         .catch((e) => {
             logger.error('failed to send the update message to the audit channel');

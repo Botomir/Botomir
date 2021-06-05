@@ -1,4 +1,5 @@
 const source = require('rfr');
+const moment = require('moment');
 
 const { sendMessage } = source('bot/utils/util');
 
@@ -37,7 +38,9 @@ function auditHandler(message, client) {
                 logger.error(`audit channel for guild ${message.guild.id} does not exist`);
                 return;
             }
-            sendMessage(channel, `**DELETED MESSAGE**\nauthor: ${username}\nChannel: <#${message.channel.id}>\nContent: ${content}`);
+
+            const time = moment().format('MMMM Do YYYY, HH:mm:ssZ');
+            sendMessage(channel, `**DELETED**\nauthor: ${username}\nChannel: <#${message.channel.id}>\nAt: ${time}\nContent: ${content}`);
         })
         .catch((e) => {
             logger.error('failed to send the delete message to the audit channel');

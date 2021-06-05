@@ -4,7 +4,7 @@ const logger = source('bot/utils/logger');
 const Message = source('models/message');
 
 function deleteHandler(message) {
-    if (message.guild === null || message.author.bot) return;
+    if (message.guild === null) return;
 
     Message.Message.find(message.guild.id, message.channel.id, message.id)
         .then((messageLog) => {
