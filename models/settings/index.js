@@ -1,4 +1,4 @@
-const settings = require('./settings.js');
+const settings = require('./settings');
 
 // export classes
 module.exports = {
