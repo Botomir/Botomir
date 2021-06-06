@@ -61,6 +61,4 @@ function handleScheduleCommand(job) {
         });
 }
 
-module.exports = function (agenda) {
-    agenda.define('schedule command', handleScheduleCommand);
-};
+module.exports = (agenda) => agenda.define('schedule command', handleScheduleCommand);

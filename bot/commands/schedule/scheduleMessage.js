@@ -1,5 +1,5 @@
 const source = require('rfr');
-const moment = require('moment');
+const moment = require('moment-timezone');
 
 const logger = source('bot/utils/logger');
 const { sendMessage } = source('bot/utils/util');
@@ -35,7 +35,7 @@ function scheduleMessage(message, args, config) {
 
     job.save();
 
-    return sendMessage(message.channel, `Your message is scheduled to be sent ${moment(nextRun).calendar()}`);
+    return sendMessage(message.channel, `Your message is scheduled to be sent ${moment(nextRun).tz(config.timezone).calendar()}`);
 }
 
 module.exports = {
