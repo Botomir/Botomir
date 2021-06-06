@@ -1,4 +1,4 @@
-const role = require('./role.js');
+const role = require('./role');
 
 // export classes
 module.exports = {

@@ -1,7 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 
 const mongoose = require('mongoose');
-const schema = require('./schema.js');
+const schema = require('./schema');
 
 const StatsModel = mongoose.model('stats', schema);
 
