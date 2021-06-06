@@ -1,4 +1,4 @@
-const audit = require('./audit.js');
+const audit = require('./audit');
 
 // export classes
 module.exports = {

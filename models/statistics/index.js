@@ -1,4 +1,4 @@
-const statistics = require('./statistics.js');
+const statistics = require('./statistics');
 
 // export classes
 module.exports = {
