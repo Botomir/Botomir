@@ -16,11 +16,6 @@ function auditHandler(oldM, newM) {
     Promise.all([newM.partial ? newM.fetch() : newM])
         .then((res) => {
             [message] = res;
-
-            if (message.guild === null || message.author.bot) {
-                throw new Error('Can not send audit for DMs or for bot messages');
-            }
-
             return Message.find(message.guild.id, message.channel.id, message.id);
         })
         .then((m) => {
@@ -32,6 +27,8 @@ function auditHandler(oldM, newM) {
                 logger.info(`audit channel for guild ${message.guild.id} has not been configured`);
                 return;
             }
+
+            if (message.channel.id === config.auditChannel) return;
 
             const channel = message.guild.channels.cache.get(config.auditChannel);
             if (!channel) {
