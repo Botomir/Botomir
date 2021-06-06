@@ -1,12 +1,12 @@
 const source = require('rfr');
-const moment = require('moment');
+const moment = require('moment-timezone');
 
 const logger = source('bot/utils/logger');
 const { sendMessage } = source('bot/utils/util');
 const agenda = source('scheduler');
 
 // takes a crontab formatted string 6+ arguments, first
-function remindHandler(message, args) {
+function remindHandler(message, args, config) {
     const guildID = message.guild.id;
     const channelID = message.channel.id;
 
@@ -34,15 +34,15 @@ function remindHandler(message, args) {
 
     job.save();
 
-    return sendMessage(message.channel, `I will send you the reminder on ${moment(nextRun).calendar()}`);
+    return sendMessage(message.channel, `I will send you the reminder on ${moment(nextRun).tz(config.timezone).calendar()}`);
 }
 
 module.exports = {
     args: 2,
     name: 'remind',
     botAdmin: false,
-    description: 'Send a reminder message at a scheduled time. The date formats must be specified using this [date formats](http://date.js.org/)',
-    usage: '<time for the reminder>\n<some message to be sent>',
+    description: 'Send a reminder message at a scheduled time. The date formats must be specified using this [date formats](http://date.js.org/), note this must be specified in UTC time',
+    usage: '<UTC time for the reminder>\n<some message to be sent>',
     aliases: [],
     execute: remindHandler,
     docs: `#### Remind Message
