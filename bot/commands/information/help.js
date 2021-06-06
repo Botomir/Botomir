@@ -45,6 +45,22 @@ function helpGeneral(message, commands, config, category) {
     }
 }
 
+function helpAdmin(message, commands, config) {
+    const isAdmin = message.member.roles.cache.map((r) => r.name).includes(config.botAdminRole);
+
+    const fields = commands.filter((c) => c.botAdmin && isAdmin)
+        .map((command) => ({
+            name: `${config.commandPrefix}${command.name} - bot admin only`,
+            value: command.description,
+        }));
+
+    if (fields.length === 0) {
+        sendMessage(message.channel, 'oh no! There are no commands here!!');
+    } else {
+        sendChunks(message.channel, fields, 'admin');
+    }
+}
+
 function helpSpecific(message, command, config) {
     // check if the command is disabled
     if (config.disabledCommands.includes(command.name)) {
@@ -104,11 +120,15 @@ function helpCommand(message, args, config) {
 
     if (name === 'categories' || name === undefined) {
         const categoryNames = categories.map((c) => `\`${c}\``).join(', ');
-        return sendMessage(message.channel, `Botomir has a lot of commands, to reduce the amount of spam please specify a category you would like some help with, valid categories to get help for are: \`all\`, ${categoryNames}`);
+        return sendMessage(message.channel, `Botomir has a lot of commands, to reduce the amount of spam please specify a category you would like some help with, valid categories to get help for are: \`all\`, \`admin\`, ${categoryNames}`);
     }
 
     if (name === 'all') {
         return helpGeneral(message, commands, config);
+    }
+
+    if (name === 'admin') {
+        return helpAdmin(message, commands, config);
     }
 
     const command = commands.get(name)
@@ -128,13 +148,13 @@ module.exports = {
     botAdmin: false,
     alwaysEnabled: true,
     description: 'lists all the commands, a category of commands or info about a specific command',
-    usage: '[`<command>`| `<category>` | `categories` | `all`]',
+    usage: '[`<command>`| `<category>` | `categories` | `all` | `admin`]',
     aliases: ['commands'],
     execute: helpCommand,
     docs: `#### Help
 - Command: \`help\`
 - Args:
-    - optional, \`<command>\`| \`<category>\` | \`categories\` | \`all\`
+    - optional, \`<command>\`| \`<category>\` | \`categories\` | \`all\` | \`admin\`
 - Returns:
     - list of commands available to Botomir\n'
     - specific information about the passed in command if command specified\n'
