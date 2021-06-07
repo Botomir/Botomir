@@ -1,4 +1,4 @@
-const responses = require('./responses.js');
+const responses = require('./responses');
 
 // export classes
 module.exports = {

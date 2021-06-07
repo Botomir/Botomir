@@ -33,6 +33,8 @@ function auditHandler(message, client) {
                 return;
             }
 
+            if (message.channel.id === config.auditChannel) return;
+
             channel = guild.channels.cache.get(config.auditChannel);
             if (!channel) {
                 logger.error(`audit channel for guild ${message.guild.id} does not exist`);

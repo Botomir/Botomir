@@ -13,14 +13,12 @@ function auditHandler(oldM, newM) {
 
     if (newM.guild === null) return;
 
+    // don't run handler for embedded messages
+    if (oldM.content === '' && newM.content === '') return;
+
     Promise.all([newM.partial ? newM.fetch() : newM])
         .then((res) => {
             [message] = res;
-
-            if (message.guild === null || message.author.bot) {
-                throw new Error('Can not send audit for DMs or for bot messages');
-            }
-
             return Message.find(message.guild.id, message.channel.id, message.id);
         })
         .then((m) => {
@@ -33,6 +31,8 @@ function auditHandler(oldM, newM) {
                 return;
             }
 
+            if (message.channel.id === config.auditChannel) return;
+
             const channel = message.guild.channels.cache.get(config.auditChannel);
             if (!channel) {
                 logger.error(`audit channel for guild ${message.guild.id} does not exist`);
@@ -40,7 +40,6 @@ function auditHandler(oldM, newM) {
             }
 
             const time = moment(newM.editedAt).format('MMMM Do YYYY, HH:mm:ssZ');
-            console.log(time);
             sendMessage(channel, `**UPDATED**\nauthor: ${message.author.username}\nChannel: <#${message.channel.id}>\nAt: ${time}\nOld Content: ${oldContent}\nNew Content: ${message.content}`);
         })
         .catch((e) => {

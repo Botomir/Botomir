@@ -9,6 +9,9 @@ function databaseHandler(oldM, newM) {
 
     if (newM.guild === null) return;
 
+    // don't run handler for embedded messages
+    if (oldM.content === '' && newM.content === '') return;
+
     Promise.all([oldM.partial ? oldM.fetch() : oldM, newM.partial ? newM.fetch() : newM])
         .then((res) => {
             [oldMessage, newMessage] = res;

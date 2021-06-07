@@ -1,4 +1,4 @@
-const message = require('./message.js');
+const message = require('./message');
 
 // export classes
 module.exports = {

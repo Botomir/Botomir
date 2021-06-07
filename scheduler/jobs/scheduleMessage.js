@@ -23,6 +23,4 @@ function handleScheduleMessage(job) {
     sendMessage(channel, message);
 }
 
-module.exports = function (agenda) {
-    agenda.define('schedule message', handleScheduleMessage);
-};
+module.exports = (agenda) => agenda.define('schedule message', handleScheduleMessage);
