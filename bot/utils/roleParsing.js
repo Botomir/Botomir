@@ -1,4 +1,4 @@
-const emojiRegex = require('emoji-regex/RGI_Emoji');
+const emojiRegex = require('emoji-regex/RGI_Emoji.js');
 
 // note this is an unsafe regex, and can lead to a denial of service.
 // fix this in a future version

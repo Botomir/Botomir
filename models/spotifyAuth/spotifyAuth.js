@@ -3,7 +3,7 @@
 const mongoose = require('mongoose');
 const source = require('rfr');
 
-const schema = require('./schema');
+const schema = require('./schema.js');
 
 const logger = source('bot/utils/logger');
 

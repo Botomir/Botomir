@@ -1,7 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 
 const mongoose = require('mongoose');
-const schema = require('./schema');
+const schema = require('./schema.js');
 
 const RoleModel = mongoose.model('roleMappings', schema);
 

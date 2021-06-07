@@ -1,4 +1,4 @@
-const webhook = require('./webhook');
+const webhook = require('./webhook.js');
 
 // export classes
 module.exports = {

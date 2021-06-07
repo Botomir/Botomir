@@ -1,4 +1,4 @@
-const spotifyAuth = require('./spotifyAuth');
+const spotifyAuth = require('./spotifyAuth.js');
 
 // export classes
 module.exports = {
