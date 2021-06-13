@@ -40,8 +40,8 @@ const discordStrat = new DiscordStrategy({
     // store the user info here????
 
     const userGuildIDs = profile.guilds.map((g) => g.id);
-    const servers = Bot.client.guilds.cache.filter((guild) => userGuildIDs.includes(guild.id));
-    profile.guilds = servers;
+    const guilds = Bot.client.guilds.cache.filter((guild) => userGuildIDs.includes(guild.id));
+    profile.guilds = guilds;
 
     return done(null, profile);
 });
