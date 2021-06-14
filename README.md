@@ -100,7 +100,7 @@ In order to use any of the bot configuration commands you must have the role `bo
 - You can add functionality for reactions to specified messages under `lib/reactions/botReactions.js` and a corresponding module.
 
 #### Backup Messages
-- Each message will be written to MongoDB. Data includes guild, channel, author, content, timestamp, and message id.
+- Each message will be written to MongoDB. Data includes server, channel, author, content, timestamp, and message id.
 - Each Spotify track that is sent to the `DISCORD_MUSIC_CHANNEL_ID` will be stored in the database.
 - An authenticate token database will also be maintained for Spotify access tokens.
 - You can specify a different schema or database under `lib/database`.
