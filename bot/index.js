@@ -32,13 +32,13 @@ eventFiles.forEach((file) => {
 // joined a server
 client.on('guildCreate', (guild) => {
     logger.info(`Joined a new guild: ${guild.name}`);
-    sendEventMessage(client, `Botomir has joined the \`${guild.name}\` guild!! We are now in ${client.guilds.cache.size} guilds`);
+    sendEventMessage(client, `Botomir has joined the \`${guild.name}\` server!! We are now in ${client.guilds.cache.size} servers`);
 });
 
 // removed from a server
 client.on('guildDelete', (guild) => {
     logger.info(`removed from a guild: ${guild.name}`);
-    sendEventMessage(client, `Botomir has left \`${guild.name}\` :cry:  We are now in ${client.guilds.cache.size} guilds`);
+    sendEventMessage(client, `Botomir has left \`${guild.name}\` :cry:  We are now in ${client.guilds.cache.size} servers`);
 });
 
 client.on('error', (err) => {
