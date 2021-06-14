@@ -1,9 +1,8 @@
 const source = require('rfr');
-const { rand: Random } = require('true-random');
+
+const random = require('random');
 
 const { sendMessage } = source('bot/utils/util');
-
-const generator = new Random();
 
 const diceRegex = /^([0-9]*)d([0-9]{0,3})([+-][0-9]+)?$/;
 
@@ -22,19 +21,18 @@ function diceRoleCommand(message, args) {
         modifier = Number.parseInt(parts[3], 10) || 0;
     }
 
-    if (num > 100) {
-        return sendMessage(message.channel, "That is too many dice to roll at once, please don't do more than 100 at a time");
+    const generator = random.uniformInt(1, sides);
+
+    let total = modifier;
+    let resultStr = '';
+    for (let i = 0; i < num; i += 1) {
+        const res = generator();
+        total += res;
+
+        resultStr = resultStr === '' ? res : `${resultStr}, ${res}`;
     }
 
-    const nums = generator.integers(1, sides + 1, num);
-    if (nums instanceof Array === false) {
-        return sendMessage(message.channel, "Oh no something went wrong!!! I can't seem to find my dice");
-    }
-
-    const results = nums.map((n) => Math.trunc(n));
-    const total = results.reduce((a, v) => a + v, modifier);
-
-    return sendMessage(message.channel, `:game_die: (${results.join(', ')}) + ${modifier} = ${total}`);
+    return sendMessage(message.channel, `:game_die: (${resultStr}) + ${modifier} = ${total}`);
 }
 
 module.exports = {

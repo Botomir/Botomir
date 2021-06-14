@@ -1,13 +1,13 @@
 const source = require('rfr');
-const { rand: Random } = require('true-random');
 
 const { sendMessage } = source('bot/utils/util');
 
-const generator = new Random();
+const random = require('random');
+
+const uniformBoolean = random.uniformBoolean();
 
 function coinTossCommand(message) {
-    const number = Math.trunc(generator.integer(0, 2));
-    return sendMessage(message.channel, `:coin: ${number === 1 ? 'heads' : 'tails'}`);
+    return sendMessage(message.channel, `:coin: ${uniformBoolean() ? 'heads' : 'tails'}`);
 }
 
 module.exports = {
