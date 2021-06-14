@@ -58,7 +58,7 @@ const mentalHealthDefaults = [
     },
     {
         name: 'Mental Health Services',
-        url: 'https://switchandclick.com/2020/01/23/guide-to-mechanical-keyboard-cases/',
+        url: 'https://www.canada.ca/en/public-health/services/mental-health-services/mental-health-get-help.html',
     },
     {
         name: 'Information on mental illnesses, disorders and diseases',
