@@ -48,6 +48,21 @@ Go to this [site](https://botomir.com) and click `Add to Server`.
 8. Install all of the node modules `npm ci`
 9. Start the application for development `npm run dev`
 
+
+#### Build the Docker image
+
+```bash
+$ docker build -t botomir .
+```
+
+#### Stopping the container
+
+The Botomir Focker container can be stopped using the `SIGTERM` signal:
+
+```bash
+$ docker kill -s SIGTERM <container name>
+```
+
 #### Docker Compose version 3 config file
 
 ```yaml
