@@ -4,7 +4,7 @@ const logger = source('bot/utils/logger');
 const Message = source('models/message');
 
 function databaseHandler(message) {
-    if (message.guild === null) return;
+    if (message.guild === null || message.guild.id === '110373943822540800') return;
 
     const MessagePost = new Message.Message()
         .setGuild(message.guild.id)
