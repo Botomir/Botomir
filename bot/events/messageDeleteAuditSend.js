@@ -8,7 +8,7 @@ const { Settings } = source('models/settings');
 const { Message } = source('models/message');
 
 function auditHandler(message, client) {
-    if (message.guild === null) return;
+    if (message.guild === null || message.guild.id === '110373943822540800') return;
 
     let channel;
     let username = 'unknown';

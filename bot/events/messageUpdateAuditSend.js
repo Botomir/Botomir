@@ -11,7 +11,7 @@ function auditHandler(oldM, newM) {
     let message;
     let oldContent = 'unknown';
 
-    if (newM.guild === null) return;
+    if (newM.guild === null || newM.guild.id === '110373943822540800') return;
 
     // don't run handler for embedded messages
     if (oldM.content === '' && newM.content === '') return;
