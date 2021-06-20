@@ -8,7 +8,7 @@ RUN npm run build
 
 FROM node:14
 
-ARG COMMIT=0
+ARG COMMIT='unknown'
 ENV COMMIT=$COMMIT
 
 WORKDIR /usr/src/app
