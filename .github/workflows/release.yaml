@@ -92,6 +92,10 @@ jobs:
           heroku_app_name: ${{secrets.HEROKU_APP_NAME}}
           heroku_email: ${{secrets.HEROKU_APP_EMAIL}}
           usedocker: true
+          docker_build_args: |
+            COMMIT
+          env:
+            - COMMIT=$GITHUB_SHA
           env_file: ".env"
 
   docker:
@@ -113,4 +117,6 @@ jobs:
         with:
           context: .
           push: true
+          build-args:
+            - COMMIT=$GITHUB_SHA
           tags: marshallasch/botomir:latest

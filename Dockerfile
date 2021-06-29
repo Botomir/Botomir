@@ -8,6 +8,9 @@ RUN npm run build
 
 FROM node:14
 
+ARG COMMIT='unknown'
+ENV COMMIT=$COMMIT
+
 WORKDIR /usr/src/app
 
 COPY --from=BUILD /usr/src/app/package*.json ./
