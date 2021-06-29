@@ -1,0 +1,96 @@
+name: Just deploy to heroku - test
+
+on:
+  push:
+    branches:
+      - pipeline-fix
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [14.x]
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - run: npm ci
+    - run: npm run build --if-present
+    - run: npm run lint
+
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [10.x, 12.x, 14.x, 15.x]
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - run: npm ci
+    - run: npm run build --if-present
+    - run: npm test
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: test
+    environment: test
+    steps:
+      - uses: actions/checkout@v2
+      - name: Make envfile
+        uses: SpicyPizza/create-envfile@v1
+        with:
+          ENVKEY_DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
+          ENVKEY_DISCORD_CLIENT_ID: ${{ secrets.DISCORD_CLIENT_ID }}
+          ENVKEY_DISCORD_CLIENT_SECRET: ${{ secrets.DISCORD_CLIENT_SECRET }}
+          ENVKEY_DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          ENVKEY_SPOTIFY_CLIENT_ID: ${{ secrets.SPOTIFY_CLIENT_ID }}
+          ENVKEY_SPOTIFY_CLIENT_SECRET: ${{ secrets.SPOTIFY_CLIENT_SECRET }}
+          ENVKEY_BASE_URL: ${{ secrets.BASE_URL }}
+          ENVKEY_BOT_MODS: ${{ secrets.BOT_MODS }}
+          ENVKEY_SESSION_SECRET: ${{ secrets.SESSION_SECRET }}
+          ENVKEY_BOTOMIR_NOTIFICATION_GUILD: ${{ secrets.BOTOMIR_NOTIFICATION_GUILD }}
+          ENVKEY_BOTOMIR_NOTIFICATION_CHANNEL: ${{ secrets.BOTOMIR_NOTIFICATION_CHANNEL }}
+          ENVKEY_MODE: 'production'
+
+      - uses: akhileshns/heroku-deploy@v3.7.8 # This is the action
+        env:
+          COMMIT: $GITHUB_SHA
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: ${{secrets.HEROKU_APP_NAME}}
+          heroku_email: ${{secrets.HEROKU_APP_EMAIL}}
+          usedocker: true
+          docker_build_args: |
+            COMMIT
+          env_file: ".env"
+
+  docker:
+    runs-on: ubuntu-latest
+    environment: deployment
+    steps:
+      -
+        name: Checkout
+        uses: actions/checkout@v2
+      -
+        name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      -
+        name: Build and push
+        uses: docker/build-push-action@v2
+        env:
+            COMMIT: $GITHUB_SHA
+        with:
+          context: .
+          build-args:
+            COMMIT
+          push: true
+          tags: marshallasch/botomir:latest
