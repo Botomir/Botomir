@@ -87,6 +87,8 @@ jobs:
           ENVKEY_MODE: 'production'
 
       - uses: akhileshns/heroku-deploy@v3.7.8 # This is the action
+        env:
+          COMMIT: $GITHUB_SHA
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: ${{secrets.HEROKU_APP_NAME}}
@@ -94,8 +96,6 @@ jobs:
           usedocker: true
           docker_build_args: |
             COMMIT
-          env:
-            - COMMIT=$GITHUB_SHA
           env_file: ".env"
 
   docker:
