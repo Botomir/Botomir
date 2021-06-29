@@ -66,6 +66,7 @@ jobs:
           heroku_app_name: ${{secrets.HEROKU_APP_NAME}}
           heroku_email: ${{secrets.HEROKU_APP_EMAIL}}
           usedocker: true
+          justlogin: true
           docker_build_args: |
             COMMIT
           env_file: ".env"
