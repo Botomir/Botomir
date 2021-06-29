@@ -21,5 +21,6 @@ Checklist:
 - [ ] Run `npm run lint` and ensure linter passes
 - [ ] Run `npm run test` and ensure tests pass
 - [ ] Verify that the changes work as expected on Discord
+- [ ] Verify that the changes work as expected when run using docker
 - [ ] Update documentation / not applicable
-- [ ] Update changelog / not applicable 
+- [ ] Update changelog / not applicable
