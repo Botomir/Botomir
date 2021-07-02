@@ -19,6 +19,7 @@ jobs:
           heroku_app_name: ${{secrets.HEROKU_APP_NAME}}
           heroku_email: ${{secrets.HEROKU_APP_EMAIL}}
           justlogin: true
+      - run: heroku auth:whoami
       - run: heroku container:login
       - run: heroku container:push -a $APP_NAME  web --arg COMMIT=$GITHUB_SHA
         env:
