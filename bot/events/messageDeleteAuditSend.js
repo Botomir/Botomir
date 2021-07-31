@@ -24,7 +24,7 @@ function auditHandler(message, client) {
             return guild.members.fetch(m.authorID);
         })
         .then((u) => {
-            if (u) username = u.user.username;
+            if (u) username = `${u.user.username}#${u.user.discriminator}`;
             return Settings.getServerSettings(message.guild.id);
         })
         .then((config) => {

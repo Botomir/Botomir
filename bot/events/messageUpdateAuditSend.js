@@ -40,7 +40,7 @@ function auditHandler(oldM, newM) {
             }
 
             const time = moment(newM.editedAt).format('MMMM Do YYYY, HH:mm:ssZ');
-            sendMessage(channel, `**UPDATED**\nauthor: ${message.author.username}\nChannel: <#${message.channel.id}>\nAt: ${time}\nOld Content: ${oldContent}\nNew Content: ${message.content}`);
+            sendMessage(channel, `**UPDATED**\nauthor: ${message.author.username}#${message.author.discriminator}\nChannel: <#${message.channel.id}>\nAt: ${time}\nOld Content: ${oldContent}\nNew Content: ${message.content}`);
         })
         .catch((e) => {
             logger.error('failed to send the update message to the audit channel');
