@@ -1,5 +1,8 @@
 FROM node:14 as BUILD
 
+ARG COMMIT='unknown'
+ENV COMMIT=$COMMIT
+
 WORKDIR /usr/src/app
 COPY . .
 
