@@ -21,7 +21,7 @@ jobs:
           app_name: ${{secrets.HEROKU_APP_NAME}}
           email: ${{secrets.HEROKU_APP_EMAIL}}
           dockerfile_path: ''
-          options: '--build-arg COMMIT=$COMMIT'
+          options: "--build-arg COMMIT=$COMMIT"
 
   docker:
     runs-on: ubuntu-latest
