@@ -20,7 +20,7 @@ jobs:
           app_name: ${{secrets.HEROKU_APP_NAME}}
           email: ${{secrets.HEROKU_APP_EMAIL}}
           dockerfile_path: ''
-          options: '--build-arg COMMIT="${{ github.sha }}"'
+          options: '--build-arg COMMIT="$GITHUB_SHA"'
 
   docker:
     runs-on: ubuntu-latest
