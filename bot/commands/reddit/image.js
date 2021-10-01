@@ -8,14 +8,14 @@ function redditCommand(message, args) {
 
 module.exports = {
     args: 1,
-    name: 'reddit',
+    name: 'image',
     botAdmin: false,
     description: 'pulls post from specified subreddit',
     usage: 'subreddit',
     aliases: [],
     execute: redditCommand,
-    docs: `#### Reddit
-- Command: \`reddit\`
+    docs: `#### Image
+- Command: \`image\`
 - Args:
     - required, \`<subreddit>\`
 - Returns: an embedded link to a post from the specified subreddit
@@ -24,7 +24,7 @@ module.exports = {
 - Example usage:
 \`\`\`
 User
-> !reddit funny
+> !image funny
 
 Botomir
 > <embedded message with reddit post>
