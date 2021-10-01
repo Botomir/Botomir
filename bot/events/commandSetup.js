@@ -2,6 +2,19 @@ const source = require('rfr');
 const fs = require('fs');
 const Discord = require('discord.js');
 
+const logger = source('bot/utils/logger');
+
+function checkNameConflicts(categories, commandNames) {
+    return categories.reduce((previous, category) => {
+        if (commandNames.includes(category)) {
+            logger.warn(`A command and a command category have the same name: '${category}', this will prevent help messages from loading correctly.`);
+            return true;
+        }
+
+        return previous;
+    }, false);
+}
+
 function setupCommands(client) {
     client.commands = new Discord.Collection();
 
@@ -18,6 +31,9 @@ function setupCommands(client) {
             client.commands.set(command.name, command);
         });
     });
+
+    // show warnings if a command and a category have the same name
+    checkNameConflicts(categories, client.commands.map((c) => c.name));
 
     client.categories = categories;
 }
