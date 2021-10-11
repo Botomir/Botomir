@@ -58,7 +58,7 @@ jobs:
           ENVKEY_BOTOMIR_NOTIFICATION_CHANNEL: ${{ secrets.BOTOMIR_NOTIFICATION_CHANNEL }}
           ENVKEY_MODE: 'production'
 
-      - uses: akhileshns/heroku-deploy@v3.7.8 # This is the action
+      - uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: ${{secrets.HEROKU_APP_NAME}}
@@ -67,7 +67,7 @@ jobs:
           docker_build_args: |
             COMMIT
           env:
-            - COMMIT=$GITHUB_SHA
+            COMMIT: ${{ github.sha }}
           env_file: ".env"
 
   docker:
@@ -85,10 +85,10 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
         name: Build and push
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v2.7.0
         with:
           context: .
-          build-args:
-            - COMMIT=$GITHUB_SHA
+          build-args: |
+            COMMIT=$GITHUB_SHA
           push: true
           tags: marshallasch/botomir:latest
