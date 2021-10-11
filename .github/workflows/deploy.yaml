@@ -89,6 +89,6 @@ jobs:
         with:
           context: .
           build-args: |
-            COMMIT=$GITHUB_SHA
+            COMMIT=${{ github.sha }}
           push: true
           tags: marshallasch/botomir:latest
