@@ -66,9 +66,9 @@ jobs:
           usedocker: true
           docker_build_args: |
             COMMIT
-          env:
-            COMMIT: ${{ github.sha }}
           env_file: ".env"
+        env:
+          COMMIT: ${{ github.sha }}
 
   docker:
     runs-on: ubuntu-latest
