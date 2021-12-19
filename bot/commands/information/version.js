@@ -2,7 +2,7 @@ const source = require('rfr');
 
 const { version } = source('package');
 const { sendMessage } = source('bot/utils/util');
-const commit = (process.env.COMMIT || 'unknown').slice(0, 7);
+const commit = (process.env.VCS_REF || 'unknown').slice(0, 7);
 
 function versionCommand(message) {
     sendMessage(message.channel, `Version: \`${version}\`\nBuild: \`${commit}\``);

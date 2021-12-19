@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main
+    tags:
+      - 'v*'
 
 jobs:
   lint:
@@ -36,59 +38,86 @@ jobs:
     - run: npm run build --if-present
     - run: npm test
 
-  deploy:
-    runs-on: ubuntu-latest
-    needs: test
-    environment: deployment
-    steps:
-      - uses: actions/checkout@v2
-      - name: Make envfile
-        uses: SpicyPizza/create-envfile@v1
-        with:
-          ENVKEY_DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
-          ENVKEY_DISCORD_CLIENT_ID: ${{ secrets.DISCORD_CLIENT_ID }}
-          ENVKEY_DISCORD_CLIENT_SECRET: ${{ secrets.DISCORD_CLIENT_SECRET }}
-          ENVKEY_DATABASE_URL: ${{ secrets.DATABASE_URL }}
-          ENVKEY_SPOTIFY_CLIENT_ID: ${{ secrets.SPOTIFY_CLIENT_ID }}
-          ENVKEY_SPOTIFY_CLIENT_SECRET: ${{ secrets.SPOTIFY_CLIENT_SECRET }}
-          ENVKEY_BASE_URL: ${{ secrets.BASE_URL }}
-          ENVKEY_BOT_MODS: ${{ secrets.BOT_MODS }}
-          ENVKEY_SESSION_SECRET: ${{ secrets.SESSION_SECRET }}
-          ENVKEY_BOTOMIR_NOTIFICATION_GUILD: ${{ secrets.BOTOMIR_NOTIFICATION_GUILD }}
-          ENVKEY_BOTOMIR_NOTIFICATION_CHANNEL: ${{ secrets.BOTOMIR_NOTIFICATION_CHANNEL }}
-          ENVKEY_MODE: 'production'
+  # deploy:
+  #   runs-on: ubuntu-latest
+  #   needs: test
+  #   environment: deployment
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - name: Make envfile
+  #       uses: SpicyPizza/create-envfile@v1
+  #       with:
+  #         ENVKEY_DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
+  #         ENVKEY_DISCORD_CLIENT_ID: ${{ secrets.DISCORD_CLIENT_ID }}
+  #         ENVKEY_DISCORD_CLIENT_SECRET: ${{ secrets.DISCORD_CLIENT_SECRET }}
+  #         ENVKEY_DATABASE_URL: ${{ secrets.DATABASE_URL }}
+  #         ENVKEY_SPOTIFY_CLIENT_ID: ${{ secrets.SPOTIFY_CLIENT_ID }}
+  #         ENVKEY_SPOTIFY_CLIENT_SECRET: ${{ secrets.SPOTIFY_CLIENT_SECRET }}
+  #         ENVKEY_BASE_URL: ${{ secrets.BASE_URL }}
+  #         ENVKEY_BOT_MODS: ${{ secrets.BOT_MODS }}
+  #         ENVKEY_SESSION_SECRET: ${{ secrets.SESSION_SECRET }}
+  #         ENVKEY_BOTOMIR_NOTIFICATION_GUILD: ${{ secrets.BOTOMIR_NOTIFICATION_GUILD }}
+  #         ENVKEY_BOTOMIR_NOTIFICATION_CHANNEL: ${{ secrets.BOTOMIR_NOTIFICATION_CHANNEL }}
+  #         ENVKEY_MODE: 'production'
 
-      - uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
-        with:
-          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          heroku_app_name: ${{secrets.HEROKU_APP_NAME}}
-          heroku_email: ${{secrets.HEROKU_APP_EMAIL}}
-          usedocker: true
-          docker_build_args: |
-            COMMIT
-          env_file: ".env"
-        env:
-          COMMIT: ${{ github.sha }}
+      # - uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
+      #   with:
+      #     heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+      #     heroku_app_name: ${{secrets.HEROKU_APP_NAME}}
+      #     heroku_email: ${{secrets.HEROKU_APP_EMAIL}}
+      #     justlogin: true
+      # - run: heroku container:login
+          # usedocker: true
+          # docker_build_args: |
+          #   VCS_REF
+          # env_file: ".env"
+        # env:
+        #   VCS_REF: ${{ github.sha }}
 
   docker:
     runs-on: ubuntu-latest
     environment: deployment
     steps:
-      -
-        name: Checkout
+      - name: Checkout
         uses: actions/checkout@v2
-      -
-        name: Login to DockerHub
+      - name: Setup the current date
+        id: prep
+        run: echo "::set-output name=date::$(date -u +'%Y-%m-%dT%H:%M:%SZ')"
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v3
+        with:
+          images: marshallasch/botomir
+          flavor: |
+            latest=true
+          tags: |
+            type=ref,event=branch
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=raw,value=registry.heroku.com/${{secrets.HEROKU_APP_NAME}}/web
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      - name: Login to DockerHub
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      -
-        name: Build and push
-        uses: docker/build-push-action@v2.7.0
+      - uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
         with:
-          context: .
-          build-args: |
-            COMMIT=${{ github.sha }}
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: ${{secrets.HEROKU_APP_NAME}}
+          heroku_email: ${{secrets.HEROKU_APP_EMAIL}}
+          justlogin: true
+      - run: heroku container:login
+      - name: Build and push
+        id: docker_build
+        uses: docker/build-push-action@v2
+        with:
           push: true
-          tags: marshallasch/botomir:latest
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          build-args: |
+            BUILD_DATE=${{ steps.date.outputs.date }}
+            VCS_REF=${{ github.sha }}
