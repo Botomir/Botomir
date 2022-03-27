@@ -52,7 +52,7 @@
     "handlebars": "^4.7.7",
     "helmet": "^4.2.0",
     "lodash": "^4.17.20",
-    "markdown-it": "^12.0.4",
+    "markdown-it": "^12.3.2",
     "memejs": "^1.2.3",
     "moment": "^2.29.1",
     "moment-timezone": "^0.5.33",
