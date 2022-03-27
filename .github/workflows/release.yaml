@@ -86,7 +86,7 @@ jobs:
           ENVKEY_BOTOMIR_NOTIFICATION_CHANNEL: ${{ secrets.BOTOMIR_NOTIFICATION_CHANNEL }}
           ENVKEY_MODE: 'production'
 
-      - uses: akhileshns/heroku-deploy@v3.7.8 # This is the action
+      - uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: ${{secrets.HEROKU_APP_NAME}}
