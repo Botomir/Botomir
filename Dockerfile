@@ -4,9 +4,12 @@ ARG VCS_REF='unknown'
 ENV VCS_REF=$VCS_REF
 
 WORKDIR /usr/src/app
+
+COPY package*.json ./
+RUN npm ci
+
 COPY . .
 
-RUN npm ci
 RUN npm run build
 
 FROM node:14
