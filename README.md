@@ -52,7 +52,10 @@ Go to this [site](https://botomir.com) and click `Add to Server`.
 #### Build the Docker image
 
 ```bash
-$ docker build -t botomir .
+$ docker build \
+   --build-arg VCS_REF=$(git rev-parse -q --verify HEAD) \
+   --build-arg BUILD_DATE=$(date -u +"%Y-%m-%dT%H:%M:%SZ") \
+   -t botomir .
 ```
 
 #### Stopping the container
