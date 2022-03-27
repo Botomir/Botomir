@@ -9,7 +9,7 @@ const { createHmac, timingSafeEqual } = require('crypto');
 const logger = source('bot/utils/logger');
 const { sendMessage } = source('bot/utils/util');
 
-// this will handle the actual hook proccessing
+// this will handle the actual hook processing
 function handleHook(event, payload, hook) {
     const guild = Bot.client.guilds.cache.get(hook.guildID);
     const channel = guild.channels.cache.get(hook.channelID);
@@ -142,7 +142,7 @@ const HookHandlerController = {
                 });
             })
             .catch((e) => {
-                logger.error(`failled to handle the webhook: ${e.message}`);
+                logger.error(`failed to handle the webhook: ${e.message}`);
                 logger.error(e);
 
                 res.status(500).json({
@@ -179,7 +179,33 @@ const HookHandlerController = {
                 });
             })
             .catch((e) => {
-                logger.error(`failled to handle the webhook: ${e.message}`);
+                logger.error(`failed to handle the webhook: ${e.message}`);
+                logger.error(e);
+
+                res.status(500).json({
+                    error: `Unknown error handing webhook: ${e.message}`,
+                });
+            });
+    },
+
+    custom(req, res) {
+
+        return Webhook.getHook(req.params.hookID)
+            .then((hook) => {
+                if (!hook) {
+                    return res.status(404).json({
+                        error: `hook not found with ID ${req.params.hookID}`,
+                    });
+                }
+            
+                handleHook(eventName, req.body, hook);
+                
+                return res.status(202).json({
+                    message: 'successfully got the request, now processing',
+                });
+            })
+            .catch((e) => {
+                logger.error(`failed to handle the webhook: ${e.message}`);
                 logger.error(e);
 
                 res.status(500).json({
