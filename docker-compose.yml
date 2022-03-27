@@ -1,0 +1,49 @@
+
+version: "3.9"
+services:
+
+  mongo:
+    image: mongo:5.0
+    container_name: mongo
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_DATABASE=discordbot
+    volumes:
+      - mongo_data:/data/db
+      - ./compose/mongo_init.js:/docker-entrypoint-initdb.d/init.js
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongo mongo:27017/test --quiet
+      timeout: 5s
+      retries: 3
+      interval: 10s
+      start_period: 2s
+
+
+  botomir:
+    build:
+      context: .
+    container_name: botomir
+    depends_on:
+      mongo:
+        condition: service_healthy
+    ports:
+      - "8300:8300"
+    environment:
+      - DISCORD_TOKEN
+      - SPOTIFY_CLIENT_ID
+      - SPOTIFY_CLIENT_SECRET
+      - DISCORD_CLIENT_ID
+      - DISCORD_CLIENT_SECRET
+      - BOTOMIR_NOTIFICATION_GUILD        # optional
+      - BOTOMIR_NOTIFICATION_CHANNEL      # optional
+      - BASE_URL=http://localhost:8300
+      - DATABASE_URL=mongodb://bot_account:bot_test_pass@mongo:27017/discordbot
+      - SESSION_SECRET=octocat
+      #- NODE_ENV=production
+      - BOT_MODS='@wickedscubadog#6957'
+
+volumes:
+  mongo_data:
+    driver: local
+

@@ -109,7 +109,10 @@ mongoose.connect(process.env.DATABASE_URL, {
     .then((r) => logger.info(`Successfully connected to MongoDB: ${r}`))
     .catch((e) => logger.error(`Error starting up mongo: ${e}`));
 
-agenda.start().then(() => logger.info('agenda is now ready')).catch((e) => logger.error('agenda failed to start', e));
+agenda.start()
+    .then(() => logger.info('agenda is now ready'))
+    .catch((e) => logger.error('agenda failed to start', e));
+
 process.on('SIGTERM', () => {
     logger.info('SIGTERM signal received: closing HTTP server');
 

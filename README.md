@@ -23,8 +23,8 @@ Go to this [site](https://botomir.com) and click `Add to Server`.
 
 ## How to run
 
-1. Install [nodejs], Botomir will not run using v10.24.0 or lower.
-2. install docker on your system
+1. Install [nodejs], Botomir requires v10.24.0 or higher.
+2. Install Docker on your system
 3. Start up a [mongodb] database
     ```bash
     $ docker run -p 27017:27017 -it -d --name mongo -e MONGO_INITDB_ROOT_USERNAME=admin -e MONGO_INITDB_ROOT_PASSWORD=pass mongo
@@ -58,44 +58,32 @@ $ docker build \
    -t botomir .
 ```
 
+#### Running with Docker
+
+To run Botomir using the provided `docker-compose` file some environment variables need to be set first in the `.env` file. 
+A template of this file is provided in the `compose.env` file. 
+
+Then run `docker compose up -d` to start the database and the botomir application. 
+
+
+Or you can start only the botomir container with the following command.
+Be sure to set all of the required environment variables. 
+
+```
+$ docker run -p 80:8300 \
+    -e DISCORD_TOKEN=token \
+    .... \
+    --name botomir \
+    marshallasch/botomir
+```
+
 #### Stopping the container
 
-The Botomir Focker container can be stopped using the `SIGTERM` signal:
+The Botomir Docker container can be stopped using the `SIGTERM` signal:
 
 ```bash
 $ docker kill -s SIGTERM <container name>
 ```
-
-#### Docker Compose version 3 config file
-
-```yaml
-version: "3.9"
-services:
-  botomir:
-    image: marshallasch/botomir:latest
-    container_name: botomir
-    environment:
-      - DISCORD_TOKEN: development
-      - DATABASE_URL: 'mongodb://botomir:botomir@mongo/discordbot?authSource=admin'
-      - SPOTIFY_CLIENT_ID: '1234567890'
-      - SPOTIFY_CLIENT_SECRET: abcde234543
-      - BASE_URL: 'https://botomir.com'
-      - BOTOMIR_NOTIFICATION_GUILD: '1029384756'
-      - BOTOMIR_NOTIFICATION_CHANNEL: '1234567890'
-      - MODE: production
-    ports:
-      - "80:8300"
-  mongo:
-    image: mongo:latest
-    container_name: mongo
-    ports:
-      - "27017:27017"
-```
-
-and run `docker-compose up -d` to startup the application.
-
-Or run `docker run -p 80:8300 -e DISCORD_TOKEN=token .... --name botomir marshallasch/botomir`
-
 
 ### Required Permissions
 - manage server
