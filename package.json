@@ -39,15 +39,15 @@
     "node": ">=15.2.1"
   },
   "dependencies": {
-    "agenda": "^4.1.0",
+    "agenda": "4.2.1",
     "connect-mongo": "4.6.0",
     "cookie-parser": "1.4.6",
     "cronstrue": "2.2.0",
     "discord.js": "^12.5.1",
     "dotenv": "16.0.0",
     "emoji-regex": "10.0.1",
-    "express": "^4.17.1",
-    "express-handlebars": "^5.2.0",
+    "express": "4.17.3",
+    "express-handlebars": "6.0.3",
     "express-session": "^1.17.1",
     "handlebars": "^4.7.7",
     "helmet": "5.0.2",
@@ -55,8 +55,8 @@
     "markdown-it": "^12.0.4",
     "memejs": "2.0.1",
     "moment": "^2.29.1",
-    "moment-timezone": "^0.5.33",
-    "mongoose": "^5.10.16",
+    "moment-timezone": "0.5.34",
+    "mongoose": "6.2.8",
     "node-fetch": "3.2.3",
     "parse-duration": "1.0.2",
     "passport": "^0.4.1",
@@ -70,7 +70,7 @@
     "winston": "^3.3.3"
   },
   "devDependencies": {
-    "@shelf/jest-mongodb": "1.3.4",
+    "@shelf/jest-mongodb": "2.2.1",
     "eslint": "8.12.0",
     "eslint-config-airbnb-base": "15.0.0",
     "eslint-plugin-import": "2.25.4",
