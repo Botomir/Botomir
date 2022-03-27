@@ -21,10 +21,10 @@ function recordRoleStats(serverID, mode) {
 function changeRole(member, role, mode, unassignable = []) {
     return new Promise(((resolve, reject) => {
         if (unassignable.includes(role.name)) {
-            return reject(new Error(`attempting to change unassaignable role '${role.name}'`));
+            reject(new Error(`attempting to change unassaignable role '${role.name}'`));
+        } else {
+            resolve(mode === Mode.ADD ? member.roles.add(role) : member.roles.remove(role));
         }
-
-        return resolve(mode === Mode.ADD ? member.roles.add(role) : member.roles.remove(role));
     }))
         .then((r) => logger.info(`Successfully ${mode} member role:`, r))
         .then(() => recordRoleStats(member.guild.id, mode));

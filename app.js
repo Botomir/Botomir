@@ -77,14 +77,17 @@ app.get('/login', passport.authenticate('discord', {
     scope: scopes, prompt,
 }), () => {});
 
-app.get('/discord/authorize',
+app.get(
+    '/discord/authorize',
     passport.authenticate('discord', {
         failureRedirect: '/',
-    }), (req, res) => {
+    }),
+    (req, res) => {
         const redirectUri = req.cookies.redirect_uri || '/';
         res.clearCookie('redirect_uri');
         res.redirect(redirectUri);
-    });
+    },
+);
 
 app.get('/logout', (req, res) => {
     req.logout();
