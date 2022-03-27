@@ -101,18 +101,17 @@ const server = app.listen(port, () => {
 Bot.client.login(process.env.DISCORD_TOKEN);
 
 mongoose.connect(process.env.DATABASE_URL, {
-        useNewUrlParser: true,
-        useFindAndModify: false,
-        useCreateIndex: true,
-        useUnifiedTopology: true,
-    })
+    useNewUrlParser: true,
+    useFindAndModify: false,
+    useCreateIndex: true,
+    useUnifiedTopology: true,
+})
     .then((r) => logger.info(`Successfully connected to MongoDB: ${r}`))
     .catch((e) => logger.error(`Error starting up mongo: ${e}`));
 
 agenda.start()
     .then(() => logger.info('agenda is now ready'))
     .catch((e) => logger.error('agenda failed to start', e));
-
 
 process.on('SIGTERM', () => {
     logger.info('SIGTERM signal received: closing HTTP server');
