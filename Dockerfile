@@ -35,7 +35,8 @@ EXPOSE 8300
 CMD [ "node", "app.js" ]
 
 COPY --from=BUILD /usr/src/app/package*.json ./
-RUN npm ci --only=production
+RUN 
+
 
 
 COPY --from=BUILD /usr/src/app/dist ./
