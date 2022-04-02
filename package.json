@@ -46,7 +46,7 @@
     "cronstrue": "2.2.0",
     "discord.js": "12.5.1",
     "dotenv": "16.0.0",
-    "emoji-regex": "10.0.1",
+    "emoji-regex": "10.1.0",
     "express": "4.17.3",
     "express-handlebars": "6.0.3",
     "express-session": "1.17.2",
@@ -57,7 +57,7 @@
     "memejs": "2.0.1",
     "moment": "2.29.1",
     "moment-timezone": "0.5.34",
-    "mongoose": "6.2.8",
+    "mongoose": "6.2.9",
     "parse-duration": "1.0.2",
     "passport": "0.5.2",
     "passport-discord": "0.1.4",
@@ -66,7 +66,7 @@
     "rfr": "1.2.3",
     "spotify-web-api-node": "5.0.2",
     "uuid": "8.3.2",
-    "weather-promise": "2.0.3",
+    "weather-promise": "2.1.0",
     "winston": "3.6.0"
   },
   "devDependencies": {
