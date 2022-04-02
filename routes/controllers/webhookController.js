@@ -189,7 +189,6 @@ const HookHandlerController = {
     },
 
     custom(req, res) {
-
         return Webhook.getHook(req.params.hookID)
             .then((hook) => {
                 if (!hook) {
@@ -197,9 +196,9 @@ const HookHandlerController = {
                         error: `hook not found with ID ${req.params.hookID}`,
                     });
                 }
-            
-                handleHook(eventName, req.body, hook);
-                
+
+                handleHook('custom', req.body, hook);
+
                 return res.status(202).json({
                     message: 'successfully got the request, now processing',
                 });
