@@ -1,4 +1,4 @@
-FROM node:14 as BUILD
+FROM node:17 as BUILD
 
 ARG VCS_REF='unknown'
 ENV VCS_REF=$VCS_REF
@@ -12,7 +12,7 @@ COPY . .
 
 RUN npm run build
 
-FROM node:14
+FROM node:17
 
 ARG VCS_REF='unknown'
 ENV VCS_REF=$VCS_REF
