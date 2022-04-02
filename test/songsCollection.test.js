@@ -22,9 +22,7 @@ const fields2 = {
 };
 
 describe('Songs database', () => {
-    beforeAll(() => {
-        return mongoose.connect(process.env.MONGO_URL);
-    });
+    beforeAll(() => mongoose.connect(process.env.MONGO_URL));
 
     afterAll(() => mongoose.connection.close());
 

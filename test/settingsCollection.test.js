@@ -15,9 +15,7 @@ const fields = {
 };
 
 describe('settings database', () => {
-    beforeAll(() => {
-        return mongoose.connect(process.env.MONGO_URL);
-    });
+    beforeAll(() => mongoose.connect(process.env.MONGO_URL));
 
     afterAll(() => mongoose.connection.close());
 
@@ -177,9 +175,7 @@ describe('settings database', () => {
 });
 
 describe('settings default values', () => {
-    beforeAll(() => {
-        return mongoose.connect(process.env.MONGO_URL);
-    });
+    beforeAll(() => mongoose.connect(process.env.MONGO_URL));
 
     afterAll(() => mongoose.connection.close());
 
@@ -353,9 +349,7 @@ describe('settings default values', () => {
 });
 
 describe('settings inital values', () => {
-    beforeAll(() => {
-        return mongoose.connect(process.env.MONGO_URL);
-    });
+    beforeAll(() => mongoose.connect(process.env.MONGO_URL));
 
     afterAll(() => mongoose.connection.close());
 
@@ -487,9 +481,7 @@ describe('settings inital values', () => {
 });
 
 describe('enable / dissable commands', () => {
-    beforeAll(() => {
-        return mongoose.connect(process.env.MONGO_URL);
-    });
+    beforeAll(() => mongoose.connect(process.env.MONGO_URL));
 
     afterAll(() => mongoose.connection.close());
 
@@ -561,9 +553,7 @@ describe('enable / dissable commands', () => {
 });
 
 describe('settable / unsettable roles', () => {
-    beforeAll(() => {
-        return mongoose.connect(process.env.MONGO_URL);
-    });
+    beforeAll(() => mongoose.connect(process.env.MONGO_URL));
 
     afterAll(() => mongoose.connection.close());
 
@@ -635,9 +625,7 @@ describe('settable / unsettable roles', () => {
 });
 
 describe('add / remove meme subreddit', () => {
-    beforeAll(() => {
-        return mongoose.connect(process.env.MONGO_URL);
-    });
+    beforeAll(() => mongoose.connect(process.env.MONGO_URL));
 
     afterAll(() => mongoose.connection.close());
 
@@ -815,9 +803,7 @@ describe('add / remove meme subreddit', () => {
 });
 
 describe('add / remove cute subreddit', () => {
-    beforeAll(() => {
-        return mongoose.connect(process.env.MONGO_URL);
-    });
+    beforeAll(() => mongoose.connect(process.env.MONGO_URL));
 
     afterAll(() => mongoose.connection.close());
 
@@ -972,9 +958,7 @@ describe('add / remove cute subreddit', () => {
 });
 
 describe('settings static functions', () => {
-    beforeAll(() => {
-        return mongoose.connect(process.env.MONGO_URL);
-    });
+    beforeAll(() => mongoose.connect(process.env.MONGO_URL));
 
     afterAll(() => mongoose.connection.close());
 

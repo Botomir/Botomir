@@ -24,9 +24,7 @@ const fields2 = {
 };
 
 describe('messages database', () => {
-    beforeAll(() => {
-        return mongoose.connect(process.env.MONGO_URL);
-    });
+    beforeAll(() => mongoose.connect(process.env.MONGO_URL));
 
     afterAll(() => mongoose.connection.close());
 
