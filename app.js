@@ -52,7 +52,7 @@ refresh.use(discordStrat);
 const app = express();
 
 app.use(helmet());
-app.engine('handlebars', exphbs());
+app.engine('handlebars', exphbs.engine());
 app.set('view engine', 'handlebars');
 app.use(express.static('static'));
 app.use(cookieParser());
