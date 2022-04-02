@@ -103,12 +103,7 @@ const server = app.listen(port, () => {
 
 Bot.client.login(process.env.DISCORD_TOKEN);
 
-mongoose.connect(process.env.DATABASE_URL, {
-    useNewUrlParser: true,
-    useFindAndModify: false,
-    useCreateIndex: true,
-    useUnifiedTopology: true,
-})
+mongoose.connect(process.env.DATABASE_URL)
     .then((r) => logger.info(`Successfully connected to MongoDB: ${r}`))
     .catch((e) => logger.error(`Error starting up mongo: ${e}`));
 
