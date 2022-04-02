@@ -16,13 +16,7 @@ const fields = {
 
 describe('settings database', () => {
     beforeAll(() => {
-        const mongooseOpts = {
-            useNewUrlParser: true,
-            useFindAndModify: false,
-            useCreateIndex: true,
-            useUnifiedTopology: true,
-        };
-        return mongoose.connect(process.env.MONGO_URL, mongooseOpts);
+        return mongoose.connect(process.env.MONGO_URL);
     });
 
     afterAll(() => mongoose.connection.close());
@@ -184,13 +178,7 @@ describe('settings database', () => {
 
 describe('settings default values', () => {
     beforeAll(() => {
-        const mongooseOpts = {
-            useNewUrlParser: true,
-            useFindAndModify: false,
-            useCreateIndex: true,
-            useUnifiedTopology: true,
-        };
-        return mongoose.connect(process.env.MONGO_URL, mongooseOpts);
+        return mongoose.connect(process.env.MONGO_URL);
     });
 
     afterAll(() => mongoose.connection.close());
@@ -366,13 +354,7 @@ describe('settings default values', () => {
 
 describe('settings inital values', () => {
     beforeAll(() => {
-        const mongooseOpts = {
-            useNewUrlParser: true,
-            useFindAndModify: false,
-            useCreateIndex: true,
-            useUnifiedTopology: true,
-        };
-        return mongoose.connect(process.env.MONGO_URL, mongooseOpts);
+        return mongoose.connect(process.env.MONGO_URL);
     });
 
     afterAll(() => mongoose.connection.close());
@@ -506,13 +488,7 @@ describe('settings inital values', () => {
 
 describe('enable / dissable commands', () => {
     beforeAll(() => {
-        const mongooseOpts = {
-            useNewUrlParser: true,
-            useFindAndModify: false,
-            useCreateIndex: true,
-            useUnifiedTopology: true,
-        };
-        return mongoose.connect(process.env.MONGO_URL, mongooseOpts);
+        return mongoose.connect(process.env.MONGO_URL);
     });
 
     afterAll(() => mongoose.connection.close());
@@ -586,13 +562,7 @@ describe('enable / dissable commands', () => {
 
 describe('settable / unsettable roles', () => {
     beforeAll(() => {
-        const mongooseOpts = {
-            useNewUrlParser: true,
-            useFindAndModify: false,
-            useCreateIndex: true,
-            useUnifiedTopology: true,
-        };
-        return mongoose.connect(process.env.MONGO_URL, mongooseOpts);
+        return mongoose.connect(process.env.MONGO_URL);
     });
 
     afterAll(() => mongoose.connection.close());
@@ -666,13 +636,7 @@ describe('settable / unsettable roles', () => {
 
 describe('add / remove meme subreddit', () => {
     beforeAll(() => {
-        const mongooseOpts = {
-            useNewUrlParser: true,
-            useFindAndModify: false,
-            useCreateIndex: true,
-            useUnifiedTopology: true,
-        };
-        return mongoose.connect(process.env.MONGO_URL, mongooseOpts);
+        return mongoose.connect(process.env.MONGO_URL);
     });
 
     afterAll(() => mongoose.connection.close());
@@ -852,13 +816,7 @@ describe('add / remove meme subreddit', () => {
 
 describe('add / remove cute subreddit', () => {
     beforeAll(() => {
-        const mongooseOpts = {
-            useNewUrlParser: true,
-            useFindAndModify: false,
-            useCreateIndex: true,
-            useUnifiedTopology: true,
-        };
-        return mongoose.connect(process.env.MONGO_URL, mongooseOpts);
+        return mongoose.connect(process.env.MONGO_URL);
     });
 
     afterAll(() => mongoose.connection.close());
@@ -1015,13 +973,7 @@ describe('add / remove cute subreddit', () => {
 
 describe('settings static functions', () => {
     beforeAll(() => {
-        const mongooseOpts = {
-            useNewUrlParser: true,
-            useFindAndModify: false,
-            useCreateIndex: true,
-            useUnifiedTopology: true,
-        };
-        return mongoose.connect(process.env.MONGO_URL, mongooseOpts);
+        return mongoose.connect(process.env.MONGO_URL);
     });
 
     afterAll(() => mongoose.connection.close());

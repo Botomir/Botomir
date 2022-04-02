@@ -10,13 +10,7 @@ const guild2 = '698257589716123781';
 
 describe('Statistics database', () => {
     beforeAll(() => {
-        const mongooseOpts = {
-            useNewUrlParser: true,
-            useFindAndModify: false,
-            useCreateIndex: true,
-            useUnifiedTopology: true,
-        };
-        return mongoose.connect(process.env.MONGO_URL, mongooseOpts);
+        return mongoose.connect(process.env.MONGO_URL);
     });
 
     afterAll(() => mongoose.connection.close());
