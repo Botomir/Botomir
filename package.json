@@ -55,7 +55,7 @@
     "lodash": "^4.17.21",
     "markdown-it": "^12.3.2",
     "memejs": "2.0.1",
-    "moment": "2.29.1",
+    "moment": "2.29.2",
     "moment-timezone": "0.5.34",
     "mongoose": "6.2.9",
     "parse-duration": "1.0.2",
