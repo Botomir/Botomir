@@ -10,6 +10,7 @@ describe('discord snowflake validator', () => {
     });
 
     test('invalid number', () => {
+        // eslint-disable-next-line no-loss-of-precision
         expect(snowflakeValidator(788091112476770353)).toBe(false);
     });
 

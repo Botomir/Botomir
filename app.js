@@ -52,7 +52,7 @@ refresh.use(discordStrat);
 const app = express();
 
 app.use(helmet());
-app.engine('handlebars', exphbs());
+app.engine('handlebars', exphbs.engine());
 app.set('view engine', 'handlebars');
 app.use(express.static('static'));
 app.use(cookieParser());
@@ -77,14 +77,17 @@ app.get('/login', passport.authenticate('discord', {
     scope: scopes, prompt,
 }), () => {});
 
-app.get('/discord/authorize',
+app.get(
+    '/discord/authorize',
     passport.authenticate('discord', {
         failureRedirect: '/',
-    }), (req, res) => {
+    }),
+    (req, res) => {
         const redirectUri = req.cookies.redirect_uri || '/';
         res.clearCookie('redirect_uri');
         res.redirect(redirectUri);
-    });
+    },
+);
 
 app.get('/logout', (req, res) => {
     req.logout();
@@ -100,12 +103,7 @@ const server = app.listen(port, () => {
 
 Bot.client.login(process.env.DISCORD_TOKEN);
 
-mongoose.connect(process.env.DATABASE_URL, {
-    useNewUrlParser: true,
-    useFindAndModify: false,
-    useCreateIndex: true,
-    useUnifiedTopology: true,
-})
+mongoose.connect(process.env.DATABASE_URL)
     .then((r) => logger.info(`Successfully connected to MongoDB: ${r}`))
     .catch((e) => logger.error(`Error starting up mongo: ${e}`));
 
