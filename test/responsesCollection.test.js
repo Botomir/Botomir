@@ -30,15 +30,7 @@ const fields4 = {
 };
 
 describe('responses database', () => {
-    beforeAll(() => {
-        const mongooseOpts = {
-            useNewUrlParser: true,
-            useFindAndModify: false,
-            useCreateIndex: true,
-            useUnifiedTopology: true,
-        };
-        return mongoose.connect(process.env.MONGO_URL, mongooseOpts);
-    });
+    beforeAll(() => mongoose.connect(process.env.MONGO_URL));
 
     afterAll(() => mongoose.connection.close());
 
