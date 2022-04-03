@@ -15,6 +15,15 @@ function sendMessage(channel, message) {
         .catch((e) => logger.error(`could not send message:, ${e.message}`));
 }
 
+function sendReply(original, message) {
+    return original.reply(message)
+        .then((m) => {
+            logger.info(`Successfully sent message: '${m.cleanContent}'`);
+            return m;
+        })
+        .catch((e) => logger.error(`could not send message:, ${e.message}`));
+}
+
 function sendEventMessage(client, message) {
     const notificationGuildID = process.env.BOTOMIR_NOTIFICATION_GUILD;
     const notificationChannelID = process.env.BOTOMIR_NOTIFICATION_CHANNEL;
@@ -82,6 +91,7 @@ function extractMessageLink(messageLink) {
 
 module.exports = {
     sendMessage,
+    sendReply,
     getChannel,
     lookupRoleName,
     getMember,
