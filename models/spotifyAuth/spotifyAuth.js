@@ -1,4 +1,5 @@
 /* eslint-disable no-underscore-dangle */
+/* eslint-disable camelcase */
 
 const mongoose = require('mongoose');
 const source = require('rfr');

@@ -10,10 +10,12 @@ function removeReactionHandler(reaction, user) {
     if (reaction.message.guild === null || user.bot) return;
 
     let roleMapping;
-    Role.findRole(reaction.message.guild.id,
+    Role.findRole(
+        reaction.message.guild.id,
         reaction.message.channel.id,
         reaction.message.id,
-        reaction.emoji.name)
+        reaction.emoji.name,
+    )
         .then((r) => {
             if (r === null) return null;
             roleMapping = r;
