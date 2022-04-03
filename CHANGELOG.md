@@ -49,6 +49,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Audit messages now include the user tag
 - Changed the `schedule` command group name to `scheduled`
 - Renamed the `reddit` command to `image` because it just gets an image from reddit.
+- Moved the `list-reminders` command into the `scheduled` group
 
 ## [2.0.1] - 2020-12-20
 ### Changed
