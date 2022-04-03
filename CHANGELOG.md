@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - added the ability to automatically parse the role reaction emojis
 - added the ability to watch multiple role reaction messages
 - added the ability to update a role reaction message
-- added the ability to list all the role reaction messages that botomir is currently  watching
+- added the ability to list all the role reaction messages that botomir is currently watching
 - added the ability to remove a role reaction message without just updating it
 - added a bunch of new commands
 - added moderation tools to keep message logs
@@ -33,6 +33,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - can send message edits and deletions to a configurable audit channel
 - can configure the server timezone
 - added a warning to be shown if a command name and a command category share the same name, this would cause issues for the help command
+- Added message response to whenever botomir gets mentioned
 - Added support for custom webhooks
 
 ### Changed

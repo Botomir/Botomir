@@ -17,7 +17,7 @@ describe('Statistics database', () => {
 
     test('check Event types', () => {
         expect(Object.isFrozen(EventTypes)).toBeTruthy();
-        expect(Object.keys(EventTypes)).toHaveLength(9);
+        expect(Object.keys(EventTypes)).toHaveLength(10);
 
         expect(EventTypes.PLAYLIST_CREATED).toBe('PLAYLIST_CREATED');
         expect(EventTypes.ROLE_ASSIGNED).toBe('ROLE_ASSIGNED');
@@ -28,6 +28,7 @@ describe('Statistics database', () => {
         expect(EventTypes.PUPPYS_SHOWN).toBe('PUPPYS_SHOWN');
         expect(EventTypes.MEMES_SENT).toBe('MEMES_SENT');
         expect(EventTypes.MESSAGES_DELETED).toBe('MESSAGES_DELETED');
+        expect(EventTypes.BOTOMIR_MENTION).toBe('BOTOMIR_MENTION');
     });
 
     test('Create and save stats event', async () => {

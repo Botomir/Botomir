@@ -92,6 +92,7 @@ const EventTypes = {
     PUPPYS_SHOWN: 'PUPPYS_SHOWN',
     MEMES_SENT: 'MEMES_SENT',
     MESSAGES_DELETED: 'MESSAGES_DELETED',
+    BOTOMIR_MENTION: 'BOTOMIR_MENTION',
 };
 
 module.exports = {
