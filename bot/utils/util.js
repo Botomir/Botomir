@@ -24,7 +24,6 @@ function sendReply(original, message) {
         .catch((e) => logger.error(`could not send message:, ${e.message}`));
 }
 
-
 function sendEventMessage(client, message) {
     const notificationGuildID = process.env.BOTOMIR_NOTIFICATION_GUILD;
     const notificationChannelID = process.env.BOTOMIR_NOTIFICATION_CHANNEL;

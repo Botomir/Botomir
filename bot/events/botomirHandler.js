@@ -12,7 +12,11 @@ const botomirRegex = /botomir/;
 const defaultMessage = "Hi, I'm Botomir! Are you talking about me, the worlds greatest Discord bot????";
 
 function botMessage(message) {
-    if (message.guild === null || message.author.bot || !botomirRegex.test(message.content.toLowerCase())) return;
+    if (message.guild === null
+        || message.author.bot
+        || !botomirRegex.test(message.content.toLowerCase())) {
+        return;
+    }
 
     Responses.findForMode(message.guild.id, 'botomir')
         .then((res) => {
