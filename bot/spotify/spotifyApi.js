@@ -19,10 +19,12 @@ function parseAndSaveTokens(data, user) {
     spotifyApi.setAccessToken(data.access_token);
     spotifyApi.setRefreshToken(data.refresh_token);
 
-    return Spotify.storeSpotifyAuth(user,
+    return Spotify.storeSpotifyAuth(
+        user,
         data.access_token,
         data.refresh_token,
-        data.expires_in);
+        data.expires_in,
+    );
 }
 
 // Convert the authorization code for an access token

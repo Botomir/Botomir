@@ -33,15 +33,7 @@ const fields3 = {
 };
 
 describe('roles database', () => {
-    beforeAll(() => {
-        const mongooseOpts = {
-            useNewUrlParser: true,
-            useFindAndModify: false,
-            useCreateIndex: true,
-            useUnifiedTopology: true,
-        };
-        return mongoose.connect(process.env.MONGO_URL, mongooseOpts);
-    });
+    beforeAll(() => mongoose.connect(process.env.MONGO_URL));
 
     afterAll(() => mongoose.connection.close());
 
@@ -167,8 +159,12 @@ describe('roles database', () => {
     });
 
     test('findRole none', async () => {
-        const res = await Role.findRole(fields1.guild,
-            fields1.channel, fields1.message, fields1.emoji);
+        const res = await Role.findRole(
+            fields1.guild,
+            fields1.channel,
+            fields1.message,
+            fields1.emoji,
+        );
         expect(res).toBeNull();
     });
 
@@ -184,8 +180,12 @@ describe('roles database', () => {
         expect(role._mongoId).toBeDefined();
         await role.save();
 
-        const res = await Role.findRole(fields1.guild,
-            fields2.channel, fields2.message, fields2.emoji);
+        const res = await Role.findRole(
+            fields1.guild,
+            fields2.channel,
+            fields2.message,
+            fields2.emoji,
+        );
         expect(res).toBeNull();
     });
 
@@ -201,8 +201,12 @@ describe('roles database', () => {
         expect(role._mongoId).toBeDefined();
         await role.save();
 
-        const res = await Role.findRole(fields2.guild,
-            fields2.channel, fields2.message, fields1.emoji);
+        const res = await Role.findRole(
+            fields2.guild,
+            fields2.channel,
+            fields2.message,
+            fields1.emoji,
+        );
         expect(res).toBeNull();
     });
 
@@ -218,8 +222,12 @@ describe('roles database', () => {
         expect(role._mongoId).toBeDefined();
         await role.save();
 
-        const res = await Role.findRole(fields1.guild,
-            fields1.channel, fields1.message, fields1.emoji);
+        const res = await Role.findRole(
+            fields1.guild,
+            fields1.channel,
+            fields1.message,
+            fields1.emoji,
+        );
         expect(res).toBeInstanceOf(Role);
         expect(res._mongoId).toStrictEqual(role._mongoId);
         expect(res.guildID).toBe(fields1.guild);
@@ -242,8 +250,12 @@ describe('roles database', () => {
         expect(role._mongoId).toBeDefined();
         await role.save();
 
-        const res = await Role.findRole(fields2.guild,
-            fields2.channel, fields2.message, fields2.emoji);
+        const res = await Role.findRole(
+            fields2.guild,
+            fields2.channel,
+            fields2.message,
+            fields2.emoji,
+        );
         expect(res).not.toBeNull();
         expect(res).toBeInstanceOf(Role);
         expect(res._mongoId).toStrictEqual(role._mongoId);
@@ -269,14 +281,22 @@ describe('roles database', () => {
         expect(role._mongoId).toBeDefined();
         await role.save();
 
-        const res = await Role.findRole(fields1.guild,
-            fields1.channel, fields1.message, fields1.emoji);
+        const res = await Role.findRole(
+            fields1.guild,
+            fields1.channel,
+            fields1.message,
+            fields1.emoji,
+        );
         expect(res).toBeInstanceOf(Role);
         expect(res._mongoId).toStrictEqual(role._mongoId);
 
         await Role.removeWatchedMessage(fields1.guild, fields1.channel, fields1.message);
-        const res2 = await Role.findRole(fields1.guild,
-            fields1.channel, fields1.message, fields1.emoji);
+        const res2 = await Role.findRole(
+            fields1.guild,
+            fields1.channel,
+            fields1.message,
+            fields1.emoji,
+        );
         expect(res2).toBeNull();
     });
 
@@ -302,12 +322,20 @@ describe('roles database', () => {
 
         await Role.removeWatchedMessage(fields1.guild, fields1.channel, fields1.message);
 
-        const res2 = await Role.findRole(fields1.guild,
-            fields1.channel, fields1.message, fields1.emoji);
+        const res2 = await Role.findRole(
+            fields1.guild,
+            fields1.channel,
+            fields1.message,
+            fields1.emoji,
+        );
         expect(res2).toBeNull();
 
-        const res3 = await Role.findRole(fields2.guild,
-            fields2.channel, fields2.message, fields2.emoji);
+        const res3 = await Role.findRole(
+            fields2.guild,
+            fields2.channel,
+            fields2.message,
+            fields2.emoji,
+        );
         expect(res3).toBeInstanceOf(Role);
         expect(res3._mongoId).toStrictEqual(role2._mongoId);
     });
@@ -334,12 +362,20 @@ describe('roles database', () => {
 
         await Role.removeWatchedMessage(fields2.guild, fields2.channel, fields2.message);
 
-        const res2 = await Role.findRole(fields2.guild,
-            fields2.channel, fields2.message, fields2.emoji);
+        const res2 = await Role.findRole(
+            fields2.guild,
+            fields2.channel,
+            fields2.message,
+            fields2.emoji,
+        );
         expect(res2).toBeNull();
 
-        const res3 = await Role.findRole(fields3.guild,
-            fields3.channel, fields3.message, fields3.emoji);
+        const res3 = await Role.findRole(
+            fields3.guild,
+            fields3.channel,
+            fields3.message,
+            fields3.emoji,
+        );
         expect(res3).not.toBeNull();
     });
 
@@ -374,12 +410,20 @@ describe('roles database', () => {
 
         await Role.removeWatchedMessage(fields2.guild, fields2.channel, fields2.message);
 
-        const res2 = await Role.findRole(fields2.guild,
-            fields2.channel, fields2.message, fields2.emoji);
+        const res2 = await Role.findRole(
+            fields2.guild,
+            fields2.channel,
+            fields2.message,
+            fields2.emoji,
+        );
         expect(res2).toBeNull();
 
-        const res3 = await Role.findRole(fields2.guild,
-            fields2.channel, fields3.message, fields2.emoji);
+        const res3 = await Role.findRole(
+            fields2.guild,
+            fields2.channel,
+            fields3.message,
+            fields2.emoji,
+        );
         expect(res3).not.toBeNull();
     });
 

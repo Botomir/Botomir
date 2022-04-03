@@ -15,6 +15,7 @@
     },
     "rules": {
         "camelcase": "warn",
+        "no-promise-executor-return": "warn",
         "indent": [
             "error",
             4

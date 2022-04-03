@@ -33,7 +33,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - can send message edits and deletions to a configurable audit channel
 - can configure the server timezone
 - added a warning to be shown if a command name and a command category share the same name, this would cause issues for the help command
-
+- Added support for custom webhooks
 
 ### Changed
 - now uses a database for the bot configuration and not config file

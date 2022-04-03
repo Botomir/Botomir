@@ -13,9 +13,12 @@ function listReminders(message, args, config) {
     })
         .then((jobs) => {
             const list = jobs.filter((j) => !j.attrs.repeatInterval)
-            // eslint-disable-next-line no-underscore-dangle
-                .reduce((acc, j) => `${acc}\njobID: ${j.attrs._id}\n${moment(j.attrs.nextRunAt).tz(config.timezone).calendar()}\nChannel: <#${j.attrs.data.channelID}>\nText: \`${j.attrs.data.message}\`\n--------\n`,
-                    'I currently have the following recurring messages scheduled:\n=================================================\n');
+                /* eslint-disable no-underscore-dangle */
+                .reduce(
+                    (acc, j) => `${acc}\njobID: ${j.attrs._id}\n${moment(j.attrs.nextRunAt).tz(config.timezone).calendar()}\nChannel: <#${j.attrs.data.channelID}>\nText: \`${j.attrs.data.message}\`\n--------\n`,
+                    'I currently have the following recurring messages scheduled:\n=================================================\n',
+                );
+                /* eslint-enable no-underscore-dangle */
             sendMessage(message.channel, `${list}`);
         });
 }
