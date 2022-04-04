@@ -67,7 +67,7 @@
     "spotify-web-api-node": "5.0.2",
     "uuid": "8.3.2",
     "weather-promise": "^2.1.0",
-    "winston": "3.6.0"
+    "winston": "3.7.2"
   },
   "devDependencies": {
     "@shelf/jest-mongodb": "2.2.1",
