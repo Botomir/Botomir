@@ -71,7 +71,7 @@ const WebhookNewController = {
 
         // make sure everything is set
         if (!channelID || !provider || !messageText) {
-            return res.render('webhookServerSelection', {
+            return res.render('webhookForm', {
                 errorMessage: 'Error, all of the fields are required',
                 channels,
                 channelID,
@@ -87,7 +87,7 @@ const WebhookNewController = {
             const template = Handlebars.compile(messageText);
             template();
         } catch (e) {
-            return res.render('webhookServerSelection', {
+            return res.render('webhookForm', {
                 errorMessage: 'Error, message template is not valid',
                 channels,
                 channelID,
