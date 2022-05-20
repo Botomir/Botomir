@@ -24,7 +24,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - added listing the reminder messages
 - added removing a scheduled recurring message
 - added get version command to check the version of the running code
-- can automatically render message links 
+- can automatically render message links
 - can automatically assign roles based on reactions to a message
 - can generate Spotify playlists
 - added TypeScript compilation to the project
@@ -35,6 +35,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - added a warning to be shown if a command name and a command category share the same name, this would cause issues for the help command
 - Added message response to whenever botomir gets mentioned
 - Added support for custom webhooks
+- Added support for webhooks using GET or POST requests
 
 ### Changed
 - now uses a database for the bot configuration and not config file

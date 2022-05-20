@@ -31,6 +31,7 @@ const WebhookController = {
                     return {
                         id: h.hookID,
                         provider: h.provider,
+                        method: h.method,
                         channelName: channel.name,
                         channelID: channel.id,
                         createdBy: member.user.username,
@@ -59,7 +60,7 @@ const WebhookNewController = {
     },
 
     post(req, res) {
-        const { channelID, provider, messageText } = req.body;
+        const { channelID, provider, messageText, method } = req.body;
 
         const channels = req.guild.channels.cache
             .filter((c) => c.type === 'text')
@@ -76,6 +77,7 @@ const WebhookNewController = {
                 channelID,
                 provider,
                 messageText,
+                method,
                 serverID: req.guild.id,
             });
         }
@@ -91,6 +93,7 @@ const WebhookNewController = {
                 channelID,
                 provider,
                 messageText,
+                method,
                 serverID: req.guild.id,
             });
         }
@@ -99,11 +102,13 @@ const WebhookNewController = {
             .setGuild(req.guild.id)
             .setChannel(channelID)
             .setMessage(messageText)
+            .setMethod(method)
             .setCreatedBy(req.user.id)
             .setProvider(provider)
             .save()
             .then((hook) => res.render('webhookConfirm', {
                 secret: hook.secret,
+                method: hook.method,
                 url: `${process.env.BASE_URL}/hooks/${provider}/${hook.hookID}`,
                 serverID: req.guild.id,
             }));
@@ -189,15 +194,16 @@ const HookHandlerController = {
     },
 
     custom(req, res) {
-        return Webhook.getHook(req.params.hookID)
+        return Webhook.getHook(req.params.hookID, req.method)
             .then((hook) => {
                 if (!hook) {
                     return res.status(404).json({
-                        error: `hook not found with ID ${req.params.hookID}`,
+                        error: `${req.method} hook not found with ID ${req.params.hookID}`,
                     });
                 }
 
-                handleHook('custom', req.body, hook);
+                const content = req.method === 'GET' ? req.query : req.body;
+                handleHook('custom', content, hook);
 
                 return res.status(202).json({
                     message: 'successfully got the request, now processing',

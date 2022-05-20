@@ -43,6 +43,11 @@ module.exports = new mongoose.Schema({
         type: String,
         required: true,
     },
+    method: {
+        type: String,
+        enum: ['GET', 'POST'],
+        default: 'POST',
+    },
     secret: {
         type: String,
         required: true,
@@ -52,5 +57,4 @@ module.exports = new mongoose.Schema({
         type: Date,
         default: Date.now,
     },
-
 });
