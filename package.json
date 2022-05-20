@@ -57,7 +57,7 @@
     "memejs": "2.0.1",
     "moment": "2.29.3",
     "moment-timezone": "0.5.34",
-    "mongoose": "6.2.9",
+    "mongoose": "6.3.4",
     "parse-duration": "1.0.2",
     "passport": "0.5.2",
     "passport-discord": "0.1.4",
