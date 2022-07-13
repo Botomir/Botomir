@@ -18,15 +18,7 @@ const fields2 = {
 };
 
 describe('Webhook database', () => {
-    beforeAll(() => {
-        const mongooseOpts = {
-            useNewUrlParser: true,
-            useFindAndModify: false,
-            useCreateIndex: true,
-            useUnifiedTopology: true,
-        };
-        return mongoose.connect(process.env.MONGO_URL, mongooseOpts);
-    });
+    beforeAll(() => mongoose.connect(process.env.MONGO_URL));
 
     afterAll(() => mongoose.connection.close());
 
@@ -53,10 +45,51 @@ describe('Webhook database', () => {
         expect(savedEvent.createdBy).toBe(fields.user);
         expect(savedEvent.message).toBe('a cool event has happened');
         expect(savedEvent.provider).toBe('github');
+        expect(savedEvent.method).toBe('POST');
 
         // check hookID format
         expect(savedEvent.hookID).toEqual(expect.stringMatching(/^[0-9a-f]{32}$/));
         expect(savedEvent.secret).toEqual(expect.stringMatching(/^[0-9A-F]{32}$/));
+    });
+
+    test('invalid method - DELETE', () => {
+        const hook = new Webhook()
+            .setGuild(fields.guild)
+            .setChannel(fields.channel)
+            .setCreatedBy(fields.user)
+            .setMessage('a cool event has happened')
+            .setMethod('DELETE')
+            .setProvider('github');
+
+        return expect(hook.save()).rejects.toThrow('validation failed');
+    });
+
+    test('valid method - GET', async () => {
+        const hook = new Webhook()
+            .setGuild(fields.guild)
+            .setChannel(fields.channel)
+            .setCreatedBy(fields.user)
+            .setMessage('a cool event has happened')
+            .setMethod('GET')
+            .setProvider('github');
+
+        expect(hook._mongoId).toBeDefined();
+        const savedEvent = await hook.save();
+        expect(savedEvent.method).toBe('GET');
+    });
+
+    test('valid method - POST', async () => {
+        const hook = new Webhook()
+            .setGuild(fields.guild)
+            .setChannel(fields.channel)
+            .setCreatedBy(fields.user)
+            .setMessage('a cool event has happened')
+            .setMethod('POST')
+            .setProvider('github');
+
+        expect(hook._mongoId).toBeDefined();
+        const savedEvent = await hook.save();
+        expect(savedEvent.method).toBe('POST');
     });
 
     test('missing guild', () => {
@@ -99,7 +132,7 @@ describe('Webhook database', () => {
         return expect(hook.save()).rejects.toThrow('required');
     });
 
-    test('missing providor', () => {
+    test('missing provider', () => {
         const hook = new Webhook()
             .setGuild(fields.guild)
             .setChannel(fields.channel)
@@ -214,9 +247,9 @@ describe('Webhook database', () => {
         return expect(hook.save()).rejects.toThrow('validation failed');
     });
 
-    test('get hook - none', () => expect(Webhook.getHook('d4b85e95ff374064b20869c9c599d47c')).resolves.toBeNull());
+    test('get hook - none', () => expect(Webhook.getHook('d4b85e95ff374064b20869c9c599d47c', 'POST')).resolves.toBeNull());
 
-    test('get hook - one', async () => {
+    test('get hook - POST one', async () => {
         const hook = new Webhook()
             .setGuild(fields.guild)
             .setChannel(fields.channel)
@@ -227,7 +260,42 @@ describe('Webhook database', () => {
         expect(hook._mongoId).toBeDefined();
         const savedEvent = await hook.save();
 
-        const res = await Webhook.getHook(savedEvent.hookID);
+        const res = await Webhook.getHook(savedEvent.hookID, 'POST');
+
+        expect(res).toBeInstanceOf(Webhook);
+
+        expect(res.timestamp).toStrictEqual(savedEvent.timestamp);
+        expect(res._mongoId).toStrictEqual(savedEvent._mongoId);
+        expect(res.secret).toStrictEqual(savedEvent.secret);
+        expect(res.hookID).toStrictEqual(savedEvent.hookID);
+        expect(res.guildID).toStrictEqual(savedEvent.guildID);
+        expect(res.channelID).toStrictEqual(savedEvent.channelID);
+        expect(res.createdBy).toStrictEqual(savedEvent.createdBy);
+        expect(res.message).toStrictEqual(savedEvent.message);
+        expect(res.provider).toStrictEqual(savedEvent.provider);
+    });
+
+    test('get hook - GET one', async () => {
+        const hook1 = new Webhook()
+            .setGuild(fields.guild)
+            .setChannel(fields.channel)
+            .setCreatedBy(fields.user)
+            .setMessage('a cool event has happened')
+            .setProvider('github');
+
+        const hook2 = new Webhook()
+            .setGuild(fields.guild)
+            .setChannel(fields.channel)
+            .setCreatedBy(fields.user)
+            .setMessage('a cool event has happened')
+            .setMethod('GET')
+            .setProvider('github');
+
+        expect(hook1._mongoId).toBeDefined();
+        await hook1.save();
+        const savedEvent = await hook2.save();
+
+        const res = await Webhook.getHook(savedEvent.hookID, 'GET');
 
         expect(res).toBeInstanceOf(Webhook);
 

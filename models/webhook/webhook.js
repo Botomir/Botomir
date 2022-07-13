@@ -38,6 +38,10 @@ class Webhook {
         return this._model.hook_provider;
     }
 
+    get method() {
+        return this._model.method;
+    }
+
     get secret() {
         return this._model.secret;
     }
@@ -74,6 +78,13 @@ class Webhook {
         return this;
     }
 
+    setMethod(method) {
+        if (typeof method === 'string') {
+            this._model.method = method;
+        }
+        return this;
+    }
+
     setProvider(provider) {
         if (typeof provider === 'string') {
             this._model.hook_provider = provider;
@@ -85,10 +96,11 @@ class Webhook {
         return this._model.save().then(() => this);
     }
 
-    static getHook(hookID) {
+    static getHook(hookID, method) {
         return WebhookModel
             .findOne({
                 id: hookID,
+                method,
             })
             .then((result) => {
                 if (!result) return null;

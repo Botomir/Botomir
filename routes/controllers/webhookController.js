@@ -9,7 +9,7 @@ const { createHmac, timingSafeEqual } = require('crypto');
 const logger = source('bot/utils/logger');
 const { sendMessage } = source('bot/utils/util');
 
-// this will handle the actual hook proccessing
+// this will handle the actual hook processing
 function handleHook(event, payload, hook) {
     const guild = Bot.client.guilds.cache.get(hook.guildID);
     const channel = guild.channels.cache.get(hook.channelID);
@@ -31,6 +31,7 @@ const WebhookController = {
                     return {
                         id: h.hookID,
                         provider: h.provider,
+                        method: h.method,
                         channelName: channel.name,
                         channelID: channel.id,
                         createdBy: member.user.username,
@@ -59,7 +60,7 @@ const WebhookNewController = {
     },
 
     post(req, res) {
-        const { channelID, provider, messageText } = req.body;
+        const { channelID, provider, messageText, method } = req.body;
 
         const channels = req.guild.channels.cache
             .filter((c) => c.type === 'text')
@@ -70,12 +71,13 @@ const WebhookNewController = {
 
         // make sure everything is set
         if (!channelID || !provider || !messageText) {
-            return res.render('webhookServerSelection', {
+            return res.render('webhookForm', {
                 errorMessage: 'Error, all of the fields are required',
                 channels,
                 channelID,
                 provider,
                 messageText,
+                method,
                 serverID: req.guild.id,
             });
         }
@@ -85,12 +87,13 @@ const WebhookNewController = {
             const template = Handlebars.compile(messageText);
             template();
         } catch (e) {
-            return res.render('webhookServerSelection', {
+            return res.render('webhookForm', {
                 errorMessage: 'Error, message template is not valid',
                 channels,
                 channelID,
                 provider,
                 messageText,
+                method,
                 serverID: req.guild.id,
             });
         }
@@ -99,11 +102,13 @@ const WebhookNewController = {
             .setGuild(req.guild.id)
             .setChannel(channelID)
             .setMessage(messageText)
+            .setMethod(method)
             .setCreatedBy(req.user.id)
             .setProvider(provider)
             .save()
             .then((hook) => res.render('webhookConfirm', {
                 secret: hook.secret,
+                method: hook.method,
                 url: `${process.env.BASE_URL}/hooks/${provider}/${hook.hookID}`,
                 serverID: req.guild.id,
             }));
@@ -142,7 +147,7 @@ const HookHandlerController = {
                 });
             })
             .catch((e) => {
-                logger.error(`failled to handle the webhook: ${e.message}`);
+                logger.error(`failed to handle the webhook: ${e.message}`);
                 logger.error(e);
 
                 res.status(500).json({
@@ -179,7 +184,33 @@ const HookHandlerController = {
                 });
             })
             .catch((e) => {
-                logger.error(`failled to handle the webhook: ${e.message}`);
+                logger.error(`failed to handle the webhook: ${e.message}`);
+                logger.error(e);
+
+                res.status(500).json({
+                    error: `Unknown error handing webhook: ${e.message}`,
+                });
+            });
+    },
+
+    custom(req, res) {
+        return Webhook.getHook(req.params.hookID, req.method)
+            .then((hook) => {
+                if (!hook) {
+                    return res.status(404).json({
+                        error: `${req.method} hook not found with ID ${req.params.hookID}`,
+                    });
+                }
+
+                const content = req.method === 'GET' ? req.query : req.body;
+                handleHook('custom', content, hook);
+
+                return res.status(202).json({
+                    message: 'successfully got the request, now processing',
+                });
+            })
+            .catch((e) => {
+                logger.error(`failed to handle the webhook: ${e.message}`);
                 logger.error(e);
 
                 res.status(500).json({

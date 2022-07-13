@@ -23,7 +23,8 @@ Go to this [site](https://botomir.com) and click `Add to Server`.
 
 ## How to run
 
-1. Install [nodejs], Botomir requires v10.24.0 or higher.
+1. Install [nodejs], Botomir requires v12
+ or higher.
 2. Install Docker on your system
 3. Start up a [mongodb] database
     ```bash

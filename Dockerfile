@@ -1,4 +1,4 @@
-FROM node:14 as BUILD
+FROM node:18 as BUILD
 
 ARG VCS_REF='unknown'
 ENV VCS_REF=$VCS_REF
@@ -12,7 +12,7 @@ COPY . .
 
 RUN npm run build
 
-FROM node:14
+FROM node:18
 
 ARG VCS_REF='unknown'
 ENV VCS_REF=$VCS_REF
@@ -35,7 +35,7 @@ EXPOSE 8300
 CMD [ "node", "app.js" ]
 
 COPY --from=BUILD /usr/src/app/package*.json ./
-RUN npm ci --only=production
+RUN npm ci --only=production --ignore-scripts=true
 
 
 COPY --from=BUILD /usr/src/app/dist ./

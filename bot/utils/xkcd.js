@@ -1,13 +1,13 @@
-const fetch = require('node-fetch');
+const axios = require('axios');
 
 function getComic(number) {
-    return fetch(`http://xkcd.com/${number}/info.0.json`)
-        .then((res) => res.json());
+    return axios.get(`http://xkcd.com/${number}/info.0.json`)
+        .then((res) => res.data);
 }
 
 function getNewestComic() {
-    return fetch('http://xkcd.com/info.0.json')
-        .then((res) => res.json());
+    return axios.get('http://xkcd.com/info.0.json')
+        .then((res) => res.data);
 }
 
 function getRandomComic() {

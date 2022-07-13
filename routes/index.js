@@ -41,6 +41,8 @@ router.get('/about', AboutController.get);
 
 router.post('/hooks/github/:hookID', HookHandlerController.github);
 router.post('/hooks/gitlab/:hookID', HookHandlerController.gitlab);
+router.post('/hooks/custom/:hookID', HookHandlerController.custom);
+router.get('/hooks/custom/:hookID', HookHandlerController.custom);
 
 router.get('/settings', checkAuth, SettingsController.get);
 router.get('/settings/:serverID', checkAuth, settingsMiddleware, ServerSettingsController.get);

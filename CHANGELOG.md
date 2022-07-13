@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - added the ability to automatically parse the role reaction emojis
 - added the ability to watch multiple role reaction messages
 - added the ability to update a role reaction message
-- added the ability to list all the role reaction messages that botomir is currently  watching
+- added the ability to list all the role reaction messages that botomir is currently watching
 - added the ability to remove a role reaction message without just updating it
 - added a bunch of new commands
 - added moderation tools to keep message logs
@@ -24,7 +24,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - added listing the reminder messages
 - added removing a scheduled recurring message
 - added get version command to check the version of the running code
-- can automatically render message links 
+- can automatically render message links
 - can automatically assign roles based on reactions to a message
 - can generate Spotify playlists
 - added TypeScript compilation to the project
@@ -33,7 +33,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - can send message edits and deletions to a configurable audit channel
 - can configure the server timezone
 - added a warning to be shown if a command name and a command category share the same name, this would cause issues for the help command
-
+- Added message response to whenever botomir gets mentioned
+- Added support for custom webhooks
+- Added support for webhooks using GET or POST requests
 
 ### Changed
 - now uses a database for the bot configuration and not config file
@@ -48,6 +50,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Audit messages now include the user tag
 - Changed the `schedule` command group name to `scheduled`
 - Renamed the `reddit` command to `image` because it just gets an image from reddit.
+- Moved the `list-reminders` command into the `scheduled` group
 
 ## [2.0.1] - 2020-12-20
 ### Changed
