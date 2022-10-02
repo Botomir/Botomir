@@ -68,24 +68,15 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
-        with:
-          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          heroku_app_name: ${{secrets.HEROKU_APP_NAME}}
-          heroku_email: ${{secrets.HEROKU_APP_EMAIL}}
-          justlogin: true
-      - run: heroku container:login
+
       - name: Build and push
         id: docker_build
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: |
-            ${{ steps.meta.outputs.tags }}
-            registry.heroku.com/${{secrets.HEROKU_APP_NAME}}/web
+          platforms: linux/amd64,linux/arm64
+          tags:  ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           build-args: |
-            BUILD_DATE=${{ steps.date.outputs.date }}
+            BUILD_DATE=${{ steps.prep.outputs.date }}
             VCS_REF=${{ github.sha }}
-      - name: Release the new container version
-        run: heroku container:release web -a ${{secrets.HEROKU_APP_NAME}}
