@@ -20,7 +20,7 @@ function databaseHandler(message) {
 }
 
 module.exports = {
-    name: 'message',
+    name: 'messageCreate',
     once: false,
     execute: databaseHandler,
 };

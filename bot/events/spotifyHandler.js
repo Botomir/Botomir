@@ -40,7 +40,7 @@ function spotifyTrackMessage(message) {
 }
 
 module.exports = {
-    name: 'message',
+    name: 'messageCreate',
     once: false,
     execute: spotifyTrackMessage,
 };

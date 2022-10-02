@@ -64,7 +64,7 @@ const keebEmbed = {
 
 function keebCommand(message) {
     sendMessage(message.channel, {
-        embed: keebEmbed,
+        embeds: [keebEmbed],
     });
 }
 

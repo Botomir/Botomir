@@ -62,7 +62,7 @@ const ConfigController = {
 
                 return res.render('configure', {
                     guildName: guild.name,
-                    channels: guild.channels.cache.filter((c) => c.type === 'text').map((c) => ({
+                    channels: guild.channels.cache.filter((c) => c.type === 'GUILD_TEXT').map((c) => ({
                         name: c.name,
                         id: c.id,
                         isMusic: config.musicChannelID === c.id,

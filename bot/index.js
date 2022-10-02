@@ -1,4 +1,4 @@
-const Discord = require('discord.js');
+const { Client, Intents } = require('discord.js');
 const fs = require('fs');
 
 const source = require('rfr');
@@ -7,8 +7,15 @@ const { sendEventMessage } = source('bot/utils/util');
 
 const logger = source('bot/utils/logger');
 
-const client = new Discord.Client({
+const client = new Client({
     partials: ['MESSAGE', 'CHANNEL', 'REACTION'],
+    intents: [
+        Intents.FLAGS.GUILDS,
+        Intents.FLAGS.GUILD_MEMBERS,
+        Intents.FLAGS.GUILD_MESSAGES,
+        Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
+        Intents.FLAGS.MESSAGE_CONTENT,
+    ],
 });
 
 // setup event handlers

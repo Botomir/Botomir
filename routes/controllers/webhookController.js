@@ -48,7 +48,7 @@ const WebhookController = {
 
 const WebhookNewController = {
     get(req, res) {
-        const channels = req.guild.channels.cache.filter((c) => c.type === 'text').map((c) => ({
+        const channels = req.guild.channels.cache.filter((c) => c.type === 'GUILD_TEXT').map((c) => ({
             name: c.name,
             id: c.id,
         }));
@@ -63,7 +63,7 @@ const WebhookNewController = {
         const { channelID, provider, messageText, method } = req.body;
 
         const channels = req.guild.channels.cache
-            .filter((c) => c.type === 'text')
+            .filter((c) => c.type === 'GUILD_TEXT')
             .map((c) => ({
                 name: c.name,
                 id: c.id,

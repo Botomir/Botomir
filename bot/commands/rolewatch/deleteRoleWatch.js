@@ -33,9 +33,7 @@ function removeRoleWatch(message, args) {
             if (!status) throw new Error('This message is not a role reaction message.');
 
             return Promise.all([
-                watchMessage.delete({
-                    reason: 'removing the role reaction assignment message',
-                }),
+                watchMessage.delete(),
                 Role.removeWatchedMessage(serverID, channelID, messageID),
             ]);
         })

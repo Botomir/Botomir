@@ -21,15 +21,19 @@ function messageLink(message) {
             const embededMessage = new Discord.MessageEmbed()
                 .setColor('#0099ff')
                 .setDescription(linkedMessage.content)
-                .setAuthor(`${linkedMessage.author.username} in #${linkedMessage.channel.name}`, `https://cdn.discordapp.com/avatars/${linkedMessage.author.id}/${linkedMessage.author.avatar}`);
+                .setAuthor({
+                    name: `${linkedMessage.author.username} in #${linkedMessage.channel.name}`, iconURL: `https://cdn.discordapp.com/avatars/${linkedMessage.author.id}/${linkedMessage.author.avatar}`,
+                });
 
-            return sendMessage(message.channel, embededMessage);
+            return sendMessage(message.channel, {
+                embeds: [embededMessage],
+            });
         })
         .catch((err) => logger.error('something went wrong with the embeded message', err));
 }
 
 module.exports = {
-    name: 'message',
+    name: 'messageCreate',
     once: false,
     execute: messageLink,
 };

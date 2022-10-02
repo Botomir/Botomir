@@ -13,14 +13,18 @@ function createEmbed(comic) {
         .setTitle(`#${comic.num} - ${comic.safe_title}`)
         .setImage(comic.img)
         .setTimestamp(new Date(comic.year, comic.month, comic.day))
-        .setFooter(`For any questions contact ${process.env.BOT_MODS || '@Colonel Pineapple#3164'}`);
+        .setFooter({
+            text: `For any questions contact ${process.env.BOT_MODS || '@Colonel Pineapple#3164'}`,
+        });
 }
 
 function xkcdCommand(message, args) {
     const comicPromise = args.length === 0 ? getRandomComic() : getComic(args[0]);
 
     return comicPromise
-        .then((comic) => sendMessage(message.channel, createEmbed(comic)))
+        .then((comic) => sendMessage(message.channel, {
+            embeds: [createEmbed(comic)],
+        }))
         .catch(() => {
             logger.error(`failed to get XKCD comic for ${args[0]}`);
             sendMessage(message.channel, `failed to get XKCD comic for ${args[0]}`);

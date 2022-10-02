@@ -13,7 +13,7 @@ function mentalHealthCommand(message, args, config) {
     };
 
     sendMessage(message.channel, {
-        embed: mhEmbed,
+        embeds: [mhEmbed],
     });
 }
 

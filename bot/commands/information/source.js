@@ -9,7 +9,7 @@ const sourceEmbed = {
 
 function sourceCommand(message) {
     sendMessage(message.channel, {
-        embed: sourceEmbed,
+        embeds: [sourceEmbed],
     });
 }
 

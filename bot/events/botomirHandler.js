@@ -33,7 +33,7 @@ function botMessage(message) {
 }
 
 module.exports = {
-    name: 'message',
+    name: 'messageCreate',
     once: false,
     execute: botMessage,
 };

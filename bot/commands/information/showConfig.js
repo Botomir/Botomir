@@ -1,38 +1,76 @@
-const Discord = require('discord.js');
+const { MessageEmbed } = require('discord.js');
 const source = require('rfr');
 
 const { sendMessage } = source('bot/utils/util');
 
 function setRoleChannelCommand(message, args, config) {
     const disabled = config.disabledCommands.length !== 0 ? config.disabledCommands : 'No commands are disabled';
-    const unassignableRoles = config.unassignableRoles.length !== 0 ? config.unassignableRoles : 'All roles are assignable';
+    const unassignableRoles = config.unassignableRoles.length !== 0 ? config.unassignableRoles.join('\n') : 'All roles are assignable';
 
     const music = config.musicChannelID !== '' ? `<#${config.musicChannelID}>` : 'unset';
 
-    const configsEmbed = new Discord.MessageEmbed()
+    const configsEmbed = new MessageEmbed()
         .setColor('#0099ff')
         .setTitle('Current server configuration')
         .setDescription('All of the current configurable admin settings')
-        .addField('commandPrefix', config.commandPrefix, true)
-        .addField('botAdminRole', config.botAdminRole, true)
-        .addField('\u200b', '\u200b', true)
-        .addField('musicChannelID', music, true)
-        .addField('\u200b', '\u200b', true)
-        .addField('playlistName', config.playlistName)
-        .addField('playlistDescription', config.playlistDescription)
-        .addField('tempUnit', config.tempUnit, true)
-        .addField('weatherLocation', config.weatherLocation, true)
-        .addField('timezone', config.timezone, true)
-        .addField('\u200b', '\u200b')
-        .addField('memeSubs', config.memeSubs, true)
-        .addField('cuteSubs', config.cuteSubs, true)
-        .addField('\u200b', '\u200b')
-        .addField('disabledCommands', disabled, true)
-        .addField('unassignableRoles', unassignableRoles, true)
+        .addFields([
+            {
+                name: 'commandPrefix', value: config.commandPrefix, inline: true,
+            },
+            {
+                name: 'botAdminRole', value: config.botAdminRole, inline: true,
+            },
+            {
+                name: '\u200b', value: '\u200b', inline: true,
+            },
+            {
+                name: 'musicChannelID', value: music, inline: true,
+            },
+            {
+                name: '\u200b', value: '\u200b', inline: true,
+            },
+            {
+                name: 'playlistName', value: config.playlistName,
+            },
+            {
+                name: 'playlistDescription', value: config.playlistDescription,
+            },
+            {
+                name: 'tempUnit', value: config.tempUnit, inline: true,
+            },
+            {
+                name: 'weatherLocation', value: config.weatherLocation, inline: true,
+            },
+            {
+                name: 'timezone', value: config.timezone, inline: true,
+            },
+            {
+                name: '\u200b', value: '\u200b',
+            },
+            {
+                name: 'memeSubs', value: config.memeSubs.join('\n'), inline: true,
+            },
+            {
+                name: 'cuteSubs', value: config.cuteSubs.join('\n'), inline: true,
+            },
+            {
+                name: '\u200b', value: '\u200b',
+            },
+            {
+                name: 'disabledCommands', value: disabled, inline: true,
+            },
+            {
+                name: 'unassignableRoles', value: unassignableRoles, inline: true,
+            },
+        ])
         .setTimestamp()
-        .setFooter(`For any questions contact ${process.env.BOT_MODS || '@Colonel Pineapple#3164'}`);
+        .setFooter({
+            text: `For any questions contact ${process.env.BOT_MODS || '@Colonel Pineapple#3164'}`,
+        });
 
-    sendMessage(message.channel, configsEmbed);
+    sendMessage(message.channel, {
+        embeds: [configsEmbed],
+    });
 }
 
 module.exports = {

@@ -9,7 +9,7 @@ const docsEmbed = {
 
 function docsCommand(message) {
     sendMessage(message.channel, {
-        embed: docsEmbed,
+        embeds: [docsEmbed],
     });
 }
 
