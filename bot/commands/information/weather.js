@@ -7,7 +7,7 @@ const logger = source('bot/utils/logger');
 
 function weatherEmbedMessage(result) {
     return {
-        embed:
+        embeds: [
             {
                 color: 0x0099ff,
                 title: 'Weather',
@@ -57,6 +57,7 @@ function weatherEmbedMessage(result) {
                     },
                 ],
             },
+        ],
     };
 }
 

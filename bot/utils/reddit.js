@@ -17,7 +17,7 @@ function createRedditEmbed(title, url) {
 function redditPost(message, subreddit) {
     return reddit(subreddit)
         .then((data) => sendMessage(message.channel, {
-            embed: createRedditEmbed(data.title, data.url),
+            embeds: [createRedditEmbed(data.title, data.url)],
         }))
         .catch((e) => {
             logger.error(`when calling memejs API on ${subreddit}:`, e);

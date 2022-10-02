@@ -9,7 +9,7 @@ const siteEmbed = {
 
 function siteCommand(message) {
     sendMessage(message.channel, {
-        embed: siteEmbed,
+        embeds: [siteEmbed],
     });
 }
 

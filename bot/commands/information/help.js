@@ -23,7 +23,7 @@ function sendChunks(channel, fields, categoryName) {
         helpEmbeded.title = `${category} Botomir Commands (${partNum += 1}/${numParts})`;
         helpEmbeded.fields = fields.splice(0, 25);
         sendMessage(channel, {
-            embed: helpEmbeded,
+            embeds: [helpEmbeded],
         });
     }
 }
@@ -109,7 +109,7 @@ function helpSpecific(message, command, config) {
 
     helpEmbeded.fields = fields;
     return sendMessage(message.channel, {
-        embed: helpEmbeded,
+        embeds: [helpEmbeded],
     });
 }
 
