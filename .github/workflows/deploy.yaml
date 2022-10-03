@@ -1,4 +1,4 @@
-name: Just deploy to heroku
+name: Publish to DockerHub
 
 on:
   push:
