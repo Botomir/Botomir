@@ -59,7 +59,7 @@
     "moment-timezone": "0.5.34",
     "mongoose": "6.2.9",
     "parse-duration": "1.0.2",
-    "passport": "0.5.2",
+    "passport": "0.6.0",
     "passport-discord": "0.1.4",
     "passport-oauth2-refresh": "2.1.0",
     "random": "3.0.6",
