@@ -45,7 +45,7 @@
     "cookie-parser": "1.4.6",
     "cronstrue": "2.7.0",
     "discord.js": "^13.11.0",
-    "dotenv": "16.0.1",
+    "dotenv": "16.0.3",
     "emoji-regex": "10.1.0",
     "express": "4.17.3",
     "express-handlebars": "6.0.6",
