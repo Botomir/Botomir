@@ -1,4 +1,4 @@
-const axios = require('axios');
+const axios = require('axios').default;
 
 function getComic(number) {
     return axios.get(`http://xkcd.com/${number}/info.0.json`)
