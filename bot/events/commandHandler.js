@@ -3,6 +3,7 @@ const source = require('rfr');
 const { Settings } = source('models/settings');
 const { sendMessage } = source('bot/utils/util');
 const { Statistics, EventTypes } = source('models/statistics');
+const {CommandDoesNotExistError} = source('bot/errors');
 
 const logger = source('bot/utils/logger');
 
@@ -24,7 +25,7 @@ function commandHandler(message) {
             const command = commands.get(commandName)
                             || commands.find((c) => c.aliases && c.aliases.includes(commandName));
 
-            if (!command) throw new Error(`command ${commandName} does not exist.`);
+            if (!command) throw new CommandDoesNotExistError(commandName);
 
             if (config.disabledCommands.includes(command.name)) {
                 return sendMessage(message.channel, `${commandName} is not allowed on this server, `
@@ -56,9 +57,10 @@ function commandHandler(message) {
                 .save();
         })
         .catch((err) => {
-            logger.error('There was an error trying to run the command');
             logger.error(err);
-            sendMessage(message.channel, 'there was an error trying to execute that command!');
+            if (!err instanceof CommandDoesNotExistError) {
+                sendMessage(message.channel, 'There was an error trying to execute that command!');
+            }
         });
 }
 
