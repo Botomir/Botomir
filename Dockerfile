@@ -1,8 +1,5 @@
 FROM node:18 as BUILD
 
-ARG VCS_REF='unknown'
-ENV VCS_REF=$VCS_REF
-
 WORKDIR /usr/src/app
 
 COPY package*.json ./
@@ -10,12 +7,11 @@ RUN npm ci
 
 COPY . .
 
+ARG VCS_REF='unknown'
+ENV VCS_REF=$VCS_REF
 RUN npm run build
 
 FROM node:18
-
-ARG VCS_REF='unknown'
-ENV VCS_REF=$VCS_REF
 
 LABEL org.opencontainers.version="v1.0.0"
 
@@ -46,6 +42,8 @@ COPY --from=BUILD /usr/src/app/docs ./docs/
 
 # these two labels will change every time the container is built
 # put them at the end because of layer caching
+ARG VCS_REF='unknown'
+ENV VCS_REF=$VCS_REF
 LABEL org.opencontainers.image.revision="${VCS_REF}"
 
 ARG BUILD_DATE
