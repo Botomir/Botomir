@@ -1,5 +1,28 @@
 {
   "extends": [
     "config:base"
+  ],
+  "packageRules": [
+    {
+      "matchPaths": [".github/workflows"],
+      "groupName": "Github Workflows",
+      "schedule": ["on the first day of the week"]
+    },
+    {
+      "matchPackagePatterns": ["eslint"],
+      "groupName": "eslint",
+      "schedule": ["on the first day of the month"]
+    },
+    {
+      "matchPackagePatterns": ["jest"],
+      "groupName": "jest",
+      "schedule": ["on the first day of the month"]
+    },
+    {
+      "matchPackagePatterns": ["^express"],
+      "matchPackageNames": ["cookie-parser", "helmet"],
+      "groupName": "express",
+      "schedule": ["on the first day of the month"]
+    }
   ]
 }
