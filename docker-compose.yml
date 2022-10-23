@@ -30,6 +30,7 @@ services:
     ports:
       - "8300:8300"
     environment:
+      - LOG_LEVEL=debug
       - DISCORD_TOKEN
       - SPOTIFY_CLIENT_ID
       - SPOTIFY_CLIENT_SECRET
