@@ -18,11 +18,11 @@
     "type": "git",
     "url": "git+https://github.com/Botomir/Botomir.git"
   },
-  "author": [
+  "contributors": [
     {
       "name": "Sooraj Modi",
       "email": "soorajmodi@hotmail.ca",
-      "url": "soorajmodi.com"
+      "url": "https://soorajmodi.com"
     },
     {
       "name": "Marshall Asch",
