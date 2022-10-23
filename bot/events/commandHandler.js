@@ -3,7 +3,7 @@ const source = require('rfr');
 const { Settings } = source('models/settings');
 const { sendMessage } = source('bot/utils/util');
 const { Statistics, EventTypes } = source('models/statistics');
-const {CommandDoesNotExistError} = source('bot/errors');
+const { CommandDoesNotExistError } = source('bot/errors');
 
 const logger = source('bot/utils/logger');
 
@@ -58,7 +58,7 @@ function commandHandler(message) {
         })
         .catch((err) => {
             logger.error(err);
-            if (!err instanceof CommandDoesNotExistError) {
+            if (err instanceof CommandDoesNotExistError === false) {
                 sendMessage(message.channel, 'There was an error trying to execute that command!');
             }
         });
