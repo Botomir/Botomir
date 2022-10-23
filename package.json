@@ -36,7 +36,7 @@
   },
   "homepage": "https://github.com/Botomir/Botomir#readme",
   "engines": {
-    "node": ">=12.20"
+    "node": ">=16.6"
   },
   "dependencies": {
     "agenda": "4.4.0",
