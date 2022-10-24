@@ -8,7 +8,10 @@ function deleteHandler(message) {
 
     Message.Message.find(message.guild.id, message.channel.id, message.id)
         .then((messageLog) => {
-            if (messageLog) messageLog.delete().save();
+            if (messageLog) {
+                return messageLog.delete().save();
+            }
+            return null;
         })
         .catch((e) => {
             logger.error('failed to save the message deletion to the database');

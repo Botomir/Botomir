@@ -15,7 +15,7 @@ function databaseHandler(message) {
         .setContent(message.content, message.createdTimestamp);
 
     MessagePost.save()
-        .then(() => logger.info('Successfully written message to database'))
+        .then(() => logger.debug('Successfully written message to database'))
         .catch((e) => logger.error('failed to save the message to the database', e));
 }
 
