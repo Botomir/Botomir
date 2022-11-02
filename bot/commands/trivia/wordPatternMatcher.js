@@ -1,44 +1,39 @@
 const source = require('rfr');
 const fs = require('fs');
 const readline = require('readline');
-const stream = require('stream');
+const Stream = require('stream');
 
 const { sendMessage } = source('bot/utils/util');
 const logger = source('bot/utils/logger');
 
-const searchStream = (filename, text) => {
-    return new Promise((resolve) => {
-        const inStream = fs.createReadStream(filename);
-        const outStream = new stream;
-        const rl = readline.createInterface(inStream, outStream);
-        const result = [];
-        const regEx = new RegExp(text, "i")
-        rl.on('line', function (line) {
-            if (line && line.search(regEx) >= 0) {
-                result.push(line)
-            }
-        });
-        rl.on('close', function () {
-            logger.info('finished search', filename)
-            resolve(result)
-        });
-    })
-}
-
+const searchStream = (filename, text) => new Promise((resolve) => {
+    const inStream = fs.createReadStream(filename);
+    const outStream = new Stream();
+    const rl = readline.createInterface(inStream, outStream);
+    const result = [];
+    const regEx = new RegExp(text, 'i');
+    rl.on('line', (line) => {
+        if (line && line.search(regEx) >= 0) {
+            result.push(line);
+        }
+    });
+    rl.on('close', () => {
+        logger.info('finished search', filename);
+        resolve(result);
+    });
+});
 
 function command(message, args) {
-
     if (!fs.existsSync(process.env.DICTIONARY_FILE)) {
-        return sendMessage(message.channel, 'Cannot use the command, no dictionary file is present.')
+        return sendMessage(message.channel, 'Cannot use the command, no dictionary file is present.');
     }
-    const pattern = '^' + args[0].toLowerCase() + '$';
+    const pattern = `^${args[0].toLowerCase()}$`;
 
-    searchStream(process.env.DICTIONARY_FILE, pattern)
-        .then(words => {
-            sendMessage(message.channel, `Possible words are:\n${words.join('\n')}`)
+    return searchStream(process.env.DICTIONARY_FILE, pattern)
+        .then((words) => {
+            sendMessage(message.channel, `Possible words are:\n${words.join('\n')}`);
         })
         .catch((err) => logger.error('error searching the file for the pattern:', err));
-
 }
 
 module.exports = {
