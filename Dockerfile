@@ -28,8 +28,13 @@ HEALTHCHECK --interval=5m --timeout=3s \
   CMD curl -f http://localhost:8300/ || exit 1
 
 EXPOSE 8300
-CMD [ "node", "app.js" ]
+ENV DICTIONARY_FILE=/config/words.txt
+VOLUME [ "/config" ]
 
+# CMD [ "node", "app.js" ]
+ENTRYPOINT [ "/entrypoint.sh" ]
+
+COPY entrypoint.sh /entrypoint.sh
 COPY --from=BUILD /usr/src/app/package*.json ./
 RUN npm ci --only=production --ignore-scripts=true
 
