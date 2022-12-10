@@ -1,4 +1,5 @@
 const source = require('rfr');
+const { Events } = require('discord.js');
 
 const logger = source('bot/utils/logger');
 const Message = source('models/message');
@@ -20,7 +21,7 @@ function databaseHandler(message) {
 }
 
 module.exports = {
-    name: 'messageCreate',
+    name: Events.MessageCreate,
     once: false,
     execute: databaseHandler,
 };

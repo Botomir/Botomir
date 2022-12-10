@@ -1,5 +1,7 @@
 const source = require('rfr');
 
+const { Events } = require('discord.js');
+
 const logger = source('bot/utils/logger');
 const { Settings } = source('models/settings');
 
@@ -20,7 +22,7 @@ function botInitializer(client) {
 }
 
 module.exports = {
-    name: 'ready',
+    name: Events.ClientReady,
     once: true,
     execute: botInitializer,
 };

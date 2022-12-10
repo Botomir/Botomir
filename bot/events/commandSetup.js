@@ -1,6 +1,6 @@
 const source = require('rfr');
 const fs = require('fs');
-const Discord = require('discord.js');
+const { Events, Collection } = require('discord.js');
 
 const logger = source('bot/utils/logger');
 
@@ -16,7 +16,7 @@ function checkNameConflicts(categories, commandNames) {
 }
 
 function setupCommands(client) {
-    client.commands = new Discord.Collection();
+    client.commands = new Collection();
 
     const commandFolders = fs.readdirSync('./bot/commands').filter((file) => !file.endsWith('.js'));
 
@@ -39,7 +39,7 @@ function setupCommands(client) {
 }
 
 module.exports = {
-    name: 'ready',
+    name: Events.ClientReady,
     once: true,
     execute: setupCommands,
 };

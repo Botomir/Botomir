@@ -1,4 +1,5 @@
 const source = require('rfr');
+const { Events } = require('discord.js');
 
 const { changeRole, Mode } = source('bot/roles/roles');
 const { getMember, getRole, lookupRoleName } = source('bot/utils/util');
@@ -38,7 +39,7 @@ function addReactionHandler(reaction, user) {
 }
 
 module.exports = {
-    name: 'messageReactionAdd',
+    name: Events.MessageReactionAdd,
     once: false,
     execute: addReactionHandler,
 };

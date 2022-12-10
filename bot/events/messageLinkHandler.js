@@ -1,5 +1,5 @@
 const source = require('rfr');
-const Discord = require('discord.js');
+const { Events, EmbedBuilder } = require('discord.js');
 
 const { sendMessage, extractMessageLink } = source('bot/utils/util');
 const logger = source('bot/utils/logger');
@@ -18,7 +18,7 @@ function messageLink(message) {
 
     message.client.channels.cache.get(channelID).messages.fetch(messageID)
         .then((linkedMessage) => {
-            const embededMessage = new Discord.MessageEmbed()
+            const embededMessage = new EmbedBuilder()
                 .setColor('#0099ff')
                 .setDescription(linkedMessage.content)
                 .setAuthor({
@@ -33,7 +33,7 @@ function messageLink(message) {
 }
 
 module.exports = {
-    name: 'messageCreate',
+    name: Events.MessageCreate,
     once: false,
     execute: messageLink,
 };

@@ -1,6 +1,7 @@
 const source = require('rfr');
 
 const logger = source('bot/utils/logger');
+const { Events } = require('discord.js');
 
 const { Settings } = source('models/settings');
 const { Song } = source('models/song');
@@ -40,7 +41,7 @@ function spotifyTrackMessage(message) {
 }
 
 module.exports = {
-    name: 'messageCreate',
+    name: Events.MessageCreate,
     once: false,
     execute: spotifyTrackMessage,
 };
