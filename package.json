@@ -39,7 +39,7 @@
     "node": ">=16.6"
   },
   "dependencies": {
-    "agenda": "4.4.0",
+    "agenda": "5.0.0",
     "axios": "^1.0.0",
     "connect-mongo": "4.6.0",
     "cookie-parser": "1.4.6",
