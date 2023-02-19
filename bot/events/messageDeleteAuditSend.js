@@ -2,6 +2,7 @@ const source = require('rfr');
 const moment = require('moment');
 
 const { sendMessage } = source('bot/utils/util');
+const { Events } = require('discord.js');
 
 const logger = source('bot/utils/logger');
 const { Settings } = source('models/settings');
@@ -51,7 +52,7 @@ function auditHandler(message, client) {
 }
 
 module.exports = {
-    name: 'messageDelete',
+    name: Events.MessageDelete,
     once: false,
     execute: auditHandler,
 };

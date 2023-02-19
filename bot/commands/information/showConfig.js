@@ -1,4 +1,4 @@
-const { MessageEmbed } = require('discord.js');
+const { EmbedBuilder } = require('discord.js');
 const source = require('rfr');
 
 const { sendMessage } = source('bot/utils/util');
@@ -9,7 +9,7 @@ function setRoleChannelCommand(message, args, config) {
 
     const music = config.musicChannelID !== '' ? `<#${config.musicChannelID}>` : 'unset';
 
-    const configsEmbed = new MessageEmbed()
+    const configsEmbed = new EmbedBuilder()
         .setColor('#0099ff')
         .setTitle('Current server configuration')
         .setDescription('All of the current configurable admin settings')

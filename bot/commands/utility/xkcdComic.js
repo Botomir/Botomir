@@ -1,6 +1,6 @@
 const source = require('rfr');
 
-const Discord = require('discord.js');
+const { EmbedBuilder } = require('discord.js');
 
 const logger = source('bot/utils/logger');
 
@@ -8,7 +8,7 @@ const { sendMessage } = source('bot/utils/util');
 const { getRandomComic, getComic } = source('bot/utils/xkcd');
 
 function createEmbed(comic) {
-    return new Discord.MessageEmbed()
+    return new EmbedBuilder()
         .setColor('#0099ff')
         .setTitle(`#${comic.num} - ${comic.safe_title}`)
         .setImage(comic.img)

@@ -1,4 +1,5 @@
 const source = require('rfr');
+const { Events } = require('discord.js');
 
 const { changeRole, Mode } = source('bot/roles/roles');
 const { getMember, getRole, lookupRoleName } = source('bot/utils/util');
@@ -37,7 +38,7 @@ function removeReactionHandler(reaction, user) {
 }
 
 module.exports = {
-    name: 'messageReactionRemove',
+    name: Events.MessageReactionRemove,
     once: false,
     execute: removeReactionHandler,
 };

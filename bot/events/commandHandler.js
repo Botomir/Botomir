@@ -1,4 +1,5 @@
 const source = require('rfr');
+const { Events } = require('discord.js');
 
 const { Settings } = source('models/settings');
 const { sendMessage } = source('bot/utils/util');
@@ -65,7 +66,7 @@ function commandHandler(message) {
 }
 
 module.exports = {
-    name: 'messageCreate',
+    name: Events.MessageCreate,
     once: false,
     execute: commandHandler,
 };
