@@ -3,7 +3,7 @@ const { createLogger, format, transports } = require('winston');
 // logger format for stderr
 const myFormat = format.printf(({ level, message, timestamp, metadata }) => `${timestamp} ${metadata.location} [${level}]: ${message}`);
 
-const logLevel = process.env.LOG_LEVEL || process.env.NODE_ENV === 'production' ? 'info' : 'silly';
+const logLevel = process.env.LOG_LEVEL || (process.env.NODE_ENV === 'production' ? 'info' : 'silly');
 const logger = createLogger({
 
     transports: [
