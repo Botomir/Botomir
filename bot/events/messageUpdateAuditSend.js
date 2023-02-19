@@ -1,5 +1,6 @@
 const source = require('rfr');
 const moment = require('moment');
+const { Events } = require('discord.js');
 
 const { sendMessage } = source('bot/utils/util');
 
@@ -49,7 +50,7 @@ function auditHandler(oldM, newM) {
 }
 
 module.exports = {
-    name: 'messageUpdate',
+    name: Events.MessageUpdate,
     once: false,
     execute: auditHandler,
 };

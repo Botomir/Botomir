@@ -1,4 +1,5 @@
 const source = require('rfr');
+const { Events } = require('discord.js');
 
 const logger = source('bot/utils/logger');
 const Message = source('models/message');
@@ -19,14 +20,15 @@ function databaseHandler(oldM, newM) {
         })
         .then((messageLog) => {
             if (messageLog) {
-                messageLog.setContent(newMessage.content, newMessage.editedTimestamp).save();
+                return messageLog.setContent(newMessage.content, newMessage.editedTimestamp).save();
             }
+            return null;
         })
         .catch((e) => logger.error('failed to save the message update to the database', e));
 }
 
 module.exports = {
-    name: 'messageUpdate',
+    name: Events.MessageUpdate,
     once: false,
     execute: databaseHandler,
 };

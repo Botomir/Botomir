@@ -1,5 +1,6 @@
 const _ = require('lodash');
 const source = require('rfr');
+const { Events } = require('discord.js');
 
 const { sendReply } = source('bot/utils/util');
 const logger = source('bot/utils/logger');
@@ -33,7 +34,7 @@ function botMessage(message) {
 }
 
 module.exports = {
-    name: 'messageCreate',
+    name: Events.MessageCreate,
     once: false,
     execute: botMessage,
 };

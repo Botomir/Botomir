@@ -1,4 +1,5 @@
 const source = require('rfr');
+const { Events } = require('discord.js');
 
 const logger = source('bot/utils/logger');
 const Message = source('models/message');
@@ -8,7 +9,10 @@ function deleteHandler(message) {
 
     Message.Message.find(message.guild.id, message.channel.id, message.id)
         .then((messageLog) => {
-            if (messageLog) messageLog.delete().save();
+            if (messageLog) {
+                return messageLog.delete().save();
+            }
+            return null;
         })
         .catch((e) => {
             logger.error('failed to save the message deletion to the database');
@@ -17,7 +21,7 @@ function deleteHandler(message) {
 }
 
 module.exports = {
-    name: 'messageDelete',
+    name: Events.MessageDelete,
     once: false,
     execute: deleteHandler,
 };
