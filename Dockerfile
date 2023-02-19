@@ -1,4 +1,4 @@
-FROM node:18 as BUILD
+FROM node:19 as BUILD
 
 WORKDIR /usr/src/app
 
@@ -11,7 +11,7 @@ ARG VCS_REF='unknown'
 ENV VCS_REF=$VCS_REF
 RUN npm run build
 
-FROM node:18
+FROM node:19
 
 LABEL org.opencontainers.version="v1.0.0"
 
