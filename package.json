@@ -57,7 +57,7 @@
     "memejs": "2.0.1",
     "moment": "2.29.4",
     "moment-timezone": "0.5.40",
-    "mongoose": "6.4.6",
+    "mongoose": "6.12.0",
     "parse-duration": "1.0.2",
     "passport": "0.6.0",
     "passport-discord": "0.1.4",
@@ -70,7 +70,7 @@
     "winston": "3.8.2"
   },
   "devDependencies": {
-    "@shelf/jest-mongodb": "4.1.4",
+    "@shelf/jest-mongodb": "4.1.7",
     "eslint": "8.34.0",
     "eslint-config-airbnb-base": "15.0.0",
     "eslint-plugin-import": "2.27.5",
