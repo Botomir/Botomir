@@ -6,7 +6,7 @@
 
 const mongoose = require('mongoose');
 
-const { v4: uuidv4 } = require('uuid');
+const { randomUUID } = require('crypto');
 const source = require('rfr');
 
 const { snowflakeValidator } = source('models/util');
@@ -21,7 +21,7 @@ module.exports = new mongoose.Schema({
     id: {
         type: String,
         required: true,
-        default: () => uuidv4().replace(/-/g, ''),
+        default: () => randomUUID().replace(/-/g, ''),
     },
     channel: {
         type: String,
@@ -51,7 +51,7 @@ module.exports = new mongoose.Schema({
     secret: {
         type: String,
         required: true,
-        default: () => uuidv4().replace(/-/g, '').toUpperCase(),
+        default: () => randomUUID().replace(/-/g, '').toUpperCase(),
     },
     timestamp: {
         type: Date,

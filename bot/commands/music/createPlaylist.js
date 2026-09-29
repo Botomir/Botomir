@@ -1,5 +1,5 @@
 const source = require('rfr');
-const parse = require('parse-duration');
+const parse = require('parse-duration').default;
 
 const { createPlaylist, addTracksToPlaylist } = source('bot/spotify/spotifyApi');
 

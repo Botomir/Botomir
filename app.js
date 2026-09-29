@@ -1,4 +1,6 @@
-require('dotenv').config();
+require('dotenv').config({
+    quiet: true,
+});
 const express = require('express');
 const exphbs = require('express-handlebars');
 const source = require('rfr');
@@ -10,7 +12,7 @@ const passport = require('passport');
 const DiscordStrategy = require('passport-discord').Strategy;
 const refresh = require('passport-oauth2-refresh');
 const cookieParser = require('cookie-parser');
-const MongoStore = require('connect-mongo');
+const { MongoStore } = require('connect-mongo');
 
 const logger = source('bot/utils/logger');
 const router = source('routes');
@@ -51,7 +53,16 @@ refresh.use(discordStrat);
 
 const app = express();
 
-app.use(helmet());
+// express 5 defaults to the 'simple' query parser, keep the express 4 behaviour
+app.set('query parser', 'extended');
+
+// keep the helmet 6 defaults for COEP and HSTS max-age (180 days)
+app.use(helmet({
+    crossOriginEmbedderPolicy: true,
+    strictTransportSecurity: {
+        maxAge: 15552000,
+    },
+}));
 app.engine('handlebars', exphbs.engine());
 app.set('view engine', 'handlebars');
 app.use(express.static('static'));
@@ -69,6 +80,15 @@ app.use(express.json()); // for parsing application/json
 app.use(express.urlencoded({
     extended: true,
 })); // for parsing application/x-www-form-urlencoded
+
+// express 5 leaves req.body undefined when no parser ran, keep the express 4 behaviour
+app.use((req, res, next) => {
+    if (req.body === undefined) {
+        req.body = {
+        };
+    }
+    next();
+});
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -89,15 +109,18 @@ app.get(
     },
 );
 
-app.get('/logout', (req, res) => {
-    req.logout();
-    res.redirect('/');
+app.get('/logout', (req, res, next) => {
+    req.logout((err) => {
+        if (err) return next(err);
+        return res.redirect('/');
+    });
 });
 
 app.use(router);
 
 const port = !process.env.PORT ? 8300 : process.env.PORT;
-const server = app.listen(port, () => {
+const server = app.listen(port, (err) => {
+    if (err) throw err;
     logger.info(`Server started on port ${port}`);
 });
 
@@ -118,7 +141,7 @@ process.on('SIGTERM', () => {
         logger.info('Http server closed.');
 
         Bot.client.destroy();
-        mongoose.connection.close(false, () => {
+        mongoose.connection.close(false).then(() => {
             logger.info('MongoDb connection closed.');
             process.exit(0);
         });

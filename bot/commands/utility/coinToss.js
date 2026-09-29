@@ -2,7 +2,7 @@ const source = require('rfr');
 
 const { sendMessage } = source('bot/utils/util');
 
-const random = require('random');
+const random = require('random').default;
 
 const uniformBoolean = random.uniformBoolean();
 

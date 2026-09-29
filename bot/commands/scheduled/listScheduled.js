@@ -6,17 +6,19 @@ const { sendMessage } = source('bot/utils/util');
 const agenda = source('scheduler');
 
 function listScheduled(message) {
-    agenda.jobs({
-        'data.serverID': message.guild.id,
+    agenda.queryJobs({
+        data: {
+            serverID: message.guild.id,
+        },
     })
-        .then((jobs) => {
-            const list = jobs.filter((j) => j.attrs.repeatInterval)
+        .then(({ jobs }) => {
+            const list = jobs.filter((j) => j.repeatInterval)
                 .reduce((acc, j) => {
-                    const intervalString = cronstrue.toString(j.attrs.repeatInterval, {
+                    const intervalString = cronstrue.toString(j.repeatInterval, {
                         verbose: true,
                     });
                     // eslint-disable-next-line no-underscore-dangle
-                    return `${acc}\njobID: ${j.attrs._id}\nSchedule: ${intervalString}\nChannel: <#${j.attrs.data.channelID}>\nText: \`${j.attrs.data.message}\`\n--------\n`;
+                    return `${acc}\njobID: ${j._id}\nSchedule: ${intervalString}\nChannel: <#${j.data.channelID}>\nText: \`${j.data.message}\`\n--------\n`;
                 }, 'I currently have the following recurring messages scheduled:\n=================================================\n');
             sendMessage(message.channel, `${list}`);
         });

@@ -179,6 +179,8 @@ describe('settings default values', () => {
 
     afterAll(() => mongoose.connection.close());
 
+    beforeEach(() => mongoose.connection.db.dropDatabase());
+
     test('default admin role', async () => {
         const settings = new Settings()
             .setGuild(fields.guild);
@@ -352,6 +354,8 @@ describe('settings inital values', () => {
     beforeAll(() => mongoose.connect(process.env.MONGO_URL));
 
     afterAll(() => mongoose.connection.close());
+
+    beforeEach(() => mongoose.connection.db.dropDatabase());
 
     test('custom admin role', async () => {
         const settings = new Settings()

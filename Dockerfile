@@ -1,4 +1,4 @@
-FROM node:18 as BUILD
+FROM node:24 AS BUILD
 
 WORKDIR /usr/src/app
 
@@ -11,7 +11,7 @@ ARG VCS_REF='unknown'
 ENV VCS_REF=$VCS_REF
 RUN npm run build
 
-FROM node:18
+FROM node:24
 
 LABEL org.opencontainers.version="v1.0.0"
 
@@ -36,7 +36,7 @@ ENTRYPOINT [ "/entrypoint.sh" ]
 
 COPY entrypoint.sh /entrypoint.sh
 COPY --from=BUILD /usr/src/app/package*.json ./
-RUN npm ci --only=production --ignore-scripts=true
+RUN npm ci --omit=dev --ignore-scripts=true
 
 
 COPY --from=BUILD /usr/src/app/dist ./

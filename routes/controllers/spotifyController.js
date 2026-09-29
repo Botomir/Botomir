@@ -9,8 +9,11 @@ const SpotifyController = {
         const error = req.query.error || 'Missing the userid and the authentication code';
 
         if (userid && code) {
-            getSpotifyAuthToken(userid, code);
-            res.render('authenticate');
+            getSpotifyAuthToken(userid, code)
+                .then(() => res.render('authenticate'))
+                .catch(() => res.render('authenticateError', {
+                    error: 'Failed to get the spotify authentication token',
+                }));
         } else {
             res.render('authenticateError', {
                 error,

@@ -4,8 +4,7 @@
 .gitignore
 
 # linter files
-.eslintignore
-.eslintrc.json
+eslint.config.mjs
 
 
 .husky

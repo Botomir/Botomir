@@ -92,7 +92,7 @@ class Song {
 
     static count() {
         return SongModel
-            .count()
+            .countDocuments()
             .then((count) => ({
                 database: Song.name,
                 count,

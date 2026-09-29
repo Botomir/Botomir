@@ -144,7 +144,7 @@ class Role {
 
     static count() {
         return RoleModel
-            .count()
+            .countDocuments()
             .then((count) => ({
                 database: Role.name,
                 count,

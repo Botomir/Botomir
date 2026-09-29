@@ -1,6 +1,6 @@
 const source = require('rfr');
 
-const random = require('random');
+const random = require('random').default;
 
 const { sendMessage } = source('bot/utils/util');
 
