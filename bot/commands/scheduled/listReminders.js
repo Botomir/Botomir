@@ -5,17 +5,16 @@ const { sendMessage } = source('bot/utils/util');
 const agenda = source('scheduler');
 
 function listReminders(message, args, config) {
-    agenda.jobs({
-        'data.serverID': message.guild.id,
-        nextRunAt: {
-            $ne: null,
+    agenda.queryJobs({
+        data: {
+            serverID: message.guild.id,
         },
     })
-        .then((jobs) => {
-            const list = jobs.filter((j) => !j.attrs.repeatInterval)
+        .then(({ jobs }) => {
+            const list = jobs.filter((j) => j.nextRunAt != null && !j.repeatInterval)
                 /* eslint-disable no-underscore-dangle */
                 .reduce(
-                    (acc, j) => `${acc}\njobID: ${j.attrs._id}\n${moment(j.attrs.nextRunAt).tz(config.timezone).calendar()}\nChannel: <#${j.attrs.data.channelID}>\nText: \`${j.attrs.data.message}\`\n--------\n`,
+                    (acc, j) => `${acc}\njobID: ${j._id}\n${moment(j.nextRunAt).tz(config.timezone).calendar()}\nChannel: <#${j.data.channelID}>\nText: \`${j.data.message}\`\n--------\n`,
                     'I currently have the following recurring messages scheduled:\n=================================================\n',
                 );
                 /* eslint-enable no-underscore-dangle */

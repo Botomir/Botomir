@@ -109,7 +109,7 @@ class Message {
 
     static count() {
         return MessageModel
-            .count()
+            .countDocuments()
             .then((count) => ({
                 database: Message.name,
                 count,

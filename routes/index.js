@@ -1,4 +1,6 @@
-require('dotenv').config();
+require('dotenv').config({
+    quiet: true,
+});
 const source = require('rfr');
 const express = require('express');
 
@@ -19,6 +21,9 @@ const {
 const logger = source('bot/utils/logger');
 
 const router = express();
+
+// express 5 defaults to the 'simple' query parser, keep the express 4 behaviour
+router.set('query parser', 'extended');
 
 function checkAuth(req, res, next) {
     if (req.isAuthenticated()) return next();

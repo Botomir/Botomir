@@ -9,23 +9,28 @@ const { ObjectId } = require('mongoose').Types;
 function cancelJob(message, args, config) {
     let id;
     try {
-        id = ObjectId(args[0]);
+        id = new ObjectId(args[0]);
     } catch (error) {
         return sendMessage(message.channel, `'${args[0]}' is not a valid id, try \`${config.commandPrefix}list-scheduled\` to get the correct ID`);
     }
 
-    return agenda.jobs({
-        'data.serverID': message.guild.id,
-        _id: id,
+    return agenda.queryJobs({
+        data: {
+            serverID: message.guild.id,
+        },
+        id: id.toString(),
     })
-        .then((jobs) => {
+        .then(({ jobs }) => {
             if (jobs.length !== 1) {
                 return sendMessage(message.channel, 'No scheduled job was found, are you sure you had the right id?');
             }
 
-            if (message.author.id === jobs[0].attrs.data.owner
+            if (message.author.id === jobs[0].data.owner
                 || message.member.roles.cache.find((r) => r.name === config.botAdminRole)) {
-                return jobs[0].remove()
+                return agenda.cancel({
+                    // eslint-disable-next-line no-underscore-dangle
+                    id: jobs[0]._id,
+                })
                     .then(() => sendMessage(message.channel, 'Canceled the scheduled message'));
             }
             return sendMessage(message.channel, 'You can not cancel that scheduled message because you did not set it');

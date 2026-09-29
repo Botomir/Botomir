@@ -10,7 +10,7 @@ const { Song } = source('models/song');
 const logger = source('bot/utils/logger');
 
 const StatisticsController = {
-    get(req, res) {
+    get(req, res, next) {
         Promise.all([
             Statistics.totalEvents(EventTypes.COMMAND_EXECUTED), // 0
             Statistics.totalEvents(EventTypes.GOOD_BOT), // 1
@@ -36,7 +36,10 @@ const StatisticsController = {
                 badBot: values[2].count,
             });
         })
-            .catch((e) => logger.error('failed to generate the statistics page', e));
+            .catch((e) => {
+                logger.error('failed to generate the statistics page', e);
+                next(e);
+            });
     },
 };
 

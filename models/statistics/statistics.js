@@ -62,7 +62,7 @@ class Statistics {
             .where({
                 event: eventName,
             })
-            .count()
+            .countDocuments()
             .then((count) => ({
                 event: eventName,
                 count,
@@ -74,7 +74,7 @@ class Statistics {
             .where({
                 event: eventName,
             })
-            .count()
+            .countDocuments()
             .then((count) => ({
                 event: eventName,
                 count,
